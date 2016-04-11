@@ -4,9 +4,10 @@ var cat = function(game) {
   h = (game.height/2);
   w = (game.width/2);
   Phaser.Sprite.call(this, game, w, game.world.centerX, 'cat');
-	// this = game.add.sprite(200, 200, 'cat_r');
+
   // game.physics.enable(this, Phaser.Physics.ARCADE);
 	// game.player.add(this);
+  
   this.anchor.setTo(0.5, 0.5);
 
 	// var frames = [];

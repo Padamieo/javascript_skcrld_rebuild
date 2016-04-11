@@ -1,11 +1,11 @@
 var rainbow = require('rainbow');
 var cat = require('cat');
 
-var game = {};
+var main = {};
 
-game.create = function () {
-  this.game.physics.startSystem(Phaser.Physics.ARCADE);
-  this.game.physics.arcade.gravity.y = 0;
+main.create = function () {
+  // this.game.physics.startSystem(Phaser.Physics.ARCADE);
+  // this.game.physics.arcade.gravity.y = 0;
 
   // console.log(this.game.world.centerX);
 
@@ -19,13 +19,14 @@ game.create = function () {
   //   p = new rainbow(this.game);
   //   //
   // }
-  game.add.existing(new cat(this.game));
+  
+  this.add.existing(new cat(this.game));
 
-  game.add.existing(new rainbow(this.game));
+  this.add.existing(new rainbow(this.game));
 };
 
-game.update = function (){
+main.update = function (){
 
 };
 
-module.exports = game;
+module.exports = main;

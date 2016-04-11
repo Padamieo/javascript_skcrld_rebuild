@@ -159,14 +159,6 @@ module.exports = function (grunt) {
             src: ['**'],
             dest: 'www/audio/'
           }]
-        },
-        phaser:{
-          files:[{
-            expand: true,
-            cwd: 'bower_components/phaser-official/build/custom/',
-            src: ['phaser-arcade-physics.js'],
-            dest: 'src/js/lib/'
-          }]
         }
       },
       uglify:{

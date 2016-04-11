@@ -6,11 +6,10 @@ preloader.preload = function () {
   this.load.spritesheet('rainbow', 'images/rainbow.png', 200, 500, 18);
   this.load.spritesheet('rainbow_e', 'images/rainbow_e.png', 200, 500);
   this.game.load.image('cat', 'images/placeholder.png', 20, 40);
-
 };
 
 preloader.create = function () {
-  this.game.state.start('game');
+  this.game.state.start('main');
 };
 
 module.exports = preloader;
