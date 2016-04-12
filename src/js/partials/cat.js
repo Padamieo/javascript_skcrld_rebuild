@@ -16,8 +16,8 @@ var cat = function(game) {
 	// }
   // this.animations.add('start', frames);
 
-  this.scale.y = 1;
-  this.scale.x = 1;
+  this.scale.y = 2;
+  this.scale.x = 2;
 
 	this.game.add.existing(this);
 };
@@ -33,7 +33,7 @@ cat.prototype.update = function(game) {
 	// }else{
 	// 	this.animations.stop(null, true);
 	// }
-  
+
   if(this.name == 'f'){
     this.x = game.input.x;
     this.y = game.input.y;
