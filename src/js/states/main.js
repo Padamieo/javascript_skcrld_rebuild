@@ -25,7 +25,7 @@ function calculate_rotated_square(obj){
   //I'm not entirely sure why, honestly - it might be that polygon position is expected to be the center or it might be that I've broken it even further
   //but, at the moment it's not causing a problem visually *or* for collision - so it probably won't cause a problem in the future????????
   //good luck have fun
-  obj.poly = new P(new V(x, y), [ new V(tl[0], tl[1]), new V(tr[0], tr[1]), new V(br[0], br[1]), new V(bl[0], bl[1]) ]);  
+  obj.poly = new P(new V(x, y), [ new V(tl[0], tl[1]), new V(tr[0], tr[1]), new V(br[0], br[1]), new V(bl[0], bl[1]) ]);
 
   //OLD
   // obj.poly = new P(new V(tl[0], tl[1]), [ new V(tl[0], tl[1]), new V(tr[0], tr[1]), new V(br[0], br[1]), new V(bl[0], bl[1]) ]);
@@ -50,13 +50,18 @@ function collisionCheck(obj_a, obj_b) {
   if (collided){
     console.log(one.key, two.key, collided);
     two.tint = 0xFF0000;
+  }else{
+    two.tint = 0xFFFFFF;
   }
 }
 
 function rotate(cx, cy, x, y, angle) {
+    if(angle < 0){
+      angle = angle+Math.PI*2;
+    }
     var radians = (Math.PI / 180) * angle,
         cos = Math.cos(radians),
-        sin = Math.sin(radians),
+        sin = Math.sin(radians);
 
         //NOTE FROM JONNO:
         //here's the new rotation code - note the ever so slight differences from your own
@@ -64,8 +69,9 @@ function rotate(cx, cy, x, y, angle) {
         //I actually have no idea why this fixes the collision - but it seems to be coupled with the change noted above
         //As before, it may present a problem in the future but it probably won't
         //good luck have fun
-        nx = (x - cx) * cos + (y - cy) * sin;
-        ny = (y - cy) * cos - (x - cx) * sin;
+        nx = (x - cx) * cos - (y - cy) * sin;
+        ny = (y - cy) * cos + (x - cx) * sin;
+
 
         //OLD
         // nx = (cos * (x - cx)) - (sin * (y - cy)) + cx,
@@ -91,7 +97,7 @@ main.create = function () {
   // }
 
   one = this.add.existing(new cat(this.game));
-  one.angle = 45;
+  one.angle = 0;
   one.name = 'f';
 
   // ori = this.add.existing(new cat(this.game));
@@ -99,8 +105,9 @@ main.create = function () {
   // ori.tint = Math.random() * 0xffffff;
 
   two = this.add.existing(new cat(this.game));
-  two.angle = -45; //Phaser.Math.degToRad(45);
+  two.angle = 45; //Phaser.Math.degToRad(45);
   two.name = 'n';
+
 
   // this.add.existing(new rainbow(this.game));
 
@@ -115,11 +122,11 @@ main.create = function () {
 
   var graphics = this.game.add.graphics();
   graphics.lineStyle(2, 0xffd900, 1);
-  graphics.moveTo(two.poly.calcPoints[0].x, two.poly.calcPoints[0].y);
-  graphics.lineTo(two.poly.calcPoints[1].x, two.poly.calcPoints[1].y);
-  graphics.lineTo(two.poly.calcPoints[2].x, two.poly.calcPoints[2].y);
-  graphics.lineTo(two.poly.calcPoints[3].x, two.poly.calcPoints[3].y);
-  graphics.lineTo(two.poly.calcPoints[0].x, two.poly.calcPoints[0].y);
+  graphics.moveTo(two.poly.calcPoints[0].x+two.x, two.poly.calcPoints[0].y+two.y);
+  graphics.lineTo(two.poly.calcPoints[1].x+two.x, two.poly.calcPoints[1].y+two.y);
+  graphics.lineTo(two.poly.calcPoints[2].x+two.x, two.poly.calcPoints[2].y+two.y);
+  graphics.lineTo(two.poly.calcPoints[3].x+two.x, two.poly.calcPoints[3].y+two.y);
+  graphics.lineTo(two.poly.calcPoints[0].x+two.x, two.poly.calcPoints[0].y+two.y);
   graphics.endFill();
 
   //NOTE FROM JONNO:
