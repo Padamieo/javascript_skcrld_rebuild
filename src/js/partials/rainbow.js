@@ -2,8 +2,8 @@
 
 var rainbow = function(game) {
 
-  h = (game.height/2);
-  w = (game.width/2);
+  //var h = (game.height/2);
+  var w = (game.width/2);
   Phaser.Sprite.call(this, game, w, game.world.centerX, 'rainbow');
 
   // game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -20,7 +20,7 @@ var rainbow = function(game) {
   this.scale.x = 1;
 
 	this.game.add.existing(this);
-}
+};
 
 rainbow.prototype = Object.create(Phaser.Sprite.prototype);
 rainbow.prototype.constructor = rainbow;

@@ -1,5 +1,6 @@
 var _ = require('lodash'),
   Phaser = require('Phaser'),
+  Sat = require('Sat'),
   properties = require('./properties'),
   states = {
     boot: require('./states/boot.js'),

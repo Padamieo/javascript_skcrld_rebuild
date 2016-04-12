@@ -186,21 +186,16 @@ module.exports = function (grunt) {
     'watch',
   ]);
 
-  grunt.registerTask('build',
-    [ /*'jshint'
-    , */'clean'
-    , 'browserify'
-    , 'jade'
-    , 'stylus'
-    , 'uglify'
-    , 'copy:images'
-    , 'copy:audio'
-    , 'cacheBust'
-    , 'connect'
-    , 'open'
-    , 'watch'
-    ]
-  );
+  grunt.registerTask('build', [
+    'clean',
+    'browserify',
+    'jade',
+    'stylus',
+    'uglify',
+    'copy:images',
+    'copy:audio',
+    'cacheBust'
+  ]);
 
   grunt.registerTask('test',[
     'jshint'

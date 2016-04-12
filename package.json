@@ -16,7 +16,8 @@
     "Phaser": "./bower_components/phaser-official/build/custom/phaser-no-physics.js",
     "Stats": "./bower_components/stats.js/build/stats.min.js",
     "rainbow": "./src/js/partials/rainbow.js",
-    "cat": "./src/js/partials/cat.js"
+    "cat": "./src/js/partials/cat.js",
+    "Sat": "./bower_components/sat-js/SAT.js"
   },
   "browserify-shim": {
     "Phaser": {
@@ -24,6 +25,9 @@
     },
     "Stats": {
       "exports": "Stats"
+    },
+    "Sat": {
+      "exports": "Sat"
     }
   },
   "dependencies": {
