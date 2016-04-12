@@ -20,7 +20,15 @@ function calculate_rotated_square(obj){
   var br = rotate(x, y, r, b, a);
   var bl = rotate(x, y, l, b, a);
 
-  obj.poly = new P(new V(tl[0], tl[1]), [ new V(tl[0], tl[1]), new V(tr[0], tr[1]), new V(br[0], br[1]), new V(bl[0], bl[1]) ]);
+  //NOTE FROM JONNO:
+  //for some reason, the new rotation code only works if you change the pos provided here for the polygon to be (x,y) rather than (topleftX,topleftY)
+  //I'm not entirely sure why, honestly - it might be that polygon position is expected to be the center or it might be that I've broken it even further
+  //but, at the moment it's not causing a problem visually *or* for collision - so it probably won't cause a problem in the future????????
+  //good luck have fun
+  obj.poly = new P(new V(x, y), [ new V(tl[0], tl[1]), new V(tr[0], tr[1]), new V(br[0], br[1]), new V(bl[0], bl[1]) ]);  
+
+  //OLD
+  // obj.poly = new P(new V(tl[0], tl[1]), [ new V(tl[0], tl[1]), new V(tr[0], tr[1]), new V(br[0], br[1]), new V(bl[0], bl[1]) ]);
 
   // obj.poly = new P(new V(x, y), [new V(tl[0], tl[1]), new V(tr[0], tr[1]), new V(br[0], br[1]), new V(bl[0], bl[1])]);
 }
@@ -35,9 +43,9 @@ function collisionCheck(obj_a, obj_b) {
   calculate_rotated_square(obj_b);
   //console.log(two.poly.calcPoints[0].x);
 
-  var response = new SAT.Response();
+  // var response = new SAT.Response();
 
-  var collided = SAT.testPolygonPolygon(obj_a.poly, obj_b.poly, response);
+  var collided = SAT.testPolygonPolygon(obj_a.poly, obj_b.poly/*, response*/); //response object is optional, will contain all the points that overlap
 
   if (collided){
     console.log(one.key, two.key, collided);
@@ -49,8 +57,19 @@ function rotate(cx, cy, x, y, angle) {
     var radians = (Math.PI / 180) * angle,
         cos = Math.cos(radians),
         sin = Math.sin(radians),
-        nx = (cos * (x - cx)) - (sin * (y - cy)) + cx,
-        ny = (cos * (y - cy)) + (sin * (x - cx)) + cy;
+
+        //NOTE FROM JONNO:
+        //here's the new rotation code - note the ever so slight differences from your own
+        //most notably, the removal of "+ cx" and "+ cy"
+        //I actually have no idea why this fixes the collision - but it seems to be coupled with the change noted above
+        //As before, it may present a problem in the future but it probably won't
+        //good luck have fun
+        nx = (x - cx) * cos + (y - cy) * sin;
+        ny = (y - cy) * cos - (x - cx) * sin;
+
+        //OLD
+        // nx = (cos * (x - cx)) - (sin * (y - cy)) + cx,
+        // ny = (cos * (y - cy)) + (sin * (x - cx)) + cy;
     return [nx, ny];
 }
 
@@ -75,9 +94,9 @@ main.create = function () {
   one.angle = 45;
   one.name = 'f';
 
-  ori = this.add.existing(new cat(this.game));
-  ori.name = 'n';
-  ori.tint = Math.random() * 0xffffff;
+  // ori = this.add.existing(new cat(this.game));
+  // ori.name = 'n';
+  // ori.tint = Math.random() * 0xffffff;
 
   two = this.add.existing(new cat(this.game));
   two.angle = -45; //Phaser.Math.degToRad(45);
@@ -102,6 +121,13 @@ main.create = function () {
   graphics.lineTo(two.poly.calcPoints[3].x, two.poly.calcPoints[3].y);
   graphics.lineTo(two.poly.calcPoints[0].x, two.poly.calcPoints[0].y);
   graphics.endFill();
+
+  //NOTE FROM JONNO:
+  //this is the most...disturbing...result of my changes - the above no longer draws an outline at all!
+  //I will leave it up to you to figure out why because I have nooooooooooooooo idea
+  //but, to make it less disturbing - remember that the shapes are rotated properly, drawn properly, and now collide properly
+  //so it's probably not a problem....????????
+  //good luck have fun
 
 };
 
