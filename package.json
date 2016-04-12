@@ -17,6 +17,7 @@
     "Stats": "./bower_components/stats.js/build/stats.min.js",
     "rainbow": "./src/js/partials/rainbow.js",
     "cat": "./src/js/partials/cat.js",
+    "col": "./src/js/partials/collision.js",
     "Sat": "./bower_components/sat-js/SAT.js"
   },
   "browserify-shim": {
