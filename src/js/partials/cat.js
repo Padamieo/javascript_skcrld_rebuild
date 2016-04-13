@@ -42,6 +42,26 @@ cat.prototype.update = function(game) {
   //   this.y = game.input.y;
   // }
 
+  dt = game.time.elapsed;
+
+  if(p.lazers === true){
+
+    h = game.height;
+    offset = this.y-(h/8);
+    this.y = this.y - (offset/100);
+    this.y_velocity = ( this.y_velocity <= 0 ? 0 : this.y_velocity/0.8 );
+
+  }else{
+
+    gravity = 0.1;
+    this.y = this.y - this.y_velocity;
+    this.y_velocity = this.y_velocity - gravity / dt;
+
+  }
+
+  if(this.y > game.height-(game.height/10)){
+    this.dead = true;
+  }
 
 };
 

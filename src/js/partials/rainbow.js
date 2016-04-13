@@ -6,9 +6,7 @@ var rainbow = function(game) {
   var w = (game.width/2);
   Phaser.Sprite.call(this, game, w, game.world.centerX, 'rainbow');
 
-  // game.physics.enable(this, Phaser.Physics.ARCADE);
-	// game.player.add(this);
-  this.anchor.setTo(0.5, 0.5);
+  this.anchor.setTo(0.5, 0);
 
 	var frames = [];
 	for (var i = 0; i < 18; i++) {
@@ -29,6 +27,10 @@ rainbow.prototype.update = function(game) {
 	game = this.game;
 
 	if(game.input.activePointer.isDown === true){
+    if (game.kitty != null) {
+      this.y = game.kitty.y;
+      this.x = game.kitty.x;
+    }
 		this.animations.play('start', 30, true);
 	}else{
 		this.animations.stop(null, true);

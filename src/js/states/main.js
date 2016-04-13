@@ -1,9 +1,11 @@
 var rainbow = require('rainbow');
 var cat = require('cat');
-var p = require('player');
+var player = require('player');
 var col = require('col');
 
-var main = {};
+var main = {}
+
+//var kitty = null;
 
 main.create = function () {
   // this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -22,40 +24,33 @@ main.create = function () {
   //   //
   // }
 
-  one = this.add.existing(new cat(this.game));
-  one.angle = 0;
-  one.name = 'f';
 
   // ori = this.add.existing(new cat(this.game));
   // ori.name = 'n';
   // ori.tint = Math.random() * 0xffffff;
 
-  two = this.add.existing(new cat(this.game));
-  two.angle = 45; //Phaser.Math.degToRad(45);
-  two.name = 'n';
+  this.game.kitty = this.add.existing(new cat(this.game));
+  // col.calculate_rotated_square(cat);
+  // this.char = this.add.group();
+  // var kitty = this.char.getFirstDead();
+  // if (kitty === null) {
+  //   kitty = new cat(this.game);
+  // }
 
+  rainbow = this.add.existing(new rainbow(this.game));
 
-  // this.add.existing(new rainbow(this.game));
-
-  this.add.existing(new player(this.game));
-
-
-  col.calculate_rotated_square(two);
-
-  var graphics = this.game.add.graphics();
-  graphics.lineStyle(2, 0xffd900, 1);
-  graphics.moveTo(two.poly.calcPoints[0].x+two.x, two.poly.calcPoints[0].y+two.y);
-  graphics.lineTo(two.poly.calcPoints[1].x+two.x, two.poly.calcPoints[1].y+two.y);
-  graphics.lineTo(two.poly.calcPoints[2].x+two.x, two.poly.calcPoints[2].y+two.y);
-  graphics.lineTo(two.poly.calcPoints[3].x+two.x, two.poly.calcPoints[3].y+two.y);
-  graphics.lineTo(two.poly.calcPoints[0].x+two.x, two.poly.calcPoints[0].y+two.y);
-  graphics.endFill();
+  p = this.add.existing(new player(this.game));
 
 };
 
 main.update = function (){
 
-  col.isionCheck(two, one);
+  //col.isionCheck(cat, one);
+
+  //need to perform some lives calculations
+  if(this.game.kitty.dead === true ){
+    this.game.state.start('menu');
+  }
 
 };
 
