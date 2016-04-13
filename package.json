@@ -15,6 +15,7 @@
   "browser": {
     "Phaser": "./bower_components/phaser-official/build/custom/phaser-no-physics.js",
     "Stats": "./bower_components/stats.js/build/stats.min.js",
+    "player": "./src/js/partials/player.js",
     "rainbow": "./src/js/partials/rainbow.js",
     "cat": "./src/js/partials/cat.js",
     "col": "./src/js/partials/collision.js",

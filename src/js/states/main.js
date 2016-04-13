@@ -1,5 +1,6 @@
 var rainbow = require('rainbow');
 var cat = require('cat');
+var p = require('player');
 var col = require('col');
 
 var main = {};
@@ -35,6 +36,8 @@ main.create = function () {
 
 
   // this.add.existing(new rainbow(this.game));
+
+  this.add.existing(new player(this.game));
 
 
   col.calculate_rotated_square(two);

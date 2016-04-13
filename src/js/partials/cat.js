@@ -3,7 +3,7 @@
 var cat = function(game) {
   //var h = (game.height/2);
   var w = (game.width/2);
-  Phaser.Sprite.call(this, game, w, game.world.centerX, 'cat');
+  Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, 'cat');
 
   // game.physics.enable(this, Phaser.Physics.ARCADE);
 	// game.player.add(this);
@@ -16,8 +16,11 @@ var cat = function(game) {
 	// }
   // this.animations.add('start', frames);
 
-  this.scale.y = 2;
-  this.scale.x = 2;
+  this.scale.y = 1;
+  this.scale.x = 1;
+
+  this.y_velocity = 0;
+  this.dead = false
 
 	this.game.add.existing(this);
 };
@@ -28,16 +31,16 @@ cat.prototype.constructor = cat;
 cat.prototype.update = function(game) {
 	game = this.game;
 
-	// if(game.input.activePointer.isDown === true){
-	// 	this.animations.play('start', 30, true);
-	// }else{
-	// 	this.animations.stop(null, true);
-	// }
+	if(game.input.activePointer.isDown === true){
+		// this.animations.play('start', 30, true);
+	}else{
+		// this.animations.stop(null, true);
+	}
 
-  if(this.name == 'f'){
-    this.x = game.input.x;
-    this.y = game.input.y;
-  }
+  // if(this.name == 'f'){
+  //   this.x = game.input.x;
+  //   this.y = game.input.y;
+  // }
 
 
 };
