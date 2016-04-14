@@ -8,8 +8,6 @@ var enemy = function(game) {
 
   Phaser.Sprite.call(this, game, randomx, game.world.centerY-50, 'cat');
 
-	this.game.enemies.add(this);
-
   // this.events.onKilled.add(function(){ e.explosion(game, this)}, this);
 
   this.anchor.setTo(0.5, 0.5);
@@ -20,7 +18,7 @@ var enemy = function(game) {
   this.x_velocity = 0;
   this.alive = true;
 
-	this.game.add.existing(this);
+  game.enemies.add(this);
 };
 
 enemy.prototype = Object.create(Phaser.Sprite.prototype);

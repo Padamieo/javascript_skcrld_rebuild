@@ -4,6 +4,7 @@ var player = require('player');
 var col = require('col');
 var enemy = require('enemy');
 
+
 var main = {}
 
 //var kitty = null;
@@ -42,7 +43,14 @@ main.create = function () {
 
   p = this.add.existing(new player(this.game));
 
-  this.game.enemies = this.game.add.group();
+  // this.game.enemies = this.game.add.group();
+  this.game.enemies = new Phaser.Group(this.game);
+
+  //this.game.enemies.create(200, 240, 'cat');
+
+// tick = game.time.create(false);
+// tick.loop(2000, updateTick, this, 'level');
+// tick.start();
 
   this.game.max_enemy = 10;
 
@@ -50,18 +58,16 @@ main.create = function () {
 
 main.update = function (){
 
-  //if (this.game.enemies.countLiving() <= 0) {
-  console.log(this.game.enemies.length);
-    if(this.game.enemies.countLiving() < this.game.max_enemy){
-      nme = this.game.enemies.getFirstDead();
-      if (nme === null) {
-        nme = new enemy(this.game);
-      }
-      nme.revive();
-      nme.x = this.game.rnd.integerInRange(0, this.game.width);
-      nme.y = this.game.height;
+  if(this.game.enemies.countLiving() < this.game.max_enemy){
+    nme = this.game.enemies.getFirstDead();
+    if (nme === null) {
+      nme = new enemy(this.game);
     }
-  //}
+    nme.revive();
+    nme.x = this.game.rnd.integerInRange(0, this.game.width);
+    nme.y = this.game.height;
+  }
+
 
   //col.isionCheck(cat, one);
 
