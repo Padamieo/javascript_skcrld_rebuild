@@ -4,11 +4,13 @@ var enemy = function(game) {
   //var h = (game.height/2);
   var w = (game.width/2);
 
-  random = Math.random();
+  randomx = game.rnd.integerInRange(10, game.width);
 
-  Phaser.Sprite.call(this, game, game.world.centerX-50, game.world.centerY-50, 'cat');
+  Phaser.Sprite.call(this, game, randomx, game.world.centerY-50, 'cat');
 
-	game.enemies.add(this);
+	this.game.enemies.add(this);
+
+  // this.events.onKilled.add(function(){ e.explosion(game, this)}, this);
 
   this.anchor.setTo(0.5, 0.5);
 
@@ -16,7 +18,7 @@ var enemy = function(game) {
   this.scale.x = 1;
 
   this.x_velocity = 0;
-  this.dead = false
+  this.alive = true;
 
 	this.game.add.existing(this);
 };
@@ -28,19 +30,20 @@ enemy.prototype.update = function(game) {
 	game = this.game;
 
   if(p.lazers === true){
-    speed = 15;
+    speed = 0.08;
   }else{
-    speed = 70;
+    speed = 0.1;
   }
 
   dt = game.time.elapsed;
 
-  if(self.dead == false){
-    self.y = self.y -( speed * dt )
+  if(this.alive == true){
+    dt = game.time.elapsed;
+    this.y = this.y -( speed * dt )
   }
 
   if(this.y < 0+(game.height/10)){
-    this.dead = true;
+    this.alive = false;
   }
 
 };
