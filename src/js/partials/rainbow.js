@@ -25,8 +25,8 @@ rainbow.prototype.constructor = rainbow;
 
 rainbow.prototype.update = function(game) {
 	game = this.game;
-
-	if(game.input.activePointer.isDown === true){
+  
+  if(p.lazers === true){
     if (game.kitty != null) {
       this.y = game.kitty.y;
       this.x = game.kitty.x;
