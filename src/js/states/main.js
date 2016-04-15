@@ -36,19 +36,19 @@ main.create = function () {
 
   g.setup(this.game);
 
-  // this.game.physics.startSystem(Phaser.Physics.ARCADE);
+  this.game.physics.startSystem(Phaser.Physics.ARCADE);
   // this.game.physics.arcade.gravity.y = 0;
 
 
 	//bullet pool could be individual
 	this.game.bulletPool = this.game.add.group();
-	// this.game.bulletPool.enableBody = true;
-	// this.game.bulletPool.physicsBodyType = Phaser.Physics.ARCADE
+	this.game.bulletPool.enableBody = true;
+	this.game.bulletPool.physicsBodyType = Phaser.Physics.ARCADE
 	this.game.bulletPool.createMultiple(50 , 'bullet');
 	this.game.bulletPool.setAll('anchor.x', 0.5);
 	this.game.bulletPool.setAll('anchor.y', 0.5);
 	this.game.bulletPool.setAll('outOfBoundsKill', true);
-	// this.game.bulletPool.setAll('checkWorldBounds', true);
+	this.game.bulletPool.setAll('checkWorldBounds', true);
 
 
 
@@ -92,11 +92,38 @@ main.update = function (){
   //col.isionCheck(cat, one);
 
   if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)){
-    num = this.game.enemies.countLiving();
-    r = this.game.rnd.integerInRange(0, num);
-    e = this.game.enemies.getAt(r);
-    e.kill();
+    // num = this.game.enemies.countLiving();
+    // r = this.game.rnd.integerInRange(0, num);
+    // e = this.game.enemies.getAt(r);
+    // e.kill();
   }
+
+  for (var i = 0, len = this.game.bulletPool.children.length; i < len; i++){
+    if(this.game.bulletPool.children[i].alive){
+      col.calculate_rotated_square(this.game.bulletPool.children[i]);
+    }
+  }
+
+  for (var b = 0, ll = this.game.enemies.children.length; b < ll; b++){
+    if(this.game.enemies.children[b].alive){
+      col.calculate_rotated_square(this.game.enemies.children[b]);
+    }
+  }
+
+  for (var i = 0, len = this.game.bulletPool.children.length; i < len; i++){
+    if(this.game.bulletPool.children[i].alive){
+      for (var b = 0, ll = this.game.enemies.children.length; b < ll; b++){
+        value = col.isionCheck(this.game.enemies.children[b], this.game.bulletPool.children[i]);
+        if(value){
+          console.log("hit");
+          this.game.enemies.children[b].kill();
+          this.game.bulletPool.children[i].kill();
+        }
+      }
+    }
+  }
+
+
 
   //need to perform some lives calculations
   if(this.game.kitty.dead === true ){

@@ -22,9 +22,9 @@ var general = {
 
     //setup emitter for burst
     //emitter requires arcade physics to operate
-    // game.emitter = game.add.emitter(0, 0, 100);
-    // game.emitter.makeParticles('test');
-    // game.emitter.gravity = 200;
+    game.emitter = game.add.emitter(0, 0, 100);
+    game.emitter.makeParticles('test');
+    game.emitter.gravity = 200;
 
   },
 
@@ -38,7 +38,6 @@ var general = {
 		//bang.rotation = 180;
 		bang.reset(loc.x, loc.y);
 		bang.play('boom', 30, 1, true);
-
 	},
 
   burst: function(game, x, y){
@@ -57,7 +56,6 @@ var general = {
   shake: function(game){
 		game.camera.y = 0;
 		game.add.tween(game.camera)
-
 		.to({ y: -10 }, 40, Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true)
 		.start();
 		/*

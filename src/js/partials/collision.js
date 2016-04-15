@@ -37,9 +37,11 @@ var col = {
 
     if (collided){
       // console.log(one.key, two.key, collided);
-      two.tint = 0xFF0000;
+      //two.tint = 0xFF0000;
+      return true;
     }else{
-      two.tint = 0xFFFFFF;
+      return false;
+      //two.tint = 0xFFFFFF;
     }
   },
 

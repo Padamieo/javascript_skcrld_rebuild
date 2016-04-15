@@ -8,7 +8,7 @@ var enemy = function(game) {
 
   Phaser.Sprite.call(this, game, randomx, game.world.centerY-50, 'cat');
 
-  this.events.onKilled.add(function(){ g.explosion(game, this)}, this);
+  this.events.onKilled.add(function(){ g.explosion(game, this); console.log("bang")}, this);
 
   this.anchor.setTo(0.5, 0.5);
 

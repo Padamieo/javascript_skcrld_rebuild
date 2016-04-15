@@ -1,4 +1,4 @@
-// var pickup = require('pickup');
+//var g = require('general');
 
 var cat = function(game) {
   //var h = (game.height/2);

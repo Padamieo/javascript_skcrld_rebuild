@@ -13,7 +13,7 @@
   "author": "Michaél Adam Lockwood",
   "license": " ",
   "browser": {
-    "Phaser": "./bower_components/phaser-official/build/custom/phaser-no-physics.js",
+    "Phaser": "./bower_components/phaser-official/build/custom/phaser-arcade-physics.js",
     "Stats": "./bower_components/stats.js/build/stats.min.js",
     "player": "./src/js/partials/player.js",
     "general": "./src/js/partials/general.js",
