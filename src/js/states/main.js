@@ -3,33 +3,54 @@ var cat = require('cat');
 var player = require('player');
 var col = require('col');
 var enemy = require('enemy');
+var g = require('general');
 
 
 var main = {}
 
-//var kitty = null;
+function store(game){
+  if(localStorage != undefined){
+    console.log("Local Storage is supported");
+
+    if(localStorage.getItem("lives") === null){
+      localStorage.setItem("lives", 9 );
+      game.lives = 9;
+    }
+
+    //localStorage.removeItem("Website");
+
+  }else{
+    console.log("No support");
+  }
+}
+
+function delete_store(){
+  if(localStorage != undefined){
+    localStorage.clear();
+  }
+}
 
 main.create = function () {
+
+  store(this.game);
+
+  g.setup(this.game);
+
   // this.game.physics.startSystem(Phaser.Physics.ARCADE);
   // this.game.physics.arcade.gravity.y = 0;
 
-  this.game.nextShotAt = 0;
-	this.game.shotDelay = 600;
 
 	//bullet pool could be individual
 	this.game.bulletPool = this.game.add.group();
 	// this.game.bulletPool.enableBody = true;
 	// this.game.bulletPool.physicsBodyType = Phaser.Physics.ARCADE
-	this.game.bulletPool.createMultiple(50 , 'bullet'); //needs to be based on amount of players
+	this.game.bulletPool.createMultiple(50 , 'bullet');
 	this.game.bulletPool.setAll('anchor.x', 0.5);
 	this.game.bulletPool.setAll('anchor.y', 0.5);
 	this.game.bulletPool.setAll('outOfBoundsKill', true);
 	// this.game.bulletPool.setAll('checkWorldBounds', true);
 
 
-  // ori = this.add.existing(new cat(this.game));
-  // ori.name = 'n';
-  // ori.tint = Math.random() * 0xffffff;
 
   this.game.kitty = this.add.existing(new cat(this.game));
   // col.calculate_rotated_square(cat);
@@ -68,8 +89,14 @@ main.update = function (){
     nme.y = this.game.height;
   }
 
-
   //col.isionCheck(cat, one);
+
+  if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)){
+    num = this.game.enemies.countLiving();
+    r = this.game.rnd.integerInRange(0, num);
+    e = this.game.enemies.getAt(r);
+    e.kill();
+  }
 
   //need to perform some lives calculations
   if(this.game.kitty.dead === true ){

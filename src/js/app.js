@@ -8,9 +8,17 @@ var _ = require('lodash'),
     menu: require('./states/menu.js'),
     main: require('./states/main.js')
   },
+
+  // game = new Phaser.Game(
+  //   window.innerWidth*window.devicePixelRatio,
+  //   window.innerHeight*window.devicePixelRatio,
+  //   Phaser.AUTO,
+  //   'game'
+  // );
+
   game = new Phaser.Game(
-    window.innerWidth*window.devicePixelRatio,
-    window.innerHeight*window.devicePixelRatio,
+    properties.size.x,
+    properties.size.y,
     Phaser.AUTO,
     'game'
   );

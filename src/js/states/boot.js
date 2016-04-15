@@ -11,9 +11,9 @@ boot.create = function () {
   this.game.sound.mute = properties.mute;
 
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-  // this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
-  // this.scale.pageAlignHorizontally = true;
-  // this.scale.pageAlignVertically = true;
+  //this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+  this.scale.pageAlignHorizontally = true;
+  this.scale.pageAlignVertically = true;
 
   this.game.state.start('preloader');
 };

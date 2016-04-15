@@ -10,6 +10,9 @@ var player = function(game) {
   this.lazers = false;
   this.ssize = 0;
 
+  this.nextShotAt = 0;
+  this.shotDelay = 600;
+
 	this.game.add.existing(this);
 };
 
@@ -29,7 +32,7 @@ player.prototype.update = function(game) {
       change_in_time = 0;
     }
 
-    this.x = game.input.x;;
+    this.x = game.input.x;
     this.y = game.input.y;
     this.lineStyle(2, 0xffffff, 0.5);
     this.drawCircle(0, 0, 100);
@@ -52,10 +55,10 @@ player.prototype.update = function(game) {
 	}else{
     if(this.endtime > game.time.now){
 
-      if (game.nextShotAt > game.time.now) {
+      if (this.nextShotAt > game.time.now) {
         return;
       }
-      game.nextShotAt = game.time.now + game.shotDelay;
+      this.nextShotAt = game.time.now + this.shotDelay;
 
       if (game.bulletPool.countDead() === 0) {
         return;
