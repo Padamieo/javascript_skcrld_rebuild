@@ -6,7 +6,7 @@ var enemy = function(game) {
 
   randomx = game.rnd.integerInRange(10, game.width);
 
-  Phaser.Sprite.call(this, game, randomx, game.world.centerY-50, 'cat');
+  Phaser.Sprite.call(this, game, randomx, game.world.centerY-50, 'enemy');
 
   this.events.onKilled.add(function(){ g.explosion(game, this); console.log("bang")}, this);
 

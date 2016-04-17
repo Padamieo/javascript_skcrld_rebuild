@@ -10,11 +10,9 @@ var cat = function(game) {
 
   this.anchor.setTo(0.5, 0.5);
 
-	// var frames = [];
-	// for (var i = 0; i < 18; i++) {
-	// 	frames.push(i);
-	// }
-  // this.animations.add('start', frames);
+  this.animations.add('fall', [1]);
+  this.animations.add('fire', [0]);
+
 
   this.scale.y = 1;
   this.scale.x = 1;
@@ -50,12 +48,13 @@ cat.prototype.update = function(game) {
     offset = this.y-(h/8);
     this.y = this.y - (offset/100);
     this.y_velocity = ( this.y_velocity <= 0 ? 0 : this.y_velocity/0.8 );
-
+    this.animations.play('fire', 1, true);
   }else{
 
     gravity = 0.1;
     this.y = this.y - this.y_velocity;
     this.y_velocity = this.y_velocity - gravity / dt;
+    this.animations.play('fall', 1, true);
 
   }
 

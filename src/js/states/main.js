@@ -5,7 +5,6 @@ var col = require('col');
 var enemy = require('enemy');
 var g = require('general');
 
-
 var main = {}
 
 function store(game){

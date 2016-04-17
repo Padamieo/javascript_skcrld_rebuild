@@ -10,8 +10,8 @@ var player = function(game) {
   this.endtime = 0;
   this.max = 100;
   this.lazers = false;
-  this.ssize = 0;
-
+  this.circlesize = 0;
+  this.duration = 1000;
   this.nextShotAt = 0;
   this.shotDelay = 400;
   this.tap = true;
@@ -29,7 +29,7 @@ player.prototype.update = function(game) {
 	if(game.input.activePointer.isDown === true){
     if(this.press == false){
       this.starttime = game.time.now;
-      this.endtime = game.time.now + 1000;
+      this.endtime = game.time.now + this.duration;
       this.press = true;
       this.tap = true;
     }
@@ -40,14 +40,13 @@ player.prototype.update = function(game) {
     this.drawCircle(0, 0, 100);
 
     if(this.press == true){
-      var change_in_time = game.time.now + this.starttime;
-      //console.log(change_in_time);
-      if(this.ssize <= this.max){
-        this.ssize =  this.max*1000 / change_in_time; // (this.max / 10);
+      var change_in_time = game.time.now - this.starttime;
+      if(this.circlesize <= this.max){
+        this.circlesize = change_in_time * (this.max / this.duration);
       }
       this.lineStyle(0, 0xffffff, 0);
       this.beginFill(0xffffff, 0.5);
-      this.drawCircle(0, 0, this.ssize);
+      this.drawCircle(0, 0, this.circlesize);
     }
 
     if(this.endtime < game.time.now){
@@ -85,7 +84,7 @@ player.prototype.update = function(game) {
     }
     this.lazers = false;
     this.press = false;
-    this.ssize = 0;
+    this.circlesize = 0;
 	}
 
 };
