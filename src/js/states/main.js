@@ -130,6 +130,7 @@ main.update = function (){
 
 //every x seconds run this, currently causes weird invisible duplications need to resolve
 function updateTick(game) {
+
   console.log('tick');
   if(game.enemies.countLiving() < game.max_enemy){
     nme = game.enemies.getFirstDead();
@@ -140,6 +141,7 @@ function updateTick(game) {
     nme.x = game.rnd.integerInRange(0, game.width);
     nme.y = game.height;
   }
+
 }
 
 module.exports = main;
