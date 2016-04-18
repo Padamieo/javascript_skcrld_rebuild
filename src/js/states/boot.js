@@ -10,10 +10,29 @@ boot.create = function () {
 
   this.game.sound.mute = properties.mute;
 
+  //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-  //this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+
   this.scale.pageAlignHorizontally = true;
   this.scale.pageAlignVertically = true;
+
+  // console.log(window.innerWidth);
+  // console.log(this.game.width);
+
+  // this.game.width = 300;
+  // this.game.height = 500;
+  //this.game.setGameSize(300, 500);
+
+  // canvas.width = (this.game.width * 1) - 0;
+  // canvas.height = (this.game.height * 2) - 0;
+
+  // this.game.world.setBounds(100, 200);
+
+  // vvv = this.scale.scaleMode.aspectRatio();
+  // console.log(vvv);
+
+  console.log(window.innerWidth);
+  console.log(this.game.width);
 
   this.game.state.start('preloader');
 };

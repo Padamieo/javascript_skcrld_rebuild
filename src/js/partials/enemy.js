@@ -2,7 +2,7 @@ var g = require('general');
 
 var enemy = function(game) {
   //var h = (game.height/2);
-  var w = (game.width/2);
+  //var w = (game.width/2);
 
   randomx = game.rnd.integerInRange(10, game.width);
 

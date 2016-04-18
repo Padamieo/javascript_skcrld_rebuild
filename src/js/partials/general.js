@@ -2,6 +2,8 @@
 var general = {
 
   setup: function(game){
+
+    //create explotion animations as group to be called, need to add scale
     game.explosion = game.add.group();
 		game.explosion.createMultiple(100, 'explosion');
 		game.explosion.setAll('anchor.x', 0.5);
@@ -21,7 +23,6 @@ var general = {
     //this may be the key to sorting screen size with clickable areas
 
     //setup emitter for burst
-    //emitter requires arcade physics to operate
     game.emitter = game.add.emitter(0, 0, 100);
     game.emitter.makeParticles('test');
     game.emitter.gravity = 200;
@@ -29,7 +30,6 @@ var general = {
   },
 
   explosion: function(game, loc){
-    console.log("ex");
 		if (game.explosion.countDead() === 0) {
 			return;
 		}

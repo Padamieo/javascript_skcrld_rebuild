@@ -6,7 +6,6 @@ var cat = function(game) {
   Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, 'cat');
 
   // game.physics.enable(this, Phaser.Physics.ARCADE);
-	// game.player.add(this);
 
   this.anchor.setTo(0.5, 0.5);
 
@@ -19,6 +18,10 @@ var cat = function(game) {
 
   this.y_velocity = 0;
   this.dead = false
+
+  //moment we create a cat for the game remove live, because they will die or leave game
+  game.lives = game.lives - 1;
+  console.log(game.lives);
 
 	this.game.add.existing(this);
 };
@@ -34,11 +37,6 @@ cat.prototype.update = function(game) {
 	}else{
 		// this.animations.stop(null, true);
 	}
-
-  // if(this.name == 'f'){
-  //   this.x = game.input.x;
-  //   this.y = game.input.y;
-  // }
 
   dt = game.time.elapsed;
 
