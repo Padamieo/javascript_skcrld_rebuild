@@ -71,6 +71,19 @@ var general = {
     }else if(navigator.device){
       navigator.device.exitApp();
     }
+  },
+
+  update_lives: function(game){
+    console.log(game.lives);
+    if( game.lives <= 8 ){
+      // ts = (game.timestamp + 1);
+      console.log(game.timestamp + 0.5);
+      if((+new Date() / 60000) >= (game.timestamp + 0.5) ){
+        game.timestamp = game.timestamp + 0.5;
+        game.lives = game.lives + 1;
+        localStorage.setItem("lives", game.lives );
+      }
+    }
   }
 
 };

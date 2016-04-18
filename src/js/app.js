@@ -1,13 +1,20 @@
-if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-  console.log("mobile");
-  document.addEventListener("deviceready", onDeviceReady, false);
-} else {
-  console.log("browser");
+// // if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+//   console.log("mobile");
+//
+//   analytics.startTrackerWithId('UA-10168261-8');
+//   console.log("start");
+//   analytics.trackTiming("app", "start", new Date().getTime());
+//
+//   document.addEventListener("deviceready", onDeviceReady, false);
+//
+// // } else {
+// //   console.log("browser");
+// //   onDeviceReady();
+// // }
   onDeviceReady();
-}
 
 function onDeviceReady(){
-  
+
   var _ = require('lodash'),
     Phaser = require('Phaser'),
     Sat = require('Sat'),

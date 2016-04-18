@@ -22,6 +22,13 @@ var cat = function(game) {
   //moment we create a cat for the game remove live, because they will die or leave game
   game.lives = game.lives - 1;
   console.log(game.lives);
+  if(localStorage != undefined){
+    localStorage.setItem("lives", game.lives );
+    game.timestamp = (+new Date() / 60000);
+    console.log(game.timestamp);
+    localStorage.setItem("timestamp", game.timestamp );
+  }
+
 
 	this.game.add.existing(this);
 };
