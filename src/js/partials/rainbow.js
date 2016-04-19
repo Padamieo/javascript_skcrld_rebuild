@@ -14,8 +14,11 @@ var rainbow = function(game) {
 	}
   this.animations.add('start', frames);
 
-  this.scale.y = 1;
-  this.scale.x = 1;
+  scale = game.width/250;
+  this.scale.y = scale;
+  this.scale.x = scale;
+
+  this.offset = this.game.kitty.height/4;
 
 	this.game.add.existing(this);
 };
@@ -25,14 +28,16 @@ rainbow.prototype.constructor = rainbow;
 
 rainbow.prototype.update = function(game) {
 	game = this.game;
-  
+
   if(p.lazers === true){
     if (game.kitty != null) {
-      this.y = game.kitty.y;
+      this.y = game.kitty.y+this.offset;
       this.x = game.kitty.x;
     }
-		this.animations.play('start', 30, true);
+    this.alpha = 1;
+		this.animations.play('start', 25, true);
 	}else{
+    this.alpha = 0;
 		this.animations.stop(null, true);
 	}
 

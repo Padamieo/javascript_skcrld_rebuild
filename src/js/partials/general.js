@@ -84,6 +84,30 @@ var general = {
         localStorage.setItem("lives", game.lives );
       }
     }
+  },
+
+  check_store: function(game){
+    if(localStorage != undefined){
+      console.log("Local Storage is supported");
+
+      if(localStorage.getItem("lives") === null){
+        localStorage.setItem("lives", 9 );
+        game.lives = 9;
+      }else{
+        game.lives = localStorage.getItem("lives");
+      }
+
+      //localStorage.removeItem("Website");
+
+    }else{
+      console.log("No support");
+    }
+  },
+
+  delete_store: function(){
+    if(localStorage != undefined){
+      localStorage.clear();
+    }
   }
 
 };

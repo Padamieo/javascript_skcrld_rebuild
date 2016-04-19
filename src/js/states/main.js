@@ -7,39 +7,12 @@ var g = require('general');
 
 var main = {}
 
-function store(game){
-  if(localStorage != undefined){
-    console.log("Local Storage is supported");
-
-    if(localStorage.getItem("lives") === null){
-      localStorage.setItem("lives", 9 );
-      game.lives = 9;
-    }else{
-      game.lives = localStorage.getItem("lives");
-    }
-
-    //localStorage.removeItem("Website");
-
-  }else{
-    console.log("No support");
-  }
-}
-
-function delete_store(){
-  if(localStorage != undefined){
-    localStorage.clear();
-  }
-}
-
 main.create = function () {
-
-  store(this.game);
 
   g.setup(this.game);
 
   this.game.physics.startSystem(Phaser.Physics.ARCADE);
   // this.game.physics.arcade.gravity.y = 0;
-
 
 	//bullet pool could be individual
 	this.game.bulletPool = this.game.add.group();
@@ -60,17 +33,17 @@ main.create = function () {
   //   kitty = new cat(this.game);
   // }
 
-  rainbow = this.add.existing(new rainbow(this.game));
+  r = this.add.existing(new rainbow(this.game));
 
   p = this.add.existing(new player(this.game));
 
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
-  // this currently causes weird invisible duplications
-  // tick = this.game.time.create(false);
-  // tick.loop(2000, updateTick, this.game, this.game);
-  // tick.start();
+  //this currently causes weird invisible duplications
+  tick = this.game.time.create(false);
+  tick.loop(2000, updateTick, this.game, this.game);
+  tick.start();
 
   this.game.max_enemy = 10;
 
@@ -78,16 +51,15 @@ main.create = function () {
 
 main.update = function (){
 
-
-  if(this.game.enemies.countLiving() < this.game.max_enemy){
-    nme = this.game.enemies.getFirstDead();
-    if (nme === null) {
-      nme = new enemy(this.game);
-    }
-    nme.revive();
-    nme.x = this.game.rnd.integerInRange(0, this.game.width);
-    nme.y = this.game.height;
-  }
+  // if(this.game.enemies.countLiving() < this.game.max_enemy){
+  //   nme = this.game.enemies.getFirstDead();
+  //   if (nme === null) {
+  //     nme = new enemy(this.game);
+  //   }
+  //   nme.revive();
+  //   nme.x = this.game.rnd.integerInRange(0, this.game.width);
+  //   nme.y = this.game.height;
+  // }
 
   if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)){
     //for testing purposes put code here
@@ -113,7 +85,6 @@ main.update = function (){
       for (var b = 0, ll = this.game.enemies.children.length; b < ll; b++){
         value = col.isionCheck(this.game.enemies.children[b], this.game.bulletPool.children[i]);
         if(value){
-          console.log("hit");
           this.game.enemies.children[b].kill();
           this.game.bulletPool.children[i].kill();
         }
@@ -131,7 +102,6 @@ main.update = function (){
 //every x seconds run this, currently causes weird invisible duplications need to resolve
 function updateTick(game) {
 
-  console.log('tick');
   if(game.enemies.countLiving() < game.max_enemy){
     nme = game.enemies.getFirstDead();
     if (nme === null) {
@@ -141,7 +111,7 @@ function updateTick(game) {
     nme.x = game.rnd.integerInRange(0, game.width);
     nme.y = game.height;
   }
-
+  console.log('spawn'+game.enemies.countLiving());
 }
 
 module.exports = main;

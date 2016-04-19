@@ -12,7 +12,6 @@ var cat = function(game) {
   this.animations.add('fall', [1]);
   this.animations.add('fire', [0]);
 
-
   this.scale.y = 1;
   this.scale.x = 1;
 
