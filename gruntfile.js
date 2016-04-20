@@ -159,6 +159,14 @@ module.exports = function (grunt) {
             src: ['**'],
             dest: 'www/audio/'
           }]
+        },
+        languages:{
+          files:[{
+            expand: true,
+            cwd: 'src/languages/',
+            src: ['**'],
+            dest: 'www/languages/'
+          }]
         }
       },
       uglify:{
@@ -181,6 +189,7 @@ module.exports = function (grunt) {
     'stylus',
     'copy:images',
     'copy:audio',
+    'copy:languages',
     'connect',
     'open',
     'watch',
@@ -194,6 +203,7 @@ module.exports = function (grunt) {
     'uglify',
     'copy:images',
     'copy:audio',
+    'copy:languages',
     'cacheBust'
   ]);
 

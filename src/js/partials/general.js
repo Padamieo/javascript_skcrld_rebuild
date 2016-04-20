@@ -82,6 +82,7 @@ var general = {
         game.timestamp = game.timestamp + 0.5;
         game.lives = game.lives + 1;
         localStorage.setItem("lives", game.lives );
+        general.updateText(game);
       }
     }
   },
@@ -94,7 +95,7 @@ var general = {
         localStorage.setItem("lives", 9 );
         game.lives = 9;
       }else{
-        game.lives = localStorage.getItem("lives");
+        game.lives = parseInt(localStorage.getItem("lives"));
       }
 
       if(localStorage.getItem("lives") === null){
@@ -102,14 +103,16 @@ var general = {
         game.timestamp = timestamp;
       }else{
         //game.timestamp = localStorage.getItem("timestamp");
-
       }
 
       //localStorage.removeItem("Website");
-
     }else{
       console.log("No support");
     }
+  },
+
+  updateText: function(game){
+    text_lives.setText("Lives " + game.lives);
   },
 
   delete_store: function(){

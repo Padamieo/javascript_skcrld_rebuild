@@ -13,6 +13,10 @@ preloader.preload = function () {
   this.game.load.image('bullet', 'images/b.png', 20, 10);
 
   this.game.load.image('test', 'images/test.png');
+
+  // need to select language pack
+  this.game.load.json('language', 'languages/en.json');
+
 };
 
 preloader.create = function () {

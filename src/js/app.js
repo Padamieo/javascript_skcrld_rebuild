@@ -11,6 +11,13 @@
 // //   console.log("browser");
 // //   onDeviceReady();
 // // }
+
+// working language detection
+// navigator.globalization.getPreferredLanguage(
+//   function (language) {alert('language: ' + language.value + '\n');},
+//   function () {alert('Error getting language\n');}
+// );
+
   onDeviceReady();
 
 function onDeviceReady(){
