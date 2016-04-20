@@ -11,7 +11,7 @@ function go_options(){
 }
 
 menu.create = function () {
-  
+
   eight = (this.game.height/8);
 
   start = this.game.add.button(this.game.world.centerX, eight*2, 'button', start_new_game, this, 1, 0, 2);
@@ -33,7 +33,25 @@ menu.create = function () {
   lives_update.loop(10000, g.update_lives, this.game, this.game);
   lives_update.start();
 
+  text_lives = this.game.add.text(this.game.world.centerX, eight*5, "Lives "+this.game.lives, {
+    font: "50px Arial",
+    fill: "#ff0044",
+    align: "center"
+  });
+  text_lives.anchor.setTo(0.5, 0.5);
+
+  text_score = this.game.add.text(this.game.world.centerX, eight*6, "Score 0", {
+    font: "50px Arial",
+    fill: "#ff0044",
+    align: "center"
+  });
+  text_score.anchor.setTo(0.5, 0.5);
+
 };
+
+function updateText() {
+  text_lives.setText("Lives" + this.game.lives);
+}
 
 menu.update = function (){
   //console.log("your on menu");

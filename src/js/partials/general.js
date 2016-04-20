@@ -97,6 +97,14 @@ var general = {
         game.lives = localStorage.getItem("lives");
       }
 
+      if(localStorage.getItem("lives") === null){
+        localStorage.setItem("timestamp", 0 );
+        game.timestamp = timestamp;
+      }else{
+        //game.timestamp = localStorage.getItem("timestamp");
+
+      }
+
       //localStorage.removeItem("Website");
 
     }else{

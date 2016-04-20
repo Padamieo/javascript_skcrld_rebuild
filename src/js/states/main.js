@@ -51,18 +51,11 @@ main.create = function () {
 
 main.update = function (){
 
-  // if(this.game.enemies.countLiving() < this.game.max_enemy){
-  //   nme = this.game.enemies.getFirstDead();
-  //   if (nme === null) {
-  //     nme = new enemy(this.game);
-  //   }
-  //   nme.revive();
-  //   nme.x = this.game.rnd.integerInRange(0, this.game.width);
-  //   nme.y = this.game.height;
-  // }
 
   if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)){
     //for testing purposes put code here
+    localStorage.setItem("lives", 9 );
+    game.lives = 9;
   }
 
   //generates co-ordinates of box around each bullet if one exists
@@ -83,10 +76,12 @@ main.update = function (){
   for (var i = 0, len = this.game.bulletPool.children.length; i < len; i++){
     if(this.game.bulletPool.children[i].alive){
       for (var b = 0, ll = this.game.enemies.children.length; b < ll; b++){
-        value = col.isionCheck(this.game.enemies.children[b], this.game.bulletPool.children[i]);
-        if(value){
-          this.game.enemies.children[b].kill();
-          this.game.bulletPool.children[i].kill();
+        if(this.game.enemies.children[b].alive){
+          value = col.isionCheck(this.game.enemies.children[b], this.game.bulletPool.children[i]);
+          if(value){
+            this.game.enemies.children[b].kill();
+            this.game.bulletPool.children[i].kill();
+          }
         }
       }
     }
