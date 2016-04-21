@@ -1,24 +1,45 @@
-// // if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
-//   console.log("mobile");
-//
-//   analytics.startTrackerWithId('UA-10168261-8');
-//   console.log("start");
-//   analytics.trackTiming("app", "start", new Date().getTime());
-//
-//   document.addEventListener("deviceready", onDeviceReady, false);
-//
-// // } else {
-// //   console.log("browser");
-// //   onDeviceReady();
-// // }
+if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
 
-// working language detection
-// navigator.globalization.getPreferredLanguage(
-//   function (language) {alert('language: ' + language.value + '\n');},
-//   function () {alert('Error getting language\n');}
-// );
+  console.log('agent browser: ' + navigator.userAgent);
+
+  set_language = 'bg-BG';
+  // navigator.globalization.getPreferredLanguage(
+  //   function (language) {
+  //     console.log('language: ' + language.value);
+  //     set_language = language.value;
+  //   },
+  //   function () {
+  //     console.log('Error getting language');
+  //   }
+  // );
 
   onDeviceReady();
+
+}else{
+
+  console.log('agent mobile: ' + navigator.userAgent);
+
+  //working language detection
+  set_language = 'en-US';
+  navigator.globalization.getPreferredLanguage(
+    function (language) {
+      console.log('language: ' + language.value);
+      set_language = language.value;
+    },
+    function () {
+      console.log('Error getting language');
+    }
+  );
+
+  //  analytics.startTrackerWithId('UA-10168261-8');
+  //  console.log("start");
+  //  analytics.trackTiming("app", "start", new Date().getTime());
+
+  //need to add vibration
+
+  document.addEventListener("deviceready", onDeviceReady, false);
+
+}
 
 function onDeviceReady(){
 
