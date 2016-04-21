@@ -16,15 +16,16 @@ var cat = function(game) {
   this.scale.x = 1;
 
   this.y_velocity = 0;
-  this.dead = false
+  this.dead = false;
+  this.fall = false;
 
   //moment we create a cat for the game remove live, because they will die or leave game
   game.lives = game.lives - 1;
-  console.log(game.lives);
+  //console.log(game.lives);
   if(localStorage != undefined){
     localStorage.setItem("lives", game.lives );
     game.timestamp = (+new Date() / 60000);
-    console.log(game.timestamp);
+    //console.log(game.timestamp);
     localStorage.setItem("timestamp", game.timestamp );
   }
 
@@ -46,20 +47,24 @@ cat.prototype.update = function(game) {
 
   dt = game.time.elapsed;
 
-  if(p.lazers === true){
-
-    h = game.height;
-    offset = this.y-(h/8);
-    this.y = this.y - (offset/100);
-    this.y_velocity = ( this.y_velocity <= 0 ? 0 : this.y_velocity/0.8 );
-    this.animations.play('fire', 1, true);
+  if(this.fall === false){
+    if(p.lazers === true){
+      h = game.height;
+      offset = this.y-(h/8);
+      this.y = this.y - (offset/100);
+      this.y_velocity = ( this.y_velocity <= 0 ? 0 : this.y_velocity/0.8 );
+      this.animations.play('fire', 1, true);
+    }else{
+      gravity = 0.1;
+      this.y = this.y - this.y_velocity;
+      this.y_velocity = this.y_velocity - gravity / dt;
+      this.animations.play('fall', 1, true);
+    }
   }else{
-
     gravity = 0.1;
     this.y = this.y - this.y_velocity;
     this.y_velocity = this.y_velocity - gravity / dt;
     this.animations.play('fall', 1, true);
-
   }
 
   if(this.y > game.height-(game.height/10)){

@@ -45,19 +45,36 @@ var col = {
     }
   },
 
+  ision: function(obj_a, obj_b){
+    var V = SAT.Vector;
+    var C = SAT.Circle;
+
+    var circle = new C(new V(obj_b.x,obj_b.y), 0);
+
+    col.calculate_rotated_square(obj_a);
+
+    var collided = SAT.testPolygonCircle(obj_a.poly, circle );
+
+    if (collided){
+      return true;
+    }else{
+      return false;
+    }
+  },
+
   rotate: function(cx, cy, x, y, angle){
 
-      var posangle = (angle < 0 ? angle+Math.PI*2 : angle);
-      var radians = (Math.PI / 180) * posangle;
-      var cos = Math.cos(radians);
-      var sin = Math.sin(radians);
+    var posangle = (angle < 0 ? angle+Math.PI*2 : angle);
+    var radians = (Math.PI / 180) * posangle;
+    var cos = Math.cos(radians);
+    var sin = Math.sin(radians);
 
-        var nx = (x - cx) * cos - (y - cy) * sin;
-        var ny = (y - cy) * cos + (x - cx) * sin;
-        //OLD
-        // nx = (cos * (x - cx)) - (sin * (y - cy)) + cx,
-        // ny = (cos * (y - cy)) + (sin * (x - cx)) + cy;
-      return [nx, ny];
+      var nx = (x - cx) * cos - (y - cy) * sin;
+      var ny = (y - cy) * cos + (x - cx) * sin;
+      //OLD
+      // nx = (cos * (x - cx)) - (sin * (y - cy)) + cx,
+      // ny = (cos * (y - cy)) + (sin * (x - cx)) + cy;
+    return [nx, ny];
   }
 
 };

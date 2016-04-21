@@ -45,7 +45,7 @@ main.create = function () {
   tick.loop(2000, updateTick, this.game, this.game);
   tick.start();
 
-  this.game.max_enemy = 10;
+  this.game.max_enemy = 5;
 
 };
 
@@ -87,6 +87,18 @@ main.update = function (){
     }
   }
 
+  for (var b = 0, ll = this.game.enemies.children.length; b < ll; b++){
+    if(this.game.enemies.children[b].alive){
+      value = col.ision( this.game.kitty , this.game.enemies.children[b] );
+      if(value){
+        this.game.enemies.children[b].kill();
+        //this.game.bulletPool.children[i].kill();
+        this.game.kitty.fall = true;
+        //console.log("hit");
+      }
+    }
+  }
+
   //need to perform some lives calculations
   if(this.game.kitty.dead === true ){
     this.game.state.start('menu');
@@ -106,7 +118,7 @@ function updateTick(game) {
     nme.x = game.rnd.integerInRange(0, game.width);
     nme.y = game.height;
   }
-  console.log('spawn'+game.enemies.countLiving());
+  // console.log('spawn'+game.enemies.countLiving());
 }
 
 module.exports = main;
