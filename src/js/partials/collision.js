@@ -1,7 +1,7 @@
 
 var col = {
 
-  calculate_rotated_square: function(obj){
+  culate_rotated_square: function(obj){
     var V = SAT.Vector;
     var P = SAT.Polygon;
 
@@ -22,14 +22,14 @@ var col = {
 
   },
 
-  isionCheck: function(obj_a, obj_b){
+  ision_square_square: function(obj_a, obj_b){
 
     // points are negative because objects are bottom right aligned
     //var carPoly = new P(new V(car.x, car.y), [new V(-200, -184), new V(-6, -76), new V(-90, -25), new V(-285, -132)]);
     //var obstaclePoly = new P(new V(obstacle.x, obstacle.y), [new V(-200, -184), new V(-6, -76), new V(-90, -25), new V(-285, -132)]);
 
-    col.calculate_rotated_square(obj_a);
-    col.calculate_rotated_square(obj_b);
+    // col.culate_rotated_square(obj_a);
+    // col.culate_rotated_square(obj_b);
 
     // var response = new SAT.Response();
 
@@ -45,13 +45,13 @@ var col = {
     }
   },
 
-  ision: function(obj_a, obj_b){
+  ision_circle_square: function(obj_a, obj_b){
     var V = SAT.Vector;
     var C = SAT.Circle;
 
     var circle = new C(new V(obj_b.x,obj_b.y), 0);
 
-    col.calculate_rotated_square(obj_a);
+    col.culate_rotated_square(obj_a);
 
     var collided = SAT.testPolygonCircle(obj_a.poly, circle );
 

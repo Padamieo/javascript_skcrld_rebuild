@@ -91,18 +91,18 @@ var general = {
     if(localStorage != undefined){
       console.log("Local Storage is supported");
 
-      if(localStorage.getItem("lives") === null){
-        localStorage.setItem("lives", 9 );
+      if(localStorage.getItem('lives') === null){
+        localStorage.setItem('lives', 9 );
         game.lives = 9;
       }else{
         game.lives = parseInt(localStorage.getItem("lives"));
       }
 
-      if(localStorage.getItem("lives") === null){
+      if(localStorage.getItem('timestamp') === null){
         localStorage.setItem("timestamp", 0 );
-        game.timestamp = timestamp;
+        game.timestamp = 0;
       }else{
-        //game.timestamp = localStorage.getItem("timestamp");
+        game.timestamp = parseInt(localStorage.getItem('timestamp'));
       }
 
       //localStorage.removeItem("Website");
@@ -112,7 +112,8 @@ var general = {
   },
 
   updateText: function(game){
-    text_lives.setText("Lives " + game.lives);
+    var phaserJSON = game.cache.getJSON('language');
+    text_lives.setText(phaserJSON.lives+' '+game.lives);
   },
 
   delete_store: function(){

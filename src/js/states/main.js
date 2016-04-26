@@ -1,11 +1,11 @@
-var rainbow = require('rainbow');
-var cat = require('cat');
-var player = require('player');
+var Rainbow = require('rainbow');
+var Cat = require('cat');
+var Player = require('player');
 var col = require('col');
-var enemy = require('enemy');
+var Enemy = require('enemy');
 var g = require('general');
 
-var main = {}
+var main = {};
 
 main.create = function () {
 
@@ -17,7 +17,7 @@ main.create = function () {
 	//bullet pool could be individual
 	this.game.bulletPool = this.game.add.group();
 	this.game.bulletPool.enableBody = true;
-	this.game.bulletPool.physicsBodyType = Phaser.Physics.ARCADE
+	this.game.bulletPool.physicsBodyType = Phaser.Physics.ARCADE;
 	this.game.bulletPool.createMultiple(50 , 'bullet');
 	this.game.bulletPool.setAll('anchor.x', 0.5);
 	this.game.bulletPool.setAll('anchor.y', 0.5);
@@ -25,23 +25,23 @@ main.create = function () {
 	this.game.bulletPool.setAll('checkWorldBounds', true);
 
 
-  this.game.kitty = this.add.existing(new cat(this.game));
-  // col.calculate_rotated_square(cat);
+  this.game.kitty = this.add.existing(new Cat(this.game));
+  // col.culate_rotated_square(cat);
   // this.char = this.add.group();
   // var kitty = this.char.getFirstDead();
   // if (kitty === null) {
   //   kitty = new cat(this.game);
   // }
 
-  r = this.add.existing(new rainbow(this.game));
+  this.add.existing(new Rainbow(this.game));
 
-  p = this.add.existing(new player(this.game));
+  p = this.add.existing(new Player(this.game));
 
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
   //this currently causes weird invisible duplications
-  tick = this.game.time.create(false);
+  var tick = this.game.time.create(false);
   tick.loop(2000, updateTick, this.game, this.game);
   tick.start();
 
@@ -49,49 +49,48 @@ main.create = function () {
 
 };
 
-main.update = function (){
-
+main.update = function(){
 
   if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)){
     //for testing purposes put code here
-    localStorage.setItem("lives", 9 );
-    game.lives = 9;
+    localStorage.setItem('lives', 9 );
+    this.game.lives = 9;
   }
 
   //generates co-ordinates of box around each bullet if one exists
-  for (var i = 0, len = this.game.bulletPool.children.length; i < len; i++){
-    if(this.game.bulletPool.children[i].alive){
-      col.calculate_rotated_square(this.game.bulletPool.children[i]);
+  for (var i1 = 0, l1 = this.game.bulletPool.children.length; i1 < l1; i1++){
+    if(this.game.bulletPool.children[i1].alive){
+      col.culate_rotated_square(this.game.bulletPool.children[i1]);
     }
   }
 
   //generates co-ordinates of box around each enemy while alive/exists
-  for (var b = 0, ll = this.game.enemies.children.length; b < ll; b++){
-    if(this.game.enemies.children[b].alive){
-      col.calculate_rotated_square(this.game.enemies.children[b]);
+  for (var i2 = 0, l2 = this.game.enemies.children.length; i2 < l2; i2++){
+    if(this.game.enemies.children[i2].alive){
+      col.culate_rotated_square(this.game.enemies.children[i2]);
     }
   }
 
   //performs heavy collision check for bullets and enemies
-  for (var i = 0, len = this.game.bulletPool.children.length; i < len; i++){
-    if(this.game.bulletPool.children[i].alive){
-      for (var b = 0, ll = this.game.enemies.children.length; b < ll; b++){
-        if(this.game.enemies.children[b].alive){
-          value = col.isionCheck(this.game.enemies.children[b], this.game.bulletPool.children[i]);
-          if(value){
-            this.game.enemies.children[b].kill();
-            this.game.bulletPool.children[i].kill();
+  for (var i3 = 0, l3 = this.game.bulletPool.children.length; i3 < l3; i3++){
+    if(this.game.bulletPool.children[i3].alive){
+      for (var i4 = 0, l4 = this.game.enemies.children.length; i4 < l4; i4++){
+        if(this.game.enemies.children[i4].alive){
+          var c_bullet_enemies = col.ision_square_square(this.game.enemies.children[i4], this.game.bulletPool.children[i3]);
+          if(c_bullet_enemies){
+            this.game.enemies.children[i4].kill();
+            this.game.bulletPool.children[i3].kill();
           }
         }
       }
     }
   }
 
-  for (var b = 0, ll = this.game.enemies.children.length; b < ll; b++){
-    if(this.game.enemies.children[b].alive){
-      value = col.ision( this.game.kitty , this.game.enemies.children[b] );
-      if(value){
-        this.game.enemies.children[b].kill();
+  for (var i5  = 0, l5 = this.game.enemies.children.length; i5 < l5; i5++){
+    if(this.game.enemies.children[i5].alive){
+      var c_kitty_enemies = col.ision_circle_square( this.game.kitty , this.game.enemies.children[i5] );
+      if(c_kitty_enemies){
+        this.game.enemies.children[i5].kill();
         //this.game.bulletPool.children[i].kill();
         this.game.kitty.fall = true;
         //console.log("hit");
@@ -110,9 +109,9 @@ main.update = function (){
 function updateTick(game) {
 
   if(game.enemies.countLiving() < game.max_enemy){
-    nme = game.enemies.getFirstDead();
+    var nme = game.enemies.getFirstDead();
     if (nme === null) {
-      nme = new enemy(game);
+      nme = new Enemy(game);
     }
     nme.revive();
     nme.x = game.rnd.integerInRange(0, game.width);

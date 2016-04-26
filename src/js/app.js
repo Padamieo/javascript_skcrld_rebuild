@@ -37,7 +37,7 @@ if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
 
   //need to add vibration
 
-  document.addEventListener("deviceready", onDeviceReady, false);
+  document.addEventListener('deviceready', onDeviceReady, false);
 
 }
 

@@ -2,7 +2,7 @@
 
 var cat = function(game) {
   //var h = (game.height/2);
-  var w = (game.width/2);
+  //var w = (game.width/2);
   Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, 'cat');
 
   // game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -22,11 +22,11 @@ var cat = function(game) {
   //moment we create a cat for the game remove live, because they will die or leave game
   game.lives = game.lives - 1;
   //console.log(game.lives);
-  if(localStorage != undefined){
-    localStorage.setItem("lives", game.lives );
+  if(localStorage !== undefined){
+    localStorage.setItem('lives', game.lives );
     game.timestamp = (+new Date() / 60000);
     //console.log(game.timestamp);
-    localStorage.setItem("timestamp", game.timestamp );
+    localStorage.setItem('timestamp', game.timestamp );
   }
 
 
@@ -39,29 +39,23 @@ cat.prototype.constructor = cat;
 cat.prototype.update = function(game) {
 	game = this.game;
 
-	if(game.input.activePointer.isDown === true){
-		// this.animations.play('start', 30, true);
-	}else{
-		// this.animations.stop(null, true);
-	}
-
-  dt = game.time.elapsed;
+  var dt = game.time.elapsed;
 
   if(this.fall === false){
     if(p.lazers === true){
-      h = game.height;
-      offset = this.y-(h/8);
+      var h = game.height;
+      var offset = this.y-(h/8);
       this.y = this.y - (offset/100);
       this.y_velocity = ( this.y_velocity <= 0 ? 0 : this.y_velocity/0.8 );
       this.animations.play('fire', 1, true);
     }else{
-      gravity = 0.1;
+      var gravity = 0.1;
       this.y = this.y - this.y_velocity;
       this.y_velocity = this.y_velocity - gravity / dt;
       this.animations.play('fall', 1, true);
     }
   }else{
-    gravity = 0.1;
+    var gravity = 0.1;
     this.y = this.y - this.y_velocity;
     this.y_velocity = this.y_velocity - gravity / dt;
     this.animations.play('fall', 1, true);

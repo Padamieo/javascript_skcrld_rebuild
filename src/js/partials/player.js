@@ -1,4 +1,4 @@
-var g = require('general');
+//var g = require('general');
 
 var player = function(game) {
   // var h = (game.height/2);
@@ -27,7 +27,7 @@ player.prototype.update = function(game) {
   this.clear();
 
 	if(game.input.activePointer.isDown === true){
-    if(this.press == false){
+    if(this.press === false){
       this.starttime = game.time.now;
       this.endtime = game.time.now + this.duration;
       this.press = true;
@@ -39,7 +39,7 @@ player.prototype.update = function(game) {
     this.lineStyle(2, 0xffffff, 0.5);
     this.drawCircle(0, 0, 100);
 
-    if(this.press == true){
+    if(this.press === true){
       var change_in_time = game.time.now - this.starttime;
       if(this.circlesize <= this.max){
         this.circlesize = change_in_time * (this.max / this.duration);
@@ -56,7 +56,7 @@ player.prototype.update = function(game) {
     }
 
 	}else{
-    if(this.tap == true){
+    if(this.tap === true){
       if(this.endtime > game.time.now){
         this.tap = false;
         if (this.nextShotAt > game.time.now) {
@@ -68,9 +68,9 @@ player.prototype.update = function(game) {
           return;
         }
 
-        console.log("fire");
+        console.log('fire');
         //get a bullet
-        bullet = game.bulletPool.getFirstExists(false);
+        var bullet = game.bulletPool.getFirstExists(false);
 
         //moves it to the current kitty location
         bullet.reset(this.game.kitty.x, this.game.kitty.y, 'bullet');
