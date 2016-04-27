@@ -76,12 +76,12 @@ menu.create = function () {
   });
   text_lives.anchor.setTo(0.5, 0.5);
 
-  var text_score = this.game.add.text(this.game.world.centerX, eight*6, phaserJSON.score+' '+this.game.highscore, {
+  var text_highscore = this.game.add.text(this.game.world.centerX, eight*6, phaserJSON.score+' '+this.game.highscore, {
     font: '25px Arial',
     fill: '#ff0044',
     align: 'center'
   });
-  text_score.anchor.setTo(0.5, 0.5);
+  text_highscore.anchor.setTo(0.5, 0.5);
 
 };
 

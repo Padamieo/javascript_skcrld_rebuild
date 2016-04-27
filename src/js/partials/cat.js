@@ -64,11 +64,6 @@ cat.prototype.update = function(game) {
 
   if(this.y > game.height-(game.height/10)){
     this.dead = true;
-    // if(localStorage !== undefined){
-    //   if(game.score < game.highscore){
-    //     localStorage.setItem('highscore', game.highscore );
-    //   }
-    // }
   }
 
 };

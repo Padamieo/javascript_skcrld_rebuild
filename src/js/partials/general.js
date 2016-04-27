@@ -108,7 +108,7 @@ var general = {
       }
 
       if(localStorage.getItem('highscore') === null){
-        localStorage.setItem("highscore", 0 );
+        localStorage.setItem("highscore",  0 );
         game.highscore = 0;
       }else{
         game.highscore = parseInt(localStorage.getItem('highscore'));

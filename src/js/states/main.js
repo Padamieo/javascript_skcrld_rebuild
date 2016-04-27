@@ -89,8 +89,8 @@ main.update = function(){
           if(c_bullet_enemies){
             this.game.enemies.children[i4].kill();
             this.game.bulletPool.children[i3].kill();
-            this.game.score = this.game.score  + 1;
-            console.log(this.game.score);
+            this.game.score = this.game.score + 1;
+            //console.log(this.game.score);
             text_score.setText(this.game.score);
           }
         }
@@ -112,9 +112,13 @@ main.update = function(){
 
   //need to perform some lives calculations
   if(this.game.kitty.dead === true ){
+    if(localStorage !== undefined){
+      if(this.game.score > this.game.highscore){
+        localStorage.setItem('highscore', this.game.score );
+      }
+    }
     this.game.state.start('menu');
   }
-
 };
 
 //every x seconds run this, currently causes weird invisible duplications need to resolve

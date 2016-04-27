@@ -2,7 +2,7 @@ if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
 
   console.log('agent browser: ' + navigator.userAgent);
 
-  set_language = 'bg-BG';
+  set_language = 'fr-FR';
   // navigator.globalization.getPreferredLanguage(
   //   function (language) {
   //     console.log('language: ' + language.value);
