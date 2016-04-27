@@ -15,6 +15,7 @@ var player = function(game) {
   this.nextShotAt = 0;
   this.shotDelay = 400;
   this.tap = true;
+  this.colour = 0xFFFFFF;
 
 	this.game.add.existing(this);
 };
@@ -26,6 +27,12 @@ player.prototype.update = function(game) {
 	game = this.game;
   this.clear();
 
+  if(this.game.kitty.fall === true){
+    this.colour = 0xFF0000;
+  }else{
+    this.colour = 0xFFFFFF;
+  }
+
 	if(game.input.activePointer.isDown === true){
     if(this.press === false){
       this.starttime = game.time.now;
@@ -36,7 +43,7 @@ player.prototype.update = function(game) {
 
     this.x = game.input.x;
     this.y = game.input.y;
-    this.lineStyle(2, 0xffffff, 0.5);
+    this.lineStyle(2, this.colour, 0.5);
     this.drawCircle(0, 0, 100);
 
     if(this.press === true){
@@ -44,8 +51,8 @@ player.prototype.update = function(game) {
       if(this.circlesize <= this.max){
         this.circlesize = change_in_time * (this.max / this.duration);
       }
-      this.lineStyle(0, 0xffffff, 0);
-      this.beginFill(0xffffff, 0.5);
+      this.lineStyle(0, this.colour, 0);
+      this.beginFill(this.colour, 0.5);
       this.drawCircle(0, 0, this.circlesize);
     }
 
@@ -56,32 +63,34 @@ player.prototype.update = function(game) {
     }
 
 	}else{
-    if(this.tap === true){
-      if(this.endtime > game.time.now){
-        this.tap = false;
-        if (this.nextShotAt > game.time.now) {
-          return;
+    if(this.game.kitty.fall === false){
+      if(this.tap === true){
+        if(this.endtime > game.time.now){
+          this.tap = false;
+          if (this.nextShotAt > game.time.now) {
+            return;
+          }
+          this.nextShotAt = game.time.now + this.shotDelay;
+
+          if (game.bulletPool.countDead() === 0) {
+            return;
+          }
+
+          //get a bullet
+          var bullet = game.bulletPool.getFirstExists(false);
+
+          //moves it to the current kitty location
+          bullet.reset(this.game.kitty.x, this.game.kitty.y, 'bullet');
+
+          var angle = game.math.angleBetween( bullet.x, bullet.y, this.x, this.y );
+          bullet.rotation = angle;
+          bullet.body.velocity.x = Math.cos(bullet.rotation) * 1000;
+          bullet.body.velocity.y = Math.sin(bullet.rotation) * 1000;
+
         }
-        this.nextShotAt = game.time.now + this.shotDelay;
-
-        if (game.bulletPool.countDead() === 0) {
-          return;
-        }
-
-        console.log('fire');
-        //get a bullet
-        var bullet = game.bulletPool.getFirstExists(false);
-
-        //moves it to the current kitty location
-        bullet.reset(this.game.kitty.x, this.game.kitty.y, 'bullet');
-
-        var angle = game.math.angleBetween( bullet.x, bullet.y, this.x, this.y );
-        bullet.rotation = angle;
-        bullet.body.velocity.x = Math.cos(bullet.rotation) * 1000;
-        bullet.body.velocity.y = Math.sin(bullet.rotation) * 1000;
-
       }
     }
+
     this.lazers = false;
     this.press = false;
     this.circlesize = 0;

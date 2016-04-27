@@ -76,7 +76,7 @@ menu.create = function () {
   });
   text_lives.anchor.setTo(0.5, 0.5);
 
-  var text_score = this.game.add.text(this.game.world.centerX, eight*6, phaserJSON.score+' '+0, {
+  var text_score = this.game.add.text(this.game.world.centerX, eight*6, phaserJSON.score+' '+this.game.highscore, {
     font: '25px Arial',
     fill: '#ff0044',
     align: 'center'

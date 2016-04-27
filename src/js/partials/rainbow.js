@@ -29,17 +29,19 @@ rainbow.prototype.constructor = rainbow;
 rainbow.prototype.update = function(game) {
 	game = this.game;
 
-  if(p.lazers === true){
-    if (game.kitty != null) {
-      this.y = game.kitty.y+this.offset;
-      this.x = game.kitty.x;
-    }
-    this.alpha = 1;
-		this.animations.play('start', 25, true);
-	}else{
-    this.alpha = 0;
-		this.animations.stop(null, true);
-	}
+  if(game.kitty.fall === false){
+    if(p.lazers === true){
+      if (game.kitty != null) {
+        this.y = game.kitty.y+this.offset;
+        this.x = game.kitty.x;
+      }
+      this.alpha = 1;
+  		this.animations.play('start', 25, true);
+  	}else{
+      this.alpha = 0;
+  		this.animations.stop(null, true);
+  	}
+  }
 
 };
 

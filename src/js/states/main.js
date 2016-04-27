@@ -47,6 +47,15 @@ main.create = function () {
 
   this.game.max_enemy = 5;
 
+  text_score = this.game.add.text(this.game.width/15, this.game.height/15, this.game.score, {
+    font: '30px Arial',
+    fill: '#ffffff',
+    align: 'left'
+  });
+  text_score.stroke = "#de77ae";
+  text_score.strokeThickness = 5;
+  text_score.anchor.setTo(0.5, 0.5);
+
 };
 
 main.update = function(){
@@ -80,6 +89,9 @@ main.update = function(){
           if(c_bullet_enemies){
             this.game.enemies.children[i4].kill();
             this.game.bulletPool.children[i3].kill();
+            this.game.score = this.game.score  + 1;
+            console.log(this.game.score);
+            text_score.setText(this.game.score);
           }
         }
       }

@@ -55,6 +55,7 @@ cat.prototype.update = function(game) {
       this.animations.play('fall', 1, true);
     }
   }else{
+    this.tint = 0xFF0000;
     var gravity = 0.1;
     this.y = this.y - this.y_velocity;
     this.y_velocity = this.y_velocity - gravity / dt;
@@ -63,6 +64,11 @@ cat.prototype.update = function(game) {
 
   if(this.y > game.height-(game.height/10)){
     this.dead = true;
+    // if(localStorage !== undefined){
+    //   if(game.score < game.highscore){
+    //     localStorage.setItem('highscore', game.highscore );
+    //   }
+    // }
   }
 
 };

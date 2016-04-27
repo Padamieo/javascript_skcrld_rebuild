@@ -27,6 +27,8 @@ var general = {
     game.emitter.makeParticles('test');
     game.emitter.gravity = 200;
 
+    game.score = 0;
+
   },
 
   explosion: function(game, loc){
@@ -59,9 +61,9 @@ var general = {
 		.to({ y: -10 }, 40, Phaser.Easing.Sinusoidal.InOut, false, 0, 5, true)
 		.start();
 		/*
-		//think this is a lighter shake
-		.to({ y: -10 }, 40, Phaser.Easing.Elastic.InOut, false, 0, 5, true)
-		.start();
+  		//think this is a lighter shake
+  		.to({ y: -10 }, 40, Phaser.Easing.Elastic.InOut, false, 0, 5, true)
+  		.start();
 		*/
 	},
 
@@ -103,6 +105,13 @@ var general = {
         game.timestamp = 0;
       }else{
         game.timestamp = parseInt(localStorage.getItem('timestamp'));
+      }
+
+      if(localStorage.getItem('highscore') === null){
+        localStorage.setItem("highscore", 0 );
+        game.highscore = 0;
+      }else{
+        game.highscore = parseInt(localStorage.getItem('highscore'));
       }
 
       //localStorage.removeItem("Website");
