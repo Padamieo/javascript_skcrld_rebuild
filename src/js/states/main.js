@@ -46,6 +46,7 @@ main.create = function () {
   tick.start();
 
   this.game.max_enemy = 5;
+  this.game.tick_count = 0;
 
   text_score = this.game.add.text(this.game.width/15, this.game.height/15, this.game.score, {
     font: '30px Arial',
@@ -124,11 +125,20 @@ main.update = function(){
 //every x seconds run this, currently causes weird invisible duplications need to resolve
 function updateTick(game) {
 
+  game.tick_count++;
+
+  if(game.tick_count > 10){
+    enemy_type = 1;
+  }else{
+    enemy_type = 0;
+  }
+
   if(game.enemies.countLiving() < game.max_enemy){
     var nme = game.enemies.getFirstDead();
     if (nme === null) {
-      nme = new Enemy(game);
+      nme = new Enemy(game, enemy_type);
     }
+    nme.enemy_type = enemy_type;
     nme.revive();
     nme.x = game.rnd.integerInRange(0, game.width);
     nme.y = game.height;

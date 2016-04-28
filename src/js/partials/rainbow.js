@@ -41,6 +41,9 @@ rainbow.prototype.update = function(game) {
       this.alpha = 0;
   		this.animations.stop(null, true);
   	}
+  }else{
+    this.alpha = 0;
+    this.animations.stop(null, true);
   }
 
 };
