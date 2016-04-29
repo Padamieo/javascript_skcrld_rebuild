@@ -17,6 +17,8 @@ preloader.preload = function () {
   // need to select language pack
   this.game.load.json('language', 'languages/'+set_language+'.json');
 
+  this.game.load.image('starfield', 'images/background_wall_temp.png');
+
 };
 
 preloader.create = function () {

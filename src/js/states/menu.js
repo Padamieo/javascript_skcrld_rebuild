@@ -26,8 +26,6 @@ menu.create = function () {
   start.scale.x = s;
   start.anchor.setTo(0.5, 0.5);
 
-  console.log(phaserJSON.start.length);
-
   var text_start = this.game.add.text(this.game.world.centerX, eight*2, phaserJSON.start, {
     font: '30px Arial',
     fill: '#ffffff',

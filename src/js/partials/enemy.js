@@ -25,6 +25,8 @@ var enemy = function(game, enemy_type = '') {
   this.max_velocity = 1;
   this.alive = true;
   this.enemy_type = (enemy_type === '' ? 0 : enemy_type );
+  this.speed = 0;
+  this.max_speed = 0.1;
 
   game.enemies.add(this);
 };
@@ -36,10 +38,21 @@ enemy.prototype.update = function(game) {
 	game = this.game;
 
   if(p.lazers === true){
-    speed = 0.08;
+    if(this.speed > 0.05){
+      this.speed -= 0.001;
+    }
+    speed = this.speed;
+
+    //speed = 0.05;
   }else{
-    speed = 0.1;
+    if(this.speed < this.max_speed){
+      this.speed += 0.001;
+    }
+    speed = this.speed;
+
+    // speed = 0.1;
   }
+  console.log(speed);
 
   dt = game.time.elapsed;
 

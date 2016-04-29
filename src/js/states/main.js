@@ -9,6 +9,11 @@ var main = {};
 
 main.create = function () {
 
+  // The scrolling starfield background
+  starfield = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'starfield');
+  starfield.max_speed = 2;
+  starfield.speed = 0;
+
   g.setup(this.game);
 
   this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -18,7 +23,7 @@ main.create = function () {
 	this.game.bulletPool = this.game.add.group();
 	this.game.bulletPool.enableBody = true;
 	this.game.bulletPool.physicsBodyType = Phaser.Physics.ARCADE;
-	this.game.bulletPool.createMultiple(50 , 'bullet');
+	this.game.bulletPool.createMultiple(10 , 'bullet');
 	this.game.bulletPool.setAll('anchor.x', 0.5);
 	this.game.bulletPool.setAll('anchor.y', 0.5);
 	this.game.bulletPool.setAll('outOfBoundsKill', true);
@@ -45,7 +50,7 @@ main.create = function () {
   tick.loop(2000, updateTick, this.game, this.game);
   tick.start();
 
-  this.game.max_enemy = 5;
+  this.game.max_enemy = 1;
   this.game.tick_count = 0;
 
   text_score = this.game.add.text(this.game.width/15, this.game.height/15, this.game.score, {
@@ -60,6 +65,25 @@ main.create = function () {
 };
 
 main.update = function(){
+
+  if(this.game.kitty.fall === false){
+    if(p.lazers === true){
+      if(starfield.speed < starfield.max_speed){
+        starfield.speed += 0.1;
+      }
+      starfield.tilePosition.y += starfield.speed;
+    }else{
+      if(starfield.speed > -0.1){
+        starfield.speed -= 0.1;
+      }
+      starfield.tilePosition.y += starfield.speed;
+    }
+  }else{
+    if(starfield.speed > -0.1){
+      starfield.speed -= 0.1;
+    }
+    starfield.tilePosition.y += starfield.speed;
+  }
 
   if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)){
     //for testing purposes put code here

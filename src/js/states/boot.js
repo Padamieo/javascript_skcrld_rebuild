@@ -31,8 +31,8 @@ boot.create = function () {
   // vvv = this.scale.scaleMode.aspectRatio();
   // console.log(vvv);
 
-  console.log(window.innerWidth);
-  console.log(this.game.width);
+  //console.log(window.innerWidth);
+  //console.log(this.game.width);
 
   this.game.state.start('preloader');
 };
