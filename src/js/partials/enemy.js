@@ -15,17 +15,19 @@ var enemy = function(game, enemy_type = '') {
   // this.events.onRevived.add(function(){
   //   revive(game, this, enemy_type = '')},
   // this);
+  this.animations.add('L', [0, 1, 2, 3, 4]);
+  this.animations.add('R', [4, 3, 2, 1, 0]);
 
   this.anchor.setTo(0.5, 0.5);
 
-  this.scale.y = 1;
-  this.scale.x = 1;
+  this.scale.y = 1.2;
+  this.scale.x = 1.2;
 
   this.x_velocity = 0;
-  this.max_velocity = 1;
+  this.max_velocity = 0.1;
   this.alive = true;
   this.enemy_type = (enemy_type === '' ? 0 : enemy_type );
-  this.speed = 0;
+  this.speed = 0.05;
   this.max_speed = 0.1;
 
   game.enemies.add(this);
@@ -42,21 +44,19 @@ enemy.prototype.update = function(game) {
       this.speed -= 0.001;
     }
     speed = this.speed;
-
     //speed = 0.05;
   }else{
     if(this.speed < this.max_speed){
       this.speed += 0.001;
     }
     speed = this.speed;
-
     // speed = 0.1;
   }
-  console.log(speed);
 
   dt = game.time.elapsed;
 
   if(this.alive === true){
+
     if(this.enemy_type === 0){
       dt = game.time.elapsed;
       this.y = this.y -( speed * dt );
@@ -68,18 +68,32 @@ enemy.prototype.update = function(game) {
       this.x = this.x - this.x_velocity * dt;
 
       if(this.x > this.game.kitty.x){
-        this.x_velocity = this.x_velocity + (0.0001 * dt);
+        //if(this.x_velocity < this.max_velocity){
+          this.x_velocity = this.x_velocity + (0.0001 * dt);
+        //}
       }else{
+        // if(this.x_velocity > -this.max_velocity){
         this.x_velocity = this.x_velocity - (0.0001 * dt);
+        // }
       }
+      //console.log(this.x_velocity);
       var rad = Math.atan2((this.game.kitty.y - this.y), (this.game.kitty.x - this.x));
-      this.angle = game.math.radToDeg(rad);
-    }
+      var angle = rad+1.5707963267948966;
+      if(angle > 0.35){
+        angle = 0.35;
+      }
+      if(angle < -0.35){
+        angle = -0.35
+      }
+      this.angle = game.math.radToDeg(angle);
 
+      this.animations.play('R', 12, true);
+
+    }
 
   }
 
-  if(this.y < 0+(game.height/10)){
+  if(this.y < 0+(game.height/20)){
     this.alive = false;
   }
 

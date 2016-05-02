@@ -9,7 +9,8 @@ preloader.preload = function () {
   this.load.spritesheet('explosion', 'images/explosion.png', 256, 256);
   this.load.spritesheet('button', 'images/placeholder_button.png', 50, 50);
 
-  this.game.load.image('enemy', 'images/placeholder.png', 20, 40);
+  //this.game.load.image('enemy', 'images/placeholder.png', 20, 40);
+  this.load.spritesheet('enemy', 'images/testsmall.png', 25, 50);
   this.game.load.image('bullet', 'images/b.png', 20, 10);
 
   this.game.load.image('test', 'images/test.png');

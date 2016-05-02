@@ -1,8 +1,10 @@
+
+set_language = 'fr-FR';
+
 if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
 
   console.log('agent browser: ' + navigator.userAgent);
 
-  set_language = 'fr-FR';
   // navigator.globalization.getPreferredLanguage(
   //   function (language) {
   //     console.log('language: ' + language.value);
@@ -20,7 +22,6 @@ if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
   console.log('agent mobile: ' + navigator.userAgent);
 
   //working language detection
-  set_language = 'en-US';
   navigator.globalization.getPreferredLanguage(
     function (language) {
       console.log('language: ' + language.value);
