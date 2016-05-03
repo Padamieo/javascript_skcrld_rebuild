@@ -15,8 +15,8 @@ var enemy = function(game, enemy_type = '') {
   // this.events.onRevived.add(function(){
   //   revive(game, this, enemy_type = '')},
   // this);
-  this.animations.add('L', [0, 1, 2, 3, 4]);
-  this.animations.add('R', [4, 3, 2, 1, 0]);
+
+  this.animations.add('rotate', [0, 1, 2, 3, 4]);
 
   this.anchor.setTo(0.5, 0.5);
 
@@ -87,8 +87,8 @@ enemy.prototype.update = function(game) {
       }
       this.angle = game.math.radToDeg(angle);
 
-      this.animations.play('R', 12, true);
-
+      this.animations.play('rotate', 12, true);
+      //this.tint = 0x5056d3;
     }
 
   }

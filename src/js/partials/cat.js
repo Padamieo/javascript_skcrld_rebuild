@@ -55,7 +55,7 @@ cat.prototype.update = function(game) {
       this.animations.play('fall', 1, true);
     }
   }else{
-    this.tint = 0xFF0000;
+    this.tint = 0xd65151;
     var gravity = 0.1;
     this.y = this.y - this.y_velocity;
     this.y_velocity = this.y_velocity - gravity / dt;
