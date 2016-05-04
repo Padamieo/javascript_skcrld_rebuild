@@ -31,7 +31,6 @@ main.create = function () {
 
 
   this.game.kitty = this.add.existing(new Cat(this.game));
-  // col.culate_rotated_square(cat);
   // this.char = this.add.group();
   // var kitty = this.char.getFirstDead();
   // if (kitty === null) {
@@ -154,7 +153,7 @@ function updateTick(game) {
   if(game.tick_count > 10){
     enemy_type = 1;
   }else{
-    enemy_type = 0;
+    enemy_type = 1;
   }
 
   if(game.enemies.countLiving() < game.max_enemy){

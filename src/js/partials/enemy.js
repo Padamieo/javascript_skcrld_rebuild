@@ -27,7 +27,7 @@ var enemy = function(game, enemy_type = '') {
   this.max_velocity = 0.1;
   this.alive = true;
   this.enemy_type = (enemy_type === '' ? 0 : enemy_type );
-  this.speed = 0.05;
+  this.v_speed = 0.05;
   this.max_speed = 0.1;
 
   game.enemies.add(this);
@@ -40,42 +40,45 @@ enemy.prototype.update = function(game) {
 	game = this.game;
 
   if(p.lazers === true){
-    if(this.speed > 0.05){
-      this.speed -= 0.001;
+    if(this.v_speed > 0.05){
+      this.v_speed -= 0.001;
     }
-    speed = this.speed;
-    //speed = 0.05;
+    v_speed = this.v_speed;
   }else{
-    if(this.speed < this.max_speed){
-      this.speed += 0.001;
+    if(this.v_speed < this.max_speed){
+      this.v_speed += 0.001;
     }
-    speed = this.speed;
-    // speed = 0.1;
+    v_speed = this.v_speed;
   }
 
-  dt = game.time.elapsed;
+  var dt = game.time.elapsed;
 
   if(this.alive === true){
 
-    if(this.enemy_type === 0){
-      dt = game.time.elapsed;
-      this.y = this.y -( speed * dt );
+    if(this.enemy_type >= 0){
+      this.y = this.y -( v_speed * dt );
     }
 
     if(this.enemy_type === 1){
-      this.y = this.y -( speed * dt );
 
       this.x = this.x - this.x_velocity * dt;
 
       if(this.x > this.game.kitty.x){
-        //if(this.x_velocity < this.max_velocity){
-          this.x_velocity = this.x_velocity + (0.0001 * dt);
-        //}
+        if(this.x > this.game.width/20 && this.x < this.game.width-(this.game.width/20)){
+          h_speed = 0.0001;
+        }else{
+          h_speed = 0.001;
+        }
+        this.x_velocity = this.x_velocity + (h_speed * dt);
       }else{
-        // if(this.x_velocity > -this.max_velocity){
-        this.x_velocity = this.x_velocity - (0.0001 * dt);
-        // }
+        if(this.x > this.game.width/20 && this.x < this.game.width-(this.game.width/20)){
+          h_speed = 0.0001;
+        }else{
+          h_speed = 0.001;
+        }
+        this.x_velocity = this.x_velocity - (h_speed * dt);
       }
+
       //console.log(this.x_velocity);
       var rad = Math.atan2((this.game.kitty.y - this.y), (this.game.kitty.x - this.x));
       var angle = rad+1.5707963267948966;
