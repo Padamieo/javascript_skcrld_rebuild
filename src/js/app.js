@@ -40,8 +40,6 @@ if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
 
   document.addEventListener('deviceready', onDeviceReady, false);
 
-
-
 }
 
 function onDeviceReady(){
