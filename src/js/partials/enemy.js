@@ -1,6 +1,6 @@
 var g = require('general');
 
-var enemy = function(game, enemy_type = '') {
+var enemy = function(game, enemy_type) {
   //var h = (game.height/2);
   //var w = (game.width/2);
 

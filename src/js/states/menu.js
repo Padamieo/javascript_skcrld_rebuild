@@ -8,6 +8,7 @@ function start_new_game(){
 
 function go_options(){
   this.game.state.start('menu');
+  window.analytics.trackEvent('menu', 'options', 'Hits', 1);
 }
 
 function button_size(text, v_pos){
@@ -15,6 +16,9 @@ function button_size(text, v_pos){
 }
 
 menu.create = function () {
+
+  window.analytics.startTrackerWithId('UA-10168261-8');
+  window.analytics.trackView('menu');
 
   var phaserJSON = this.game.cache.getJSON('language');
 
@@ -80,6 +84,13 @@ menu.create = function () {
     align: 'center'
   });
   text_highscore.anchor.setTo(0.5, 0.5);
+
+  var lang = this.game.add.text(this.game.world.centerX, eight*7, set_language, {
+    font: '15px Arial',
+    fill: '#ff0044',
+    align: 'center'
+  });
+  lang.anchor.setTo(0.5, 0.5);
 
 };
 
