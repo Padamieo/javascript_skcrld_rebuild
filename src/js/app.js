@@ -1,24 +1,24 @@
 
-set_language = 'fr-FR';
+
 
 if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
 
   console.log('agent browser: ' + navigator.userAgent);
+  
+  set_language = 'fr-FR';
 
-  // navigator.globalization.getPreferredLanguage(
-  //   function (language) {
-  //     console.log('language: ' + language.value);
-  //     set_language = language.value;
-  //   },
-  //   function () {
-  //     console.log('Error getting language');
-  //   }
-  // );
-
-  onDeviceReady();
+  start_game();
 
 }else{
 
+  //need to add vibration
+  document.addEventListener('deviceready', onDeviceReady, false);
+
+}
+
+function onDeviceReady(){
+
+  //as it mobile device
   console.log('agent mobile: ' + navigator.userAgent);
 
   //working language detection
@@ -32,17 +32,10 @@ if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
     }
   );
 
-  //  analytics.startTrackerWithId('UA-10168261-8');
-  //  console.log("start");
-  //  analytics.trackTiming("app", "start", new Date().getTime());
-
-  //need to add vibration
-
-  document.addEventListener('deviceready', onDeviceReady, false);
-
+  start_game();
 }
 
-function onDeviceReady(){
+function start_game(){
 
   var _ = require('lodash'),
     Phaser = require('Phaser'),

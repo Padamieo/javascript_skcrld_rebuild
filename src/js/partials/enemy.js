@@ -67,14 +67,14 @@ enemy.prototype.update = function(game) {
         if(this.x > this.game.width/20 && this.x < this.game.width-(this.game.width/20)){
           h_speed = 0.0001;
         }else{
-          h_speed = 0.001;
+          h_speed = 0.0009;
         }
         this.x_velocity = this.x_velocity + (h_speed * dt);
       }else{
         if(this.x > this.game.width/20 && this.x < this.game.width-(this.game.width/20)){
           h_speed = 0.0001;
         }else{
-          h_speed = 0.001;
+          h_speed = 0.0009;
         }
         this.x_velocity = this.x_velocity - (h_speed * dt);
       }

@@ -116,6 +116,7 @@ var general = {
 
       //localStorage.removeItem("Website");
     }else{
+      //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
       console.log("No support");
     }
   },
