@@ -4,7 +4,7 @@
 if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
 
   console.log('agent browser: ' + navigator.userAgent);
-  
+
   set_language = 'fr-FR';
 
   start_game();
@@ -45,7 +45,8 @@ function start_game(){
       boot: require('./states/boot.js'),
       preloader: require('./states/preloader.js'),
       menu: require('./states/menu.js'),
-      main: require('./states/main.js')
+      main: require('./states/main.js'),
+      opti: require('./states/opti.js'),
     },
 
     // game = new Phaser.Game(
