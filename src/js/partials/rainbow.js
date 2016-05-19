@@ -32,7 +32,7 @@ rainbow.prototype.update = function(game) {
   if(game.kitty.fall === false){
     if(p.lazers === true){
 
-      this.tint = Math.random() * 0xffffff; //epilectic issue
+      //this.tint = Math.random() * 0xffffff; //epilectic issue
 
       if (game.kitty != null) {
         this.y = game.kitty.y+this.offset;

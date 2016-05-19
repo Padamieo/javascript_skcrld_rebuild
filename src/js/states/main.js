@@ -9,10 +9,10 @@ var main = {};
 
 main.create = function () {
 
-  // The scrolling starfield background
-  starfield = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'starfield');
-  starfield.max_speed = 2;
-  starfield.speed = 0;
+  // The scrolling background background
+  background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'background');
+  background.max_speed = 2;
+  background.speed = 0;
 
   g.setup(this.game);
 
@@ -44,13 +44,18 @@ main.create = function () {
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
-  //this currently causes weird invisible duplications
+  this.game.max_enemy = 1;
+  this.game.tick_count = 0;
+
   var tick = this.game.time.create(false);
   tick.loop(2000, updateTick, this.game, this.game);
   tick.start();
 
-  this.game.max_enemy = 1;
-  this.game.tick_count = 0;
+  // // create a new looping TimerEvent on the default game timer and return it
+  // this.loopTimer = game.time.events.loop(1000, this.onTimer, this);
+  // // we can now modify its delay
+  // this.loopTimer.delay = 500;
+
 
   text_score = this.game.add.text(this.game.width/15, this.game.height/15, this.game.score, {
     font: '30px Arial',
@@ -67,21 +72,21 @@ main.update = function(){
 
   if(this.game.kitty.fall === false){
     if(p.lazers === true){
-      if(starfield.speed < starfield.max_speed){
-        starfield.speed += 0.1;
+      if(background.speed < background.max_speed){
+        background.speed += 0.1;
       }
-      starfield.tilePosition.y += starfield.speed;
+      background.tilePosition.y += background.speed;
     }else{
-      if(starfield.speed > -0.1){
-        starfield.speed -= 0.1;
+      if(background.speed > -0.1){
+        background.speed -= 0.1;
       }
-      starfield.tilePosition.y += starfield.speed;
+      background.tilePosition.y += background.speed;
     }
   }else{
-    if(starfield.speed > -0.1){
-      starfield.speed -= 0.1;
+    if(background.speed > -0.1){
+      background.speed -= 0.1;
     }
-    starfield.tilePosition.y += starfield.speed;
+    background.tilePosition.y += background.speed;
   }
 
   if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)){
@@ -150,11 +155,21 @@ function updateTick(game) {
 
   game.tick_count++;
 
-  if(game.tick_count > 10){
-    enemy_type = 1;
-  }else{
-    enemy_type = 1;
+  // if(game.tick_count > 10){
+  //   enemy_type = 1;
+  // }else{
+  //   enemy_type = 1;
+  // }
+
+  //need criteria for increasing speed time / this is called
+
+  if(game.score > 5){
+    game.max_enemy = game.max_enemy+1;
   }
+
+  //console.log(game.max_enemy);
+  enemy_type = game.rnd.integerInRange(0, 1);
+
 
   if(game.enemies.countLiving() < game.max_enemy){
     var nme = game.enemies.getFirstDead();
@@ -165,6 +180,7 @@ function updateTick(game) {
     nme.revive();
     nme.x = game.rnd.integerInRange(0, game.width);
     nme.y = game.height;
+    nme.angle = 0;
   }
   // console.log('spawn'+game.enemies.countLiving());
 }
