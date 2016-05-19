@@ -44,12 +44,17 @@ main.create = function () {
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
-  this.game.max_enemy = 1;
+  this.game.max_enemy = 100;
   this.game.tick_count = 0;
 
-  var tick = this.game.time.create(false);
-  tick.loop(2000, updateTick, this.game, this.game);
-  tick.start();
+  //this.game.tick = this.game.time.create(false);
+  this.game.time.events.loop(0, updateTick, this.game, this.game);
+  //this.game.tick.loop(2000, updateTick, this.game, this.game);
+  //this.game.tick.start();
+
+  this.game.time.events.dealy = 2000;
+
+  //this.game.time.dealy = 50;
 
   // // create a new looping TimerEvent on the default game timer and return it
   // this.loopTimer = game.time.events.loop(1000, this.onTimer, this);
@@ -152,7 +157,7 @@ main.update = function(){
 
 //every x seconds run this, currently causes weird invisible duplications need to resolve
 function updateTick(game) {
-
+  console.log("called");
   game.tick_count++;
 
   // if(game.tick_count > 10){
@@ -164,8 +169,11 @@ function updateTick(game) {
   //need criteria for increasing speed time / this is called
 
   if(game.score > 5){
-    game.max_enemy = game.max_enemy+1;
+    //game.max_enemy = game.max_enemy+1;
+    //game.tick.delay = 20;
   }
+  console.log(this.timer);
+  //console.log(Math.exp(game.max_enemy));
 
   //console.log(game.max_enemy);
   enemy_type = game.rnd.integerInRange(0, 1);
