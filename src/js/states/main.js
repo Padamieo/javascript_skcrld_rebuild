@@ -44,23 +44,12 @@ main.create = function () {
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
-  this.game.max_enemy = 100;
+  this.game.max_enemy = 10;
   this.game.tick_count = 0;
 
   this.game.tick = this.game.time.create(false);
-  //this.game.time.events.loop(100, updateTick, this.game, this.game);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
   this.game.tick.start();
-
-  this.game.time.events.dealy = 2000;
-
-  //this.game.time.dealy = 50;
-
-  // // create a new looping TimerEvent on the default game timer and return it
-  // this.loopTimer = game.time.events.loop(1000, this.onTimer, this);
-  // // we can now modify its delay
-  // this.loopTimer.delay = 500;
-
 
   text_score = this.game.add.text(this.game.width/15, this.game.height/15, this.game.score, {
     font: '30px Arial',
@@ -167,12 +156,20 @@ function updateTick(game) {
   // }
 
   //need criteria for increasing speed time / this is called
+  console.log(game.tick_count*0.9+" - "+game.score);
+  if((game.tick_count*0.9) < game.score){
+    console.log("high performance player");
+    current = game.tick.events[0].delay;
+    console.log(current);
+    game.tick.events[0].delay = current*0.9;
+  }
+
 
   if(game.score > 3){
     //game.max_enemy = game.max_enemy+1;
-    game.tick.events[0].delay = 20;
+    //game.tick.events[0].delay = 20;
   }
-  
+
 
   //console.log(Math.exp(game.max_enemy));
 
