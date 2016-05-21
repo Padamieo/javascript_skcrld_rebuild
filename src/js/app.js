@@ -1,38 +1,40 @@
 
-
-
-if (navigator.userAgent.match(/(Mozilla|Chrome)/)) {
-
-  console.log('agent browser: ' + navigator.userAgent);
-
+// check if we are developing the app
+if (navigator.platform.match(/(Win)/)) {
   set_language = 'fr-FR';
-
   start_game();
-
 }else{
-
-  //need to add vibration
   document.addEventListener('deviceready', onDeviceReady, false);
-
 }
 
 function onDeviceReady(){
-
-  //as it mobile device
-  console.log('agent mobile: ' + navigator.userAgent);
+  //need to add vibration
 
   //working language detection
   navigator.globalization.getPreferredLanguage(
     function (language) {
       console.log('language: ' + language.value);
-      set_language = language.value;
+      str = language.value;
+      if(str.substring(0, 2) === 'en'){
+        set_language = 'en-US';
+      }else{
+        set_language = language.value;
+      }
+      lang = language.value;
     },
     function () {
       console.log('Error getting language');
+      set_language = 'en-US';
     }
   );
 
+
+
   start_game();
+}
+
+function gcd (a, b) {
+  return (b == 0) ? a : gcd (b, a%b);
 }
 
 function start_game(){
@@ -55,6 +57,24 @@ function start_game(){
     //   Phaser.AUTO,
     //   'game'
     // );
+
+    w = properties.size.x;
+    h = properties.size.y;
+    console.log(w+" "+h);
+    r = gcd (w, h);
+    console.log(r);
+    console.log("Aspect=", w/r, ":", h/r);
+    v = (w/r)/(h/r);
+    console.log("v"+v);
+
+    dw = window.innerWidth;
+    dh = window.innerHeight;
+    console.log(dw+" "+dh);
+    dr = gcd (dw, dh);
+    console.log(dr);
+    console.log("Aspect=", dw/dr, ":", dh/dr);
+    dv = (dw/dr)/(dh/dr);
+    console.log("v"+dv);
 
     game = new Phaser.Game(
       properties.size.x,

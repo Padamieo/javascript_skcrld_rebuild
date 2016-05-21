@@ -1,22 +1,19 @@
 //var g = require('general');
 
 var player = function(game) {
-  // var h = (game.height/2);
-  // var w = (game.width/2);
 
   Phaser.Graphics.call(this, game, 0, 0);
 
   this.starttime = 0;
   this.endtime = 0;
-  this.max = 100;
+  this.max = 200;
   this.lazers = false;
-  this.circlesize = 0;
+  this.circlesize = 100;
   this.duration = 1000;
   this.nextShotAt = 0;
-  this.shotDelay = 400;
+  this.shotDelay = 50;
   this.tap = true;
   this.colour = 0xFFFFFF;
-
 	this.game.add.existing(this);
 };
 
@@ -44,7 +41,7 @@ player.prototype.update = function(game) {
     this.x = game.input.x;
     this.y = game.input.y;
     this.lineStyle(2, this.colour, 0.5);
-    this.drawCircle(0, 0, 100);
+    this.drawCircle(0, 0, 200);
 
     if(this.press === true){
       var change_in_time = game.time.now - this.starttime;
@@ -84,6 +81,7 @@ player.prototype.update = function(game) {
 
           var angle = game.math.angleBetween( bullet.x, bullet.y, this.x, this.y );
           bullet.rotation = angle;
+
           bullet.body.velocity.x = Math.cos(bullet.rotation) * 1000;
           bullet.body.velocity.y = Math.sin(bullet.rotation) * 1000;
 

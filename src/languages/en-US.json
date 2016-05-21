@@ -3,5 +3,6 @@
   "start":"Start Game",
   "exit":"Exit",
   "options": "Options",
+  "back": "back",
   "score": "Highest Score"
 }

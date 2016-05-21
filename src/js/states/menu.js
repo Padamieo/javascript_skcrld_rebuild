@@ -28,6 +28,7 @@ menu.create = function () {
   s = phaserJSON.start.length/2.5;
   //max size will be 7.5 if it is reduce size of font
   start.scale.x = s;
+  // start.scale.y = scaleRatio;
   start.anchor.setTo(0.5, 0.5);
 
   var text_start = this.game.add.text(this.game.world.centerX, eight*2, phaserJSON.start, {
@@ -36,6 +37,7 @@ menu.create = function () {
     align: 'center'
   });
   text_start.anchor.setTo(0.5, 0.5);
+  //text_start.scale.setTo(scaleRatio, scaleRatio);
 
 
   var options = this.game.add.button(this.game.world.centerX, eight*3, 'button', go_options, this, 1, 0, 2);
@@ -85,12 +87,12 @@ menu.create = function () {
   });
   text_highscore.anchor.setTo(0.5, 0.5);
 
-  var lang = this.game.add.text(this.game.world.centerX, eight*7, set_language, {
-    font: '15px Arial',
-    fill: '#ff0044',
-    align: 'center'
-  });
-  lang.anchor.setTo(0.5, 0.5);
+  // var lang = this.game.add.text(this.game.world.centerX, eight*7, vv, {
+  //   font: '15px Arial',
+  //   fill: '#ff0044',
+  //   align: 'center'
+  // });
+  // lang.anchor.setTo(0.5, 0.5);
 
 };
 

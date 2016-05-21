@@ -8,6 +8,8 @@ var general = {
 		game.explosion.createMultiple(100, 'explosion');
 		game.explosion.setAll('anchor.x', 0.5);
 		game.explosion.setAll('anchor.y', 0.5);
+    // game.explosion.setAll('scale.x', scaleRatio);
+    // game.explosion.setAll('scale.y', scaleRatio);
 		game.explosion.setAll('killOnComplete',true);
 		game.explosion.callAll('animations.add', 'animations', 'boom', [0, 1, 3], 30, false);
     //http://www.html5gamedevs.com/topic/4384-callback-when-animation-complete/
@@ -25,6 +27,8 @@ var general = {
     //setup emitter for burst
     game.emitter = game.add.emitter(0, 0, 100);
     game.emitter.makeParticles('test');
+    // game.emitter.setAll('scale.x', scaleRatio); // does not work
+    // game.emitter.setAll('scale.y', scaleRatio);
     game.emitter.gravity = 200;
 
     game.score = 0;

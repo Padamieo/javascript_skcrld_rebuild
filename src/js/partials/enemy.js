@@ -30,6 +30,8 @@ var enemy = function(game, enemy_type) {
   this.v_speed = 0.05;
   this.max_speed = 0.1;
 
+  this.trigger_once = 0;
+
   game.enemies.add(this);
 };
 
@@ -39,7 +41,7 @@ enemy.prototype.constructor = enemy;
 enemy.prototype.update = function(game) {
 	game = this.game;
 
-  if(p.lazers === true){
+  if(game.player.lazers === true){
     if(this.v_speed > 0.05){
       this.v_speed -= 0.001;
     }
@@ -96,8 +98,14 @@ enemy.prototype.update = function(game) {
 
   }
 
-  if(this.y < 0+(game.height/20)){
+  if(this.y < 0+(game.height/50)){
     this.alive = false;
+    if(this.trigger_once === 0){
+      this.game.enemies_passed = this.game.enemies_passed + -1;
+      this.trigger_once = 1;
+    }
+
+
   }
 
 };

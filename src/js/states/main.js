@@ -7,6 +7,10 @@ var g = require('general');
 
 var main = {};
 
+function tt(){
+  console.log("out");
+}
+
 main.create = function () {
 
   // The scrolling background background
@@ -19,16 +23,20 @@ main.create = function () {
   this.game.physics.startSystem(Phaser.Physics.ARCADE);
   // this.game.physics.arcade.gravity.y = 0;
 
-	//bullet pool could be individual
+	//bullet pool
 	this.game.bulletPool = this.game.add.group();
 	this.game.bulletPool.enableBody = true;
 	this.game.bulletPool.physicsBodyType = Phaser.Physics.ARCADE;
 	this.game.bulletPool.createMultiple(10 , 'bullet');
 	this.game.bulletPool.setAll('anchor.x', 0.5);
 	this.game.bulletPool.setAll('anchor.y', 0.5);
+  // this.game.bulletPool.setAll('scale.x', scaleRatio);
+  // this.game.bulletPool.setAll('scale.y', scaleRatio);
 	this.game.bulletPool.setAll('outOfBoundsKill', true);
 	this.game.bulletPool.setAll('checkWorldBounds', true);
-
+  for (var i = 0; i < this.game.bulletPool.children.length; ++i) {
+    this.game.bulletPool.children[i].events.onOutOfBounds.add( tt );
+  }
 
   this.game.kitty = this.add.existing(new Cat(this.game));
   // this.char = this.add.group();
@@ -39,19 +47,21 @@ main.create = function () {
 
   this.add.existing(new Rainbow(this.game));
 
-  p = this.add.existing(new Player(this.game));
+  this.game.player = this.add.existing(new Player(this.game));
 
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
   this.game.max_enemy = 10;
+  this.game.speed_ramp = 0.7;
   this.game.tick_count = 0;
+  this.game.enemies_passed = 0;
 
   this.game.tick = this.game.time.create(false);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
   this.game.tick.start();
 
-  text_score = this.game.add.text(this.game.width/15, this.game.height/15, this.game.score, {
+  text_score = this.game.add.text(this.game.width-(this.game.width/15), this.game.height/15, this.game.score, {
     font: '30px Arial',
     fill: '#ffffff',
     align: 'left'
@@ -65,7 +75,7 @@ main.create = function () {
 main.update = function(){
 
   if(this.game.kitty.fall === false){
-    if(p.lazers === true){
+    if(this.game.player.lazers === true){
       if(background.speed < background.max_speed){
         background.speed += 0.1;
       }
@@ -156,12 +166,15 @@ function updateTick(game) {
   // }
 
   //need criteria for increasing speed time / this is called
-  console.log(game.tick_count*0.9+" - "+game.score);
-  if((game.tick_count*0.9) < game.score){
+  console.log(game.speed_ramp+"# "+Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0)+"+"+game.enemies_passed+" - "+game.score);
+
+  if(Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0) < game.score){
     console.log("high performance player");
     current = game.tick.events[0].delay;
-    console.log(current);
-    game.tick.events[0].delay = current*0.9;
+    ramp = Phaser.Math.roundTo(game.speed_ramp+0.05,-3);
+    game.speed_ramp = (ramp <= 0.95 ? ramp : 0.95 );
+    new_speed = Phaser.Math.roundTo(current*0.95, 0);
+    game.tick.events[0].delay = (new_speed >= 200 ? new_speed : 200 );
   }
 
 
@@ -174,8 +187,8 @@ function updateTick(game) {
   //console.log(Math.exp(game.max_enemy));
 
   //console.log(game.max_enemy);
-  enemy_type = game.rnd.integerInRange(0, 1);
-
+  //enemy_type = game.rnd.integerInRange(0, 1);
+  enemy_type = 0;
 
   if(game.enemies.countLiving() < game.max_enemy){
     var nme = game.enemies.getFirstDead();
@@ -187,6 +200,7 @@ function updateTick(game) {
     nme.x = game.rnd.integerInRange(0, game.width);
     nme.y = game.height;
     nme.angle = 0;
+    nme.trigger_once = 0;
   }
   // console.log('spawn'+game.enemies.countLiving());
 }

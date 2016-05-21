@@ -1,11 +1,8 @@
 //var g = require('general');
 
 var cat = function(game) {
-  //var h = (game.height/2);
-  //var w = (game.width/2);
-  Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, 'cat');
 
-  // game.physics.enable(this, Phaser.Physics.ARCADE);
+  Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, 'cat');
 
   this.anchor.setTo(0.5, 0.5);
 
@@ -42,7 +39,7 @@ cat.prototype.update = function(game) {
   var dt = game.time.elapsed;
 
   if(this.fall === false){
-    if(p.lazers === true){
+    if(game.player.lazers === true){
       var h = game.height;
       var offset = this.y-(h/8);
       this.y = this.y - (offset/100);
