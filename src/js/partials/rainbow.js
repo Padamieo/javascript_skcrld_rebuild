@@ -33,7 +33,7 @@ rainbow.prototype.update = function(game) {
     if(game.player.lazers === true){
 
       //this.tint = Math.random() * 0xffffff; //epilectic issue
-
+      //navigator.vibrate([200, 200, 200, 200, 200]);
       if (game.kitty != null) {
         this.y = game.kitty.y+this.offset;
         this.x = game.kitty.x;

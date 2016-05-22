@@ -7,11 +7,10 @@ var g = require('general');
 
 var main = {};
 
-function tt(){
-  console.log("out");
-}
-
 main.create = function () {
+
+  this.game.physics.startSystem(Phaser.Physics.ARCADE);
+  // this.game.physics.arcade.gravity.y = 0;
 
   // The scrolling background background
   background = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'background');
@@ -20,9 +19,6 @@ main.create = function () {
 
   g.setup(this.game);
 
-  this.game.physics.startSystem(Phaser.Physics.ARCADE);
-  // this.game.physics.arcade.gravity.y = 0;
-
 	//bullet pool
 	this.game.bulletPool = this.game.add.group();
 	this.game.bulletPool.enableBody = true;
@@ -30,20 +26,13 @@ main.create = function () {
 	this.game.bulletPool.createMultiple(10 , 'bullet');
 	this.game.bulletPool.setAll('anchor.x', 0.5);
 	this.game.bulletPool.setAll('anchor.y', 0.5);
-  // this.game.bulletPool.setAll('scale.x', scaleRatio);
-  // this.game.bulletPool.setAll('scale.y', scaleRatio);
 	this.game.bulletPool.setAll('outOfBoundsKill', true);
 	this.game.bulletPool.setAll('checkWorldBounds', true);
   for (var i = 0; i < this.game.bulletPool.children.length; ++i) {
-    this.game.bulletPool.children[i].events.onOutOfBounds.add( tt );
+    this.game.bulletPool.children[i].events.onOutOfBounds.add( g.missed_shot );
   }
 
   this.game.kitty = this.add.existing(new Cat(this.game));
-  // this.char = this.add.group();
-  // var kitty = this.char.getFirstDead();
-  // if (kitty === null) {
-  //   kitty = new cat(this.game);
-  // }
 
   this.add.existing(new Rainbow(this.game));
 
@@ -52,7 +41,8 @@ main.create = function () {
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
-  this.game.max_enemy = 10;
+
+  this.game.max_enemy = 1;
   this.game.speed_ramp = 0.7;
   this.game.tick_count = 0;
   this.game.enemies_passed = 0;
@@ -69,6 +59,11 @@ main.create = function () {
   text_score.stroke = "#de77ae";
   text_score.strokeThickness = 5;
   text_score.anchor.setTo(0.5, 0.5);
+
+  this.game.enemy_array = new Array(20).fill(0);
+  i = game.rnd.integerInRange(0, 20);
+  this.game.enemy_array[i] = 1;
+  //console.log(this.game.enemy_array);
 
 };
 
@@ -123,6 +118,7 @@ main.update = function(){
             this.game.enemies.children[i4].kill();
             this.game.bulletPool.children[i3].kill();
             this.game.score = this.game.score + 1;
+            this.game.kills = this.game.kills + 1;
             //console.log(this.game.score);
             text_score.setText(this.game.score);
           }
@@ -150,7 +146,9 @@ main.update = function(){
         localStorage.setItem('highscore', this.game.score );
       }
     }
-    this.game.state.start('menu');
+    g.go_to("menu");
+    //this.game.state.start('menu');
+
   }
 };
 
@@ -159,36 +157,43 @@ function updateTick(game) {
 
   game.tick_count++;
 
-  // if(game.tick_count > 10){
-  //   enemy_type = 1;
-  // }else{
-  //   enemy_type = 1;
-  // }
+  // increase the amount of possible enemies on screen slowly based on kills - this is our natural difficulty increase
+  if(game.max_enemy <= 10){
+    //console.log(game.max_enemy+"="+Phaser.Math.roundTo(game.kills/5));
+    notsure = Phaser.Math.roundTo(game.kills/5);
+    if(notsure > 0){
+      //console.log("more than 0");
+      if(game.max_enemy != notsure){
+        //console.log("dont match");
+        game.max_enemy = notsure;
+      }
+    }
+  }
 
-  //need criteria for increasing speed time / this is called
-  console.log(game.speed_ramp+"# "+Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0)+"+"+game.enemies_passed+" - "+game.score);
-
+  //this determines if a player is doing well and increase difficulty
+  //console.log(game.speed_ramp+"# "+Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0)+"+"+game.enemies_passed+" - "+game.score);
   if(Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0) < game.score){
     console.log("high performance player");
-    current = game.tick.events[0].delay;
+
+    //changes the difficulty of triggering this
     ramp = Phaser.Math.roundTo(game.speed_ramp+0.05,-3);
     game.speed_ramp = (ramp <= 0.95 ? ramp : 0.95 );
+
+    //looks at current spawn speed and increses it
+    current = game.tick.events[0].delay;
     new_speed = Phaser.Math.roundTo(current*0.95, 0);
     game.tick.events[0].delay = (new_speed >= 200 ? new_speed : 200 );
+
   }
 
+  // calculates player accuracy over the game
+  total = game.kills+game.misses;
+  a = Phaser.Math.roundTo(game.kills/total, -2);
+  //console.log(a);
 
-  if(game.score > 3){
-    //game.max_enemy = game.max_enemy+1;
-    //game.tick.events[0].delay = 20;
-  }
-
-
-  //console.log(Math.exp(game.max_enemy));
-
-  //console.log(game.max_enemy);
-  //enemy_type = game.rnd.integerInRange(0, 1);
-  enemy_type = 0;
+  // gets a random enemy to spawn
+  i = game.rnd.integerInRange(0, 20);
+  enemy_type = game.enemy_array[i];
 
   if(game.enemies.countLiving() < game.max_enemy){
     var nme = game.enemies.getFirstDead();
@@ -201,8 +206,9 @@ function updateTick(game) {
     nme.y = game.height;
     nme.angle = 0;
     nme.trigger_once = 0;
+    nme.tint = g.enemy_colour(enemy_type);
   }
-  // console.log('spawn'+game.enemies.countLiving());
+
 }
 
 module.exports = main;

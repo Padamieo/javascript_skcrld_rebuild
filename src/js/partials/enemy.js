@@ -31,6 +31,8 @@ var enemy = function(game, enemy_type) {
   this.max_speed = 0.1;
 
   this.trigger_once = 0;
+  
+  this.tint = g.enemy_colour(enemy_type);
 
   game.enemies.add(this);
 };
@@ -59,6 +61,7 @@ enemy.prototype.update = function(game) {
 
     if(this.enemy_type >= 0){
       this.y = this.y -( v_speed * dt );
+      this.animations.play('rotate', 12, true);
     }
 
     if(this.enemy_type === 1){
@@ -91,9 +94,6 @@ enemy.prototype.update = function(game) {
         angle = -0.35
       }
       this.angle = game.math.radToDeg(angle);
-
-      this.animations.play('rotate', 12, true);
-      //this.tint = 0x5056d3;
     }
 
   }

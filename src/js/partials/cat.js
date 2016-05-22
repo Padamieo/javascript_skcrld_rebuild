@@ -41,7 +41,7 @@ cat.prototype.update = function(game) {
   if(this.fall === false){
     if(game.player.lazers === true){
       var h = game.height;
-      var offset = this.y-(h/8);
+      var offset = this.y-(h/10);
       this.y = this.y - (offset/100);
       this.y_velocity = ( this.y_velocity <= 0 ? 0 : this.y_velocity/0.8 );
       this.animations.play('fire', 1, true);

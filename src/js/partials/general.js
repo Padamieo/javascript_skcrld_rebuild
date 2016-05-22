@@ -3,17 +3,6 @@ var general = {
 
   setup: function(game){
 
-    //create explotion animations as group to be called, need to add scale
-    game.explosion = game.add.group();
-		game.explosion.createMultiple(100, 'explosion');
-		game.explosion.setAll('anchor.x', 0.5);
-		game.explosion.setAll('anchor.y', 0.5);
-    // game.explosion.setAll('scale.x', scaleRatio);
-    // game.explosion.setAll('scale.y', scaleRatio);
-		game.explosion.setAll('killOnComplete',true);
-		game.explosion.callAll('animations.add', 'animations', 'boom', [0, 1, 3], 30, false);
-    //http://www.html5gamedevs.com/topic/4384-callback-when-animation-complete/
-
 		// Create a white rectangle that we'll use to represent the flash
 		game.flash = game.add.graphics(0, 0);
 		game.flash.beginFill(0xffffff, 1);
@@ -32,6 +21,18 @@ var general = {
     game.emitter.gravity = 200;
 
     game.score = 0;
+    game.kills = 0;
+    game.misses = 0;
+
+
+    //create explotion animations as group to be called, need to add scale
+    game.explosion = game.add.group();
+    game.explosion.createMultiple(100, 'explosion');
+    game.explosion.setAll('anchor.x', 0.5);
+    game.explosion.setAll('anchor.y', 0.5);
+    game.explosion.setAll('killOnComplete',true);
+    game.explosion.callAll('animations.add', 'animations', 'boom', [0, 1, 3], 30, false);
+    //http://www.html5gamedevs.com/topic/4384-callback-when-animation-complete/
 
   },
 
@@ -134,6 +135,41 @@ var general = {
     if(localStorage != undefined){
       localStorage.clear();
     }
+  },
+
+  enemy_colour: function(enemy_type){
+    if(enemy_type === 0){
+      return 0xf24e4e;
+    }
+    if(enemy_type === 1){
+      return 0x4ef24e;
+    }
+  },
+
+  missed_shot: function(){
+    this.game.misses++;
+  },
+
+  go_to: function(state){
+    //game = this.game;
+    //console.log(game);
+
+    if(state === 'opti'){
+      game.state.start('opti');
+      //window.analytics.trackEvent('menu', 'options', 'Hits', 1);
+    }
+
+    if(state === 'menu'){
+      game.state.start('menu');
+      //window.analytics.trackEvent('opti', 'opti', 'Hits', 1);
+    }
+
+    if(state === 'main'){
+      game.state.start('main');
+      //this.game.state.start('main');
+      //window.analytics.trackEvent('opti', 'opti', 'Hits', 1);
+    }
+
   }
 
 };
