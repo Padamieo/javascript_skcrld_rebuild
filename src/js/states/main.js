@@ -61,7 +61,7 @@ main.create = function () {
   text_score.anchor.setTo(0.5, 0.5);
 
   this.game.enemy_array = new Array(20).fill(0);
-  i = game.rnd.integerInRange(0, 20);
+  i = game.rnd.integerInRange(0, 19);
   this.game.enemy_array[i] = 1;
   //console.log(this.game.enemy_array);
 
@@ -159,13 +159,10 @@ function updateTick(game) {
 
   // increase the amount of possible enemies on screen slowly based on kills - this is our natural difficulty increase
   if(game.max_enemy <= 10){
-    //console.log(game.max_enemy+"="+Phaser.Math.roundTo(game.kills/5));
-    notsure = Phaser.Math.roundTo(game.kills/5);
-    if(notsure > 0){
-      //console.log("more than 0");
-      if(game.max_enemy != notsure){
-        //console.log("dont match");
-        game.max_enemy = notsure;
+    enemy_add = Phaser.Math.roundTo(game.kills/5);
+    if(enemy_add > 0){
+      if(game.max_enemy != enemy_add){
+        game.max_enemy = enemy_add;
       }
     }
   }
@@ -179,6 +176,11 @@ function updateTick(game) {
     ramp = Phaser.Math.roundTo(game.speed_ramp+0.05,-3);
     game.speed_ramp = (ramp <= 0.95 ? ramp : 0.95 );
 
+    // calculates player accuracy over the game
+    total = game.kills+game.misses;
+    a = Phaser.Math.roundTo(game.kills/total, -2);
+    //console.log(a);
+
     //looks at current spawn speed and increses it
     current = game.tick.events[0].delay;
     new_speed = Phaser.Math.roundTo(current*0.95, 0);
@@ -186,27 +188,13 @@ function updateTick(game) {
 
   }
 
-  // calculates player accuracy over the game
-  total = game.kills+game.misses;
-  a = Phaser.Math.roundTo(game.kills/total, -2);
-  //console.log(a);
-
-  // gets a random enemy to spawn
-  i = game.rnd.integerInRange(0, 20);
-  enemy_type = game.enemy_array[i];
-
+  //spawns an enemy
   if(game.enemies.countLiving() < game.max_enemy){
     var nme = game.enemies.getFirstDead();
     if (nme === null) {
-      nme = new Enemy(game, enemy_type);
+      nme = new Enemy(game);
     }
-    nme.enemy_type = enemy_type;
     nme.revive();
-    nme.x = game.rnd.integerInRange(0, game.width);
-    nme.y = game.height;
-    nme.angle = 0;
-    nme.trigger_once = 0;
-    nme.tint = g.enemy_colour(enemy_type);
   }
 
 }

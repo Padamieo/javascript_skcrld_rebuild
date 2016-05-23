@@ -146,6 +146,12 @@ var general = {
     }
   },
 
+  choose: function(game){
+    var i = game.rnd.integerInRange(0, 19);
+    var enemy_type = game.enemy_array[i];
+    return (enemy_type === '' ? 0 : enemy_type );
+  },
+
   missed_shot: function(){
     this.game.misses++;
   },

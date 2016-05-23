@@ -1,9 +1,6 @@
 var g = require('general');
 
-var enemy = function(game, enemy_type) {
-  //var h = (game.height/2);
-  //var w = (game.width/2);
-
+var enemy = function(game) {
   randomx = game.rnd.integerInRange(10, game.width);
 
   Phaser.Sprite.call(this, game, randomx, game.world.centerY-50, 'enemy');
@@ -12,9 +9,9 @@ var enemy = function(game, enemy_type) {
     g.explosion(game, this);
   }, this);
 
-  // this.events.onRevived.add(function(){
-  //   revive(game, this, enemy_type = '')},
-  // this);
+  this.events.onRevived.add(function(){
+    enemy.revive(game, this)},
+  this);
 
   this.animations.add('rotate', [0, 1, 2, 3, 4]);
 
@@ -26,13 +23,17 @@ var enemy = function(game, enemy_type) {
   this.x_velocity = 0;
   this.max_velocity = 0.1;
   this.alive = true;
-  this.enemy_type = (enemy_type === '' ? 0 : enemy_type );
+
+  // i = game.rnd.integerInRange(0, 19);
+  // var enemy_type = game.enemy_array[i];
+
+  this.enemy_type = g.choose(game);
   this.v_speed = 0.05;
   this.max_speed = 0.1;
 
   this.trigger_once = 0;
-  
-  this.tint = g.enemy_colour(enemy_type);
+
+  this.tint = g.enemy_colour(this.enemy_type);
 
   game.enemies.add(this);
 };
@@ -104,15 +105,19 @@ enemy.prototype.update = function(game) {
       this.game.enemies_passed = this.game.enemies_passed + -1;
       this.trigger_once = 1;
     }
-
-
   }
 
 };
 
-// var revive = function(game, enemy, enemy_type){
-//   enemy.enemy_type = (enemy_type === '' ? 0 : enemy_type );
-// 	enemy.tint = '0xFF9999';
-// }
+enemy.revive = function(game, enemy){
+
+  enemy.enemy_type = g.choose(game);
+  enemy.x = game.rnd.integerInRange(0, game.width);
+  enemy.y = game.height;
+  enemy.angle = 0;
+  enemy.trigger_once = 0;
+  enemy.tint = g.enemy_colour(enemy.enemy_type);
+
+};
 
 module.exports = enemy;
