@@ -46,6 +46,8 @@ main.create = function () {
   this.game.speed_ramp = 0.7;
   this.game.tick_count = 0;
   this.game.enemies_passed = 0;
+  //this.game.historic_accuracy = 0;
+  this.game.amount_heatseekers = 0;
 
   this.game.tick = this.game.time.create(false);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
@@ -139,17 +141,16 @@ main.update = function(){
     }
   }
 
-  //need to perform some lives calculations
+  //once kitty is dead compare this games score with highscore
   if(this.game.kitty.dead === true ){
     if(localStorage !== undefined){
       if(this.game.score > this.game.highscore){
         localStorage.setItem('highscore', this.game.score );
       }
     }
-    g.go_to("menu");
-    //this.game.state.start('menu');
-
+    this.game.state.start('menu');
   }
+
 };
 
 //every x seconds run this, currently causes weird invisible duplications need to resolve
@@ -158,7 +159,7 @@ function updateTick(game) {
   game.tick_count++;
 
   // increase the amount of possible enemies on screen slowly based on kills - this is our natural difficulty increase
-  if(game.max_enemy <= 10){
+  if(game.max_enemy <= 9){
     enemy_add = Phaser.Math.roundTo(game.kills/5);
     if(enemy_add > 0){
       if(game.max_enemy != enemy_add){
@@ -166,9 +167,28 @@ function updateTick(game) {
       }
     }
   }
+  console.log(game.max_enemy);
+
+  heatseekers = Phaser.Math.roundTo(game.kills/20);
+  //console.log(game.amount_heatseekers+"="+heatseekers);
+  if(game.amount_heatseekers != heatseekers){
+    game.amount_heatseekers = heatseekers;
+
+    v = game.enemy_array.indexOf(0);
+    if(v < 0){
+      //this means we are out of 1 to add in our array
+    }else{
+      game.enemy_array[v] = 1;
+      //console.log(game.enemy_array);
+    }
+
+  }
+
+
 
   //this determines if a player is doing well and increase difficulty
   //console.log(game.speed_ramp+"# "+Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0)+"+"+game.enemies_passed+" - "+game.score);
+  //console.log(game.tick_count);
   if(Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0) < game.score){
     console.log("high performance player");
 
@@ -181,9 +201,31 @@ function updateTick(game) {
     a = Phaser.Math.roundTo(game.kills/total, -2);
     //console.log(a);
 
+    // if(a > 0.50){
+    //
+    //   if(game.historic_accuracy === 0){
+    //     game.historic_accuracy = a;
+    //   }
+    //
+    //   console.log("accurate player"+game.historic_accuracy);
+    //
+    //   if(game.historic_accuracy < a){
+    //     console.log("getting more accurate");
+    //     i = game.rnd.integerInRange(0, 19);
+    //     game.enemy_array[i] = 1;
+    //     console.log(game.enemy_array);
+    //     game.historic_accuracy = a;
+    //   }
+    //
+    // }else{
+    //   console.log("might not be good to speed up");
+    // }
+
     //looks at current spawn speed and increses it
     current = game.tick.events[0].delay;
     new_speed = Phaser.Math.roundTo(current*0.95, 0);
+    console.log(new_speed);
+
     game.tick.events[0].delay = (new_speed >= 200 ? new_speed : 200 );
 
   }

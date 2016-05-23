@@ -23,10 +23,7 @@ var enemy = function(game) {
   this.x_velocity = 0;
   this.max_velocity = 0.1;
   this.alive = true;
-
-  // i = game.rnd.integerInRange(0, 19);
-  // var enemy_type = game.enemy_array[i];
-
+  
   this.enemy_type = g.choose(game);
   this.v_speed = 0.05;
   this.max_speed = 0.1;
