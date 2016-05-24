@@ -81,12 +81,9 @@ var general = {
   },
 
   update_lives: function(game){
-    console.log(game.lives);
     if( game.lives <= 8 ){
-      // ts = (game.timestamp + 1);
-      console.log(game.timestamp + 0.5);
-      if((+new Date() / 60000) >= (game.timestamp + 0.5) ){
-        game.timestamp = game.timestamp + 0.5;
+      if((+new Date() / 60000) >= (game.timestamp + life_wait) ){
+        game.timestamp = game.timestamp + life_wait;
         game.lives = game.lives + 1;
         localStorage.setItem("lives", game.lives );
         general.updateText(game);
@@ -128,7 +125,7 @@ var general = {
 
   updateText: function(game){
     var phaserJSON = game.cache.getJSON('language');
-    text_lives.setText(phaserJSON.lives+' '+game.lives);
+    game.text_lives.setText(phaserJSON.lives+' '+game.lives);
   },
 
   delete_store: function(){
@@ -156,26 +153,36 @@ var general = {
     this.game.misses++;
   },
 
-  go_to: function(state){
-    //game = this.game;
-    //console.log(game);
+  display_text: function(text, v_pos){
+    text_display = game.add.text(game.world.centerX, v_pos, text, {
+      font: '30px Arial',
+      fill: '#ffffff',
+      align: 'center'
+    });
+    text_display.anchor.setTo(0.5, 0.5);
+    return text_display;
+  },
 
-    if(state === 'opti'){
-      game.state.start('opti');
-      //window.analytics.trackEvent('menu', 'options', 'Hits', 1);
+  calculate_button_width: function(text){
+    return text.length/2.5;
+  },
+
+  button: function(text, v_pos, action, enforce_width = ''){
+    var button = game.add.button(game.world.centerX, v_pos, 'button', action, this, 1, 0, 2);
+    if(enforce_width === ''){
+      size = general.calculate_button_width(text);
+    }else{
+      size = enforce_width;
     }
-
-    if(state === 'menu'){
-      game.state.start('menu');
-      //window.analytics.trackEvent('opti', 'opti', 'Hits', 1);
-    }
-
-    if(state === 'main'){
-      game.state.start('main');
-      //this.game.state.start('main');
-      //window.analytics.trackEvent('opti', 'opti', 'Hits', 1);
-    }
-
+    //max size will be 7.5 if it is reduce size of font
+    button.scale.x = size;
+    button.anchor.setTo(0.5, 0.5);
+    var text_button = game.add.text(game.world.centerX, v_pos, text, {
+      font: '30px Arial',
+      fill: '#ffffff',
+      align: 'center'
+    });
+    text_button.anchor.setTo(0.5, 0.5);
   }
 
 };

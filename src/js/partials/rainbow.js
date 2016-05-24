@@ -20,6 +20,11 @@ var rainbow = function(game) {
 
   this.offset = this.game.kitty.height/4;
 
+  //this is only temp untill i sort out better rainbow effect
+  this.game.rainbow_colour = this.game.time.create(false);
+  this.game.rainbow_colour.loop(200, rainbow_colour_change, this.game, this.game);
+  this.game.rainbow_colour.start();
+
 	this.game.add.existing(this);
 };
 
@@ -32,7 +37,6 @@ rainbow.prototype.update = function(game) {
   if(game.kitty.fall === false){
     if(game.player.lazers === true){
 
-      //this.tint = Math.random() * 0xffffff; //epilectic issue
       //navigator.vibrate([200, 200, 200, 200, 200]);
       if (game.kitty != null) {
         this.y = game.kitty.y+this.offset;
@@ -50,5 +54,10 @@ rainbow.prototype.update = function(game) {
   }
 
 };
+
+// temporary function for colour change
+function rainbow_colour_change(game){
+  game.rainbow.tint = Math.random() * 0xffffff;
+}
 
 module.exports = rainbow;

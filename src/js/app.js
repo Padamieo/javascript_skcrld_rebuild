@@ -1,14 +1,15 @@
 
 // check if we are developing the app
 if (navigator.platform.match(/(Win)/)) {
-  set_language = 'fr-FR';
+  set_language = 'en-US'; //default should be fr-FR
+  life_wait = 0.5;
   start_game();
 }else{
   document.addEventListener('deviceready', onDeviceReady, false);
+  life_wait = 60;
 }
 
 function onDeviceReady(){
-  //need to add vibration
 
   //working language detection
   navigator.globalization.getPreferredLanguage(
@@ -27,6 +28,8 @@ function onDeviceReady(){
       set_language = 'en-US';
     }
   );
+
+  //add vibration here
 
 
 

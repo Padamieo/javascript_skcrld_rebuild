@@ -34,7 +34,7 @@ main.create = function () {
 
   this.game.kitty = this.add.existing(new Cat(this.game));
 
-  this.add.existing(new Rainbow(this.game));
+  this.game.rainbow = this.add.existing(new Rainbow(this.game));
 
   this.game.player = this.add.existing(new Player(this.game));
 
@@ -167,7 +167,7 @@ function updateTick(game) {
       }
     }
   }
-  console.log(game.max_enemy);
+  //console.log(game.max_enemy);
 
   heatseekers = Phaser.Math.roundTo(game.kills/20);
   //console.log(game.amount_heatseekers+"="+heatseekers);
@@ -190,7 +190,7 @@ function updateTick(game) {
   //console.log(game.speed_ramp+"# "+Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0)+"+"+game.enemies_passed+" - "+game.score);
   //console.log(game.tick_count);
   if(Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0) < game.score){
-    console.log("high performance player");
+    //console.log("high performance player");
 
     //changes the difficulty of triggering this
     ramp = Phaser.Math.roundTo(game.speed_ramp+0.05,-3);
@@ -224,7 +224,7 @@ function updateTick(game) {
     //looks at current spawn speed and increses it
     current = game.tick.events[0].delay;
     new_speed = Phaser.Math.roundTo(current*0.95, 0);
-    console.log(new_speed);
+    //console.log(new_speed);
 
     game.tick.events[0].delay = (new_speed >= 200 ? new_speed : 200 );
 
