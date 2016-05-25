@@ -38,6 +38,11 @@ cat.prototype.update = function(game) {
 
   var dt = game.time.elapsed;
 
+  //need to disable some elements untill tutorial ends
+  if(game.tutorial == false){
+
+  }
+
   if(this.fall === false){
     if(game.player.lazers === true){
       var h = game.height;

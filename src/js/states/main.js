@@ -51,7 +51,7 @@ main.create = function () {
 
   this.game.tick = this.game.time.create(false);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
-  this.game.tick.start();
+  //this.game.tick.start();
 
   text_score = this.game.add.text(this.game.width-(this.game.width/15), this.game.height/15, this.game.score, {
     font: '30px Arial',
@@ -67,35 +67,38 @@ main.create = function () {
   this.game.enemy_array[i] = 1;
   //console.log(this.game.enemy_array);
 
+  this.game.tutorial = true;
+  if(this.game.tutorial == true){
+    var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
+    var text = this.game.add.text(this.game.world.centerX, this.game.height, "PRESS OR HOLD", style);
+    text.anchor.setTo(0.5, 1);
+  }
+
 };
 
 main.update = function(){
 
-  if(this.game.kitty.fall === false){
-    if(this.game.player.lazers === true){
-      if(background.speed < background.max_speed){
-        background.speed += 0.1;
+  if(game.tutorial == false){
+    if(this.game.kitty.fall === false){
+      if(this.game.player.lazers === true){
+        if(background.speed < background.max_speed){
+          background.speed += 0.1;
+        }
+        background.tilePosition.y += background.speed;
+      }else{
+        if(background.speed > -0.1){
+          background.speed -= 0.1;
+        }
+        background.tilePosition.y += background.speed;
       }
-      background.tilePosition.y += background.speed;
     }else{
       if(background.speed > -0.1){
         background.speed -= 0.1;
       }
       background.tilePosition.y += background.speed;
     }
-  }else{
-    if(background.speed > -0.1){
-      background.speed -= 0.1;
-    }
-    background.tilePosition.y += background.speed;
   }
-
-  if(this.game.input.keyboard.isDown(Phaser.Keyboard.Z)){
-    //for testing purposes put code here
-    localStorage.setItem('lives', 9 );
-    this.game.lives = 9;
-  }
-
+  
   //generates co-ordinates of box around each bullet if one exists
   for (var i1 = 0, l1 = this.game.bulletPool.children.length; i1 < l1; i1++){
     if(this.game.bulletPool.children[i1].alive){
@@ -157,6 +160,7 @@ main.update = function(){
 function updateTick(game) {
 
   game.tick_count++;
+  console.log(game.tick_count);
 
   // increase the amount of possible enemies on screen slowly based on kills - this is our natural difficulty increase
   if(game.max_enemy <= 9){

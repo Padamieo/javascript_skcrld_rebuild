@@ -61,27 +61,32 @@ function start_game(){
     //   'game'
     // );
 
-    w = properties.size.x;
-    h = properties.size.y;
-    console.log(w+" "+h);
-    r = gcd (w, h);
-    console.log(r);
-    console.log("Aspect=", w/r, ":", h/r);
-    v = (w/r)/(h/r);
-    console.log("v"+v);
+    // w = properties.size.x;
+    // h = properties.size.y;
+    // console.log(w+" "+h);
+    // r = gcd (w, h);
+    // console.log(r);
+    // console.log("Aspect=", w/r, ":", h/r);
+    // v = (w/r)/(h/r);
+    // console.log("v"+v);
 
-    dw = window.innerWidth;
-    dh = window.innerHeight;
-    console.log(dw+" "+dh);
-    dr = gcd (dw, dh);
-    console.log(dr);
-    console.log("Aspect=", dw/dr, ":", dh/dr);
-    dv = (dw/dr)/(dh/dr);
-    console.log("v"+dv);
+    w = window.innerWidth;
+    h = window.innerHeight;
+    r = gcd (w, h);
+    v = (w/r)/(h/r);
+
+    if(v >= 0.50 && v <= 0.62){
+      console.log("size close engouth");
+      width = window.innerWidth;
+      height = window.innerHeight;
+    }else{
+      width = properties.size.x;
+      height = properties.size.y;
+    }
 
     game = new Phaser.Game(
-      properties.size.x,
-      properties.size.y,
+      width,
+      height,
       Phaser.AUTO,
       'game'
     );
