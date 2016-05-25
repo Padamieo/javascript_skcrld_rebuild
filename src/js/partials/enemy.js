@@ -1,8 +1,8 @@
 var g = require('general');
 
 var enemy = function(game) {
-  randomx = game.rnd.integerInRange(10, game.width);
 
+  randomx = game.rnd.integerInRange(10, game.width);
   Phaser.Sprite.call(this, game, randomx, game.world.centerY-50, 'enemy');
 
   this.events.onKilled.add(function(){
@@ -23,7 +23,7 @@ var enemy = function(game) {
   this.x_velocity = 0;
   this.max_velocity = 0.1;
   this.alive = true;
-  
+
   this.enemy_type = g.choose(game);
   this.v_speed = 0.05;
   this.max_speed = 0.1;
@@ -94,6 +94,11 @@ enemy.prototype.update = function(game) {
       this.angle = game.math.radToDeg(angle);
     }
 
+    // this.e.x = this.x;
+    // this.e.y = this.y;
+    // this.e.lineStyle(2, 0xFF0000, 0.5);
+    // this.e.drawCircle(0, 0, 200);
+
   }
 
   if(this.y < 0+(game.height/50)){
@@ -107,14 +112,12 @@ enemy.prototype.update = function(game) {
 };
 
 enemy.revive = function(game, enemy){
-
-  enemy.enemy_type = g.choose(game);
+  enemy.enemy_type = (game.tutorial === false ? g.choose(game) : 0);
   enemy.x = game.rnd.integerInRange(0, game.width);
   enemy.y = game.height;
   enemy.angle = 0;
   enemy.trigger_once = 0;
   enemy.tint = g.enemy_colour(enemy.enemy_type);
-
 };
 
 module.exports = enemy;

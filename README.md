@@ -25,3 +25,6 @@ Run the following commands from the repo's root directory:
 * install PhoneGap Developer [Google Play Store](https://play.google.com/store/apps/details?id=com.adobe.phonegap.app).
 * phonegap serve
 * point app to ip provided in command line.
+
+
+https://github.com/sunnycupertino/cordova-plugin-admob-simple

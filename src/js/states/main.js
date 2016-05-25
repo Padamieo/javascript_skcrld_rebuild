@@ -17,7 +17,35 @@ main.create = function () {
   background.max_speed = 2;
   background.speed = 0;
 
-  g.setup(this.game);
+  //g.setup(this.game);
+
+  // Create a white rectangle that we'll use to represent the flash
+  game.flash = game.add.graphics(0, 0);
+  game.flash.beginFill(0xffffff, 1);
+  game.flash.drawRect(0, 0, game.width, game.height);
+  game.flash.endFill();
+  game.flash.alpha = 0;
+
+  game.world.setBounds(-10, -10, game.width + 20, game.height + 20);
+  //this may be the key to sorting screen size with clickable areas
+
+  //setup emitter for burst
+  game.emitter = game.add.emitter(0, 0, 100);
+  game.emitter.makeParticles('test');
+  game.emitter.gravity = 200;
+
+  game.score = 0;
+  game.kills = 0;
+  game.misses = 0;
+
+  //create explotion animations as group to be called, need to add scale
+  game.explosion = game.add.group();
+  game.explosion.createMultiple(100, 'explosion');
+  game.explosion.setAll('anchor.x', 0.5);
+  game.explosion.setAll('anchor.y', 0.5);
+  game.explosion.setAll('killOnComplete',true);
+  game.explosion.callAll('animations.add', 'animations', 'boom', [0, 1, 3], 30, false);
+  //http://www.html5gamedevs.com/topic/4384-callback-when-animation-complete/
 
 	//bullet pool
 	this.game.bulletPool = this.game.add.group();
@@ -51,7 +79,6 @@ main.create = function () {
 
   this.game.tick = this.game.time.create(false);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
-  //this.game.tick.start();
 
   text_score = this.game.add.text(this.game.width-(this.game.width/15), this.game.height/15, this.game.score, {
     font: '30px Arial',
@@ -70,15 +97,27 @@ main.create = function () {
   this.game.tutorial = true;
   if(this.game.tutorial == true){
     var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
-    var text = this.game.add.text(this.game.world.centerX, this.game.height, "PRESS OR HOLD", style);
-    text.anchor.setTo(0.5, 1);
+    this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, "PRESS OR HOLD", style);
+    this.game.tutorial_text.anchor.setTo(0.5, 1);
+    game.background_action = false;
+  }else{
+    this.game.tick.start();
   }
 
 };
 
 main.update = function(){
+  console.log(game.tutorial);
 
-  if(game.tutorial == false){
+  if(game.tutorial == true){
+    if(game.player.lazers === true){
+      game.background_action = true;
+      game.tutorial_text.setText('BOOP');
+      this.game.tick.start();
+    }
+  }
+
+  if(game.background_action === true){
     if(this.game.kitty.fall === false){
       if(this.game.player.lazers === true){
         if(background.speed < background.max_speed){
@@ -98,7 +137,7 @@ main.update = function(){
       background.tilePosition.y += background.speed;
     }
   }
-  
+
   //generates co-ordinates of box around each bullet if one exists
   for (var i1 = 0, l1 = this.game.bulletPool.children.length; i1 < l1; i1++){
     if(this.game.bulletPool.children[i1].alive){
@@ -116,8 +155,10 @@ main.update = function(){
   //performs heavy collision check for bullets and enemies
   for (var i3 = 0, l3 = this.game.bulletPool.children.length; i3 < l3; i3++){
     if(this.game.bulletPool.children[i3].alive){
+
       for (var i4 = 0, l4 = this.game.enemies.children.length; i4 < l4; i4++){
         if(this.game.enemies.children[i4].alive){
+
           var c_bullet_enemies = col.ision_square_square(this.game.enemies.children[i4], this.game.bulletPool.children[i3]);
           if(c_bullet_enemies){
             this.game.enemies.children[i4].kill();
@@ -127,13 +168,16 @@ main.update = function(){
             //console.log(this.game.score);
             text_score.setText(this.game.score);
           }
+
         }
       }
+
     }
   }
 
   for (var i5  = 0, l5 = this.game.enemies.children.length; i5 < l5; i5++){
     if(this.game.enemies.children[i5].alive){
+
       var c_kitty_enemies = col.ision_circle_square( this.game.kitty , this.game.enemies.children[i5] );
       if(c_kitty_enemies){
         this.game.enemies.children[i5].kill();
@@ -141,6 +185,7 @@ main.update = function(){
         this.game.kitty.fall = true;
         //console.log("hit");
       }
+
     }
   }
 
@@ -160,7 +205,6 @@ main.update = function(){
 function updateTick(game) {
 
   game.tick_count++;
-  console.log(game.tick_count);
 
   // increase the amount of possible enemies on screen slowly based on kills - this is our natural difficulty increase
   if(game.max_enemy <= 9){
