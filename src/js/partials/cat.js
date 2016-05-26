@@ -49,7 +49,7 @@ cat.prototype.update = function(game) {
       this.animations.play('fire', 1, true);
     }else{
 
-      if(game.tutorial == false){
+      if(game.background_action === true){
         var gravity = 0.1;
         this.animations.play('fall', 1, true);
       }else{

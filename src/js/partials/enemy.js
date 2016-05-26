@@ -112,7 +112,7 @@ enemy.prototype.update = function(game) {
 };
 
 enemy.revive = function(game, enemy){
-  enemy.enemy_type = (game.tutorial === false ? g.choose(game) : 0);
+  enemy.enemy_type = (game.tutorial === 0 ? g.choose(game) : 0);
   enemy.x = game.rnd.integerInRange(0, game.width);
   enemy.y = game.height;
   enemy.angle = 0;

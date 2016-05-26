@@ -12,7 +12,7 @@ var player = function(game) {
   this.duration = 1000;
   this.nextShotAt = 0;
   this.shotDelay = 50;
-  this.tap = true;
+  this.tap = 1;
   this.colour = 0xFFFFFF;
 	this.game.add.existing(this);
 };
@@ -35,7 +35,11 @@ player.prototype.update = function(game) {
       this.starttime = game.time.now;
       this.endtime = game.time.now + this.duration;
       this.press = true;
-      this.tap = true;
+      if(game.background_action === true){
+        this.tap = 1;
+      }else{
+        this.tap = 0;
+      }
     }
 
     this.x = game.input.x;
@@ -55,15 +59,15 @@ player.prototype.update = function(game) {
 
     if(this.endtime < game.time.now){
       this.lazers = true;
-      this.tap = false;
+      this.tap = 0;
       // g.shake(game);
     }
 
 	}else{
     if(this.game.kitty.fall === false){
-      if(this.tap === true){
+      if(this.tap === 1){
         if(this.endtime > game.time.now){
-          this.tap = false;
+          this.tap = 0;
           if (this.nextShotAt > game.time.now) {
             return;
           }

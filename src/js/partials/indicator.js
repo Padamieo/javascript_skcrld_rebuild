@@ -15,7 +15,7 @@ indicator.prototype = Object.create(Phaser.Graphics.prototype);
 indicator.prototype.constructor = indicator;
 
 indicator.prototype.update = function(game) {
-  if(this.game.tutorial == true){
+  if(this.game.tutorial === 1){
     game = this.game;
     this.clear();
 
@@ -35,6 +35,7 @@ indicator.prototype.update = function(game) {
         }
         this._text.x = this.x+offset;
         this._text.y = this.y;
+
 
       }
     }

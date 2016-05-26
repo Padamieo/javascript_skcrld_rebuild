@@ -93,7 +93,7 @@ var general = {
       }else{
         game.tutorial = localStorage.getItem('tutorial');
       }
-      game.tutorial = true;
+      game.tutorial = 1;
 
 
       //localStorage.removeItem("Website");

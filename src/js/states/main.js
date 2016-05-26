@@ -35,33 +35,24 @@ main.create = function () {
   game.emitter.makeParticles('test');
   game.emitter.gravity = 200;
 
-  if(this.game.tutorial == true){
+  if(this.game.tutorial === 1){
     this.game.ground = game.add.sprite(this.game.world.centerX, this.game.world.centerY+75, 'ground'); //also need way to calculate his 75
     this.game.ground.anchor.setTo(0.5, 0);
-    this.game.ground.width = this.game.width;
-    this.game.ground.height = 300; //need find way to calcuate this
+    // this.game.ground.width = this.game.width;
+    // this.game.ground.height = 300; //need find way to calcuate this
 
     var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
     this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, "PRESS OR HOLD", style);
     this.game.tutorial_text.anchor.setTo(0.5, 1);
 
     this.game.indicator = this.add.existing(new indicator(this.game));
-    
+
     this.game.background_action = false;
 
   }else{
     this.game.background_action = true;
     this.game.tick.start();
   }
-
-  //create explotion animations as group to be called, need to add scale
-  game.explosion = game.add.group();
-  game.explosion.createMultiple(100, 'explosion');
-  game.explosion.setAll('anchor.x', 0.5);
-  game.explosion.setAll('anchor.y', 0.5);
-  game.explosion.setAll('killOnComplete',true);
-  game.explosion.callAll('animations.add', 'animations', 'boom', [0, 1, 3], 30, false);
-  //http://www.html5gamedevs.com/topic/4384-callback-when-animation-complete/
 
 	//bullet pool
 	this.game.bulletPool = this.game.add.group();
@@ -80,11 +71,15 @@ main.create = function () {
 
   this.game.rainbow = this.add.existing(new Rainbow(this.game));
 
-  this.game.player = this.add.existing(new Player(this.game));
-
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
+  this.game.enemy_array = new Array(20).fill(0);
+  i = game.rnd.integerInRange(0, 19);
+  this.game.enemy_array[i] = 1;
+  //console.log(this.game.enemy_array);
+
+  this.game.player = this.add.existing(new Player(this.game));
 
   this.game.max_enemy = 1;
   this.game.speed_ramp = 0.7;
@@ -99,6 +94,15 @@ main.create = function () {
   this.game.tick = this.game.time.create(false);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
 
+  //create explotion animations as group to be called, need to add scale
+  game.explosion = game.add.group();
+  game.explosion.createMultiple(100, 'explosion');
+  game.explosion.setAll('anchor.x', 0.5);
+  game.explosion.setAll('anchor.y', 0.5);
+  game.explosion.setAll('killOnComplete',true);
+  game.explosion.callAll('animations.add', 'animations', 'boom', [0, 1, 3], 30, false);
+  //http://www.html5gamedevs.com/topic/4384-callback-when-animation-complete/
+
   text_score = this.game.add.text(this.game.width-(this.game.width/15), this.game.height/15, this.game.score, {
     font: '30px Arial',
     fill: '#ffffff',
@@ -108,17 +112,12 @@ main.create = function () {
   text_score.strokeThickness = 5;
   text_score.anchor.setTo(0.5, 0.5);
 
-  this.game.enemy_array = new Array(20).fill(0);
-  i = game.rnd.integerInRange(0, 19);
-  this.game.enemy_array[i] = 1;
-  //console.log(this.game.enemy_array);
-
 };
 
 main.update = function(){
   //console.log(game.tutorial);
 
-  if(game.tutorial === true){
+  if(game.tutorial === 1){
 
       if(game.player.lazers === true){
         game.tutorial_text.setText('NOW');
@@ -140,7 +139,7 @@ main.update = function(){
 
       if(game.ground.y > game.height){
         if(this.game.kills >= 1){
-          game.tutorial = false;
+          game.tutorial = 0;
         }
       }else{
         game.ground.y = game.ground.y+background.speed;
