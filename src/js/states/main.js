@@ -1,7 +1,7 @@
 var Rainbow = require('rainbow');
 var Cat = require('cat');
 var Player = require('player');
-var col = require('col');
+var c = require('collision');
 var Enemy = require('enemy');
 var g = require('general');
 var indicator = require('indicator');
@@ -35,9 +35,24 @@ main.create = function () {
   game.emitter.makeParticles('test');
   game.emitter.gravity = 200;
 
-  game.score = 0;
-  game.kills = 0;
-  game.misses = 0;
+  if(this.game.tutorial == true){
+    this.game.ground = game.add.sprite(this.game.world.centerX, this.game.world.centerY+75, 'ground'); //also need way to calculate his 75
+    this.game.ground.anchor.setTo(0.5, 0);
+    this.game.ground.width = this.game.width;
+    this.game.ground.height = 300; //need find way to calcuate this
+
+    var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
+    this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, "PRESS OR HOLD", style);
+    this.game.tutorial_text.anchor.setTo(0.5, 1);
+
+    this.game.indicator = this.add.existing(new indicator(this.game));
+    
+    this.game.background_action = false;
+
+  }else{
+    this.game.background_action = true;
+    this.game.tick.start();
+  }
 
   //create explotion animations as group to be called, need to add scale
   game.explosion = game.add.group();
@@ -77,6 +92,9 @@ main.create = function () {
   this.game.enemies_passed = 0;
   //this.game.historic_accuracy = 0;
   this.game.amount_heatseekers = 0;
+  game.score = 0;
+  game.kills = 0;
+  game.misses = 0;
 
   this.game.tick = this.game.time.create(false);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
@@ -94,33 +112,45 @@ main.create = function () {
   i = game.rnd.integerInRange(0, 19);
   this.game.enemy_array[i] = 1;
   //console.log(this.game.enemy_array);
-  
-  if(this.game.tutorial == true){
-    var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
-    this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, "PRESS OR HOLD", style);
-    this.game.tutorial_text.anchor.setTo(0.5, 1);
-    game.tutorial_stage = 0;
-    this.game.indicator = this.add.existing(new indicator(this.game));
-  }else{
-    this.game.tick.start();
-  }
 
 };
 
 main.update = function(){
   //console.log(game.tutorial);
 
-  if(game.tutorial == true){
-    if(game.tutorial_stage === 0){
+  if(game.tutorial === true){
+
       if(game.player.lazers === true){
-        game.tutorial_stage = 1;
-        game.tutorial_text.setText('BOOP');
-        this.game.tick.start();
+        game.tutorial_text.setText('NOW');
+        game.background_action = true;
+        game.tick.start();
       }
+
+    if(game.background_action === true){
+      if(this.game.kills >= 1){
+
+        this.game.indicator.kill();
+        this.game.indicator._text.kill();
+
+        if(localStorage !== undefined){
+          localStorage.setItem("tutorial",  0 );
+        }
+        game.tutorial_text.setText('YAY');
+      }
+
+      if(game.ground.y > game.height){
+        if(this.game.kills >= 1){
+          game.tutorial = false;
+        }
+      }else{
+        game.ground.y = game.ground.y+background.speed;
+      }
+
     }
+
   }
 
-  if(game.tutorial_stage === 1){
+  if(game.background_action === true){
     if(this.game.kitty.fall === false){
       if(this.game.player.lazers === true){
         if(background.speed < background.max_speed){
@@ -145,7 +175,7 @@ main.update = function(){
   for (var i1 = 0, l1 = this.game.bulletPool.children.length; i1 < l1; i1++){
     if(this.game.bulletPool.children[i1].alive){
       //console.log(i1);
-      col.culate_rotated_square(this.game.bulletPool.children[i1]);
+      c.alculate_rotated_square(this.game.bulletPool.children[i1]);
 
     }
   }
@@ -154,7 +184,7 @@ main.update = function(){
   for (var i2 = 0, l2 = this.game.enemies.children.length; i2 < l2; i2++){
     if(this.game.enemies.children[i2].alive){
 
-      col.culate_rotated_square(this.game.enemies.children[i2]);
+      c.alculate_rotated_square(this.game.enemies.children[i2]);
 
     }
   }
@@ -166,7 +196,7 @@ main.update = function(){
       for (var i4 = 0, l4 = this.game.enemies.children.length; i4 < l4; i4++){
         if(this.game.enemies.children[i4].alive){
 
-          var c_bullet_enemies = col.ision_square_square(this.game.enemies.children[i4], this.game.bulletPool.children[i3]);
+          var c_bullet_enemies = c.ollision_square_square(this.game.enemies.children[i4], this.game.bulletPool.children[i3]);
           if(c_bullet_enemies){
             this.game.enemies.children[i4].kill();
             this.game.bulletPool.children[i3].kill();
@@ -185,7 +215,7 @@ main.update = function(){
   for (var i5  = 0, l5 = this.game.enemies.children.length; i5 < l5; i5++){
     if(this.game.enemies.children[i5].alive){
 
-      var c_kitty_enemies = col.ision_circle_square( this.game.kitty , this.game.enemies.children[i5] );
+      var c_kitty_enemies = c.ollision_circle_square( this.game.kitty , this.game.enemies.children[i5] );
       if(c_kitty_enemies){
         this.game.enemies.children[i5].kill();
         //this.game.bulletPool.children[i].kill();

@@ -3,6 +3,10 @@ var indicator = function(game) {
 
   Phaser.Graphics.call(this, game, 0, 0);
 
+  var style = { font: 'bold 20pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
+  this._text = this.game.add.text(this.x, this.y, "TAP HERE", style);
+  this._text.anchor.setTo(1, 0.5);
+
 	this.game.add.existing(this);
 
 };
@@ -22,15 +26,21 @@ indicator.prototype.update = function(game) {
         this.y = this.game.enemies.children[i].y;
         this.lineStyle(2, 0xFFFFFF, 0.5);
         this.drawCircle(0, 0, 100);
-
-        // var style = { font: 'bold 30pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
-        // this._text = this.game.add.text(this.x, this.y, "TAP HERE", style);
-        // this._text.anchor.setTo(1, 1);
+        if(this.x < game.width/2){
+          this._text.anchor.setTo(0, 0.5);
+          offset = 50;
+        }else{
+          this._text.anchor.setTo(1, 0.5);
+          offset = -50;
+        }
+        this._text.x = this.x+offset;
+        this._text.y = this.y;
 
       }
     }
   }
 
 };
+
 
 module.exports = indicator;

@@ -39,9 +39,6 @@ cat.prototype.update = function(game) {
   var dt = game.time.elapsed;
 
   //need to disable some elements untill tutorial ends
-  if(game.tutorial == false){
-
-  }
 
   if(this.fall === false){
     if(game.player.lazers === true){
@@ -51,10 +48,19 @@ cat.prototype.update = function(game) {
       this.y_velocity = ( this.y_velocity <= 0 ? 0 : this.y_velocity/0.8 );
       this.animations.play('fire', 1, true);
     }else{
-      var gravity = 0.1;
+
+      if(game.tutorial == false){
+        var gravity = 0.1;
+        this.animations.play('fall', 1, true);
+      }else{
+        var gravity = 0;
+        //custom animation here
+        this.animations.play('fall', 1, true);
+      }
+
       this.y = this.y - this.y_velocity;
       this.y_velocity = this.y_velocity - gravity / dt;
-      this.animations.play('fall', 1, true);
+
     }
   }else{
     this.tint = 0xd65151;

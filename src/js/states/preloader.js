@@ -15,6 +15,8 @@ preloader.preload = function () {
 
   this.game.load.image('test', 'images/test.png');
 
+  this.game.load.image('ground', 'images/placeholder.png');
+
   // need to select language pack
   this.game.load.json('language', 'languages/'+set_language+'.json');
 

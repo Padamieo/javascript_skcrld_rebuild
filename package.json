@@ -21,7 +21,7 @@
     "cat": "./src/js/partials/cat.js",
     "indicator": "./src/js/partials/indicator.js",
     "enemy": "./src/js/partials/enemy.js",
-    "col": "./src/js/partials/collision.js",
+    "collision": "./src/js/partials/collision.js",
     "Sat": "./bower_components/sat-js/SAT.js"
   },
   "browserify-shim": {

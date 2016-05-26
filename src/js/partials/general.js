@@ -87,12 +87,12 @@ var general = {
         game.highscore = parseInt(localStorage.getItem('highscore'));
       }
 
-      // if(localStorage.getItem('tutorial') === null){
-      //   localStorage.setItem("tutorial",  1 );
-      //   game.tutorial = 1;
-      // }else{
-      //   game.tutorial = parseInt(localStorage.getItem('tutorial'));
-      // }
+      if(localStorage.getItem('tutorial') === null){
+        localStorage.setItem("tutorial",  1 );
+        game.tutorial = 1;
+      }else{
+        game.tutorial = localStorage.getItem('tutorial');
+      }
       game.tutorial = true;
 
 
@@ -135,7 +135,7 @@ var general = {
 
   display_text: function(text, v_pos){
     text_display = game.add.text(game.world.centerX, v_pos, text, {
-      font: '30px Arial',
+      font: 'bold 20pt Arial',
       fill: '#ffffff',
       align: 'center'
     });
@@ -158,7 +158,7 @@ var general = {
     button.scale.x = size;
     button.anchor.setTo(0.5, 0.5);
     var text_button = game.add.text(game.world.centerX, v_pos, text, {
-      font: '30px Arial',
+      font: 'bold 20pt Arial',
       fill: '#ffffff',
       align: 'center'
     });
