@@ -20,7 +20,7 @@ menu.create = function () {
 
   var eight = (this.game.height/8);
 
-  var menu_items = [phaserJSON.start, phaserJSON.options, phaserJSON.exit];
+  var menu_items = [phaserJSON.start, phaserJSON.options, 'Leaderboard', 'Get Lives', phaserJSON.exit];
 
   // this should be a function
   biggest_width = 0;
@@ -31,11 +31,13 @@ menu.create = function () {
     }
   }
 
-  g.button(phaserJSON.start, eight*2, start_new_game, biggest_width);
+  g.button(phaserJSON.start, eight*1, start_new_game, biggest_width);
+
+  g.button('Leaderboard', eight*2, go_options, biggest_width);
 
   g.button(phaserJSON.options, eight*3, go_options, biggest_width);
 
-  g.button(phaserJSON.exit, eight*4, g.click_exit, biggest_width);
+  g.button('Get Lives', eight*4, go_options, biggest_width);
 
   //call update live directly then set timer to check
   g.check_store(this.game);
@@ -47,6 +49,8 @@ menu.create = function () {
   this.game.text_lives = g.display_text(phaserJSON.lives+' '+this.game.lives, eight*5);
 
   g.display_text(phaserJSON.score+' '+this.game.highscore, eight*6);
+
+  g.button(phaserJSON.exit, eight*7, g.click_exit, biggest_width);
 
   //text(vv, eight*7);
 

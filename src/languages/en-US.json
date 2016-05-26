@@ -3,6 +3,13 @@
   "start":"Start Game",
   "exit":"Exit",
   "options": "Options",
+  "vibration": "vibration",
+  "on": "on",
+  "off": "off",
   "back": "back",
-  "score": "Highest Score"
+  "score": "Highest Score",
+  "tap": "TAP HERE",
+  "leaderboards": "Leaderboards",
+  "hold": "PRESS OR HOLD",
+  "yay": "YAY"
 }

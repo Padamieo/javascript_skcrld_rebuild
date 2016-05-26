@@ -36,13 +36,16 @@ main.create = function () {
   game.emitter.gravity = 200;
 
   if(this.game.tutorial === 1){
+
+    //var phaserJSON = game.cache.getJSON('language');
+
     this.game.ground = game.add.sprite(this.game.world.centerX, this.game.world.centerY+75, 'ground'); //also need way to calculate his 75
     this.game.ground.anchor.setTo(0.5, 0);
     // this.game.ground.width = this.game.width;
     // this.game.ground.height = 300; //need find way to calcuate this
 
     var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
-    this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, "PRESS OR HOLD", style);
+    this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, 'PRESS OF HOLD', style);
     this.game.tutorial_text.anchor.setTo(0.5, 1);
 
     this.game.indicator = this.add.existing(new indicator(this.game));
