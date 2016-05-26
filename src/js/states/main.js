@@ -4,6 +4,7 @@ var Player = require('player');
 var col = require('col');
 var Enemy = require('enemy');
 var g = require('general');
+var indicator = require('indicator');
 
 var main = {};
 
@@ -93,13 +94,13 @@ main.create = function () {
   i = game.rnd.integerInRange(0, 19);
   this.game.enemy_array[i] = 1;
   //console.log(this.game.enemy_array);
-
-  this.game.tutorial = true;
+  
   if(this.game.tutorial == true){
     var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
     this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, "PRESS OR HOLD", style);
     this.game.tutorial_text.anchor.setTo(0.5, 1);
-    game.background_action = false;
+    game.tutorial_stage = 0;
+    this.game.indicator = this.add.existing(new indicator(this.game));
   }else{
     this.game.tick.start();
   }
@@ -107,17 +108,19 @@ main.create = function () {
 };
 
 main.update = function(){
-  console.log(game.tutorial);
+  //console.log(game.tutorial);
 
   if(game.tutorial == true){
-    if(game.player.lazers === true){
-      game.background_action = true;
-      game.tutorial_text.setText('BOOP');
-      this.game.tick.start();
+    if(game.tutorial_stage === 0){
+      if(game.player.lazers === true){
+        game.tutorial_stage = 1;
+        game.tutorial_text.setText('BOOP');
+        this.game.tick.start();
+      }
     }
   }
 
-  if(game.background_action === true){
+  if(game.tutorial_stage === 1){
     if(this.game.kitty.fall === false){
       if(this.game.player.lazers === true){
         if(background.speed < background.max_speed){
@@ -141,14 +144,18 @@ main.update = function(){
   //generates co-ordinates of box around each bullet if one exists
   for (var i1 = 0, l1 = this.game.bulletPool.children.length; i1 < l1; i1++){
     if(this.game.bulletPool.children[i1].alive){
+      //console.log(i1);
       col.culate_rotated_square(this.game.bulletPool.children[i1]);
+
     }
   }
 
   //generates co-ordinates of box around each enemy while alive/exists
   for (var i2 = 0, l2 = this.game.enemies.children.length; i2 < l2; i2++){
     if(this.game.enemies.children[i2].alive){
+
       col.culate_rotated_square(this.game.enemies.children[i2]);
+
     }
   }
 

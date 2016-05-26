@@ -19,6 +19,7 @@
     "general": "./src/js/partials/general.js",
     "rainbow": "./src/js/partials/rainbow.js",
     "cat": "./src/js/partials/cat.js",
+    "indicator": "./src/js/partials/indicator.js",
     "enemy": "./src/js/partials/enemy.js",
     "col": "./src/js/partials/collision.js",
     "Sat": "./bower_components/sat-js/SAT.js"

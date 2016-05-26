@@ -51,7 +51,7 @@ function start_game(){
       preloader: require('./states/preloader.js'),
       menu: require('./states/menu.js'),
       main: require('./states/main.js'),
-      opti: require('./states/opti.js'),
+      options: require('./states/options.js'),
     },
 
     // game = new Phaser.Game(

@@ -7,7 +7,7 @@ function start_new_game(){
 }
 
 function go_options(){
-  game.state.start('opti');
+  game.state.start('options');
   //window.analytics.trackEvent('menu', 'options', 'Hits', 1);
 }
 

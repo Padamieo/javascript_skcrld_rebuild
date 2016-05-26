@@ -87,6 +87,15 @@ var general = {
         game.highscore = parseInt(localStorage.getItem('highscore'));
       }
 
+      // if(localStorage.getItem('tutorial') === null){
+      //   localStorage.setItem("tutorial",  1 );
+      //   game.tutorial = 1;
+      // }else{
+      //   game.tutorial = parseInt(localStorage.getItem('tutorial'));
+      // }
+      game.tutorial = true;
+
+
       //localStorage.removeItem("Website");
     }else{
       //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
