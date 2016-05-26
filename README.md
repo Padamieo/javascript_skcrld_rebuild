@@ -28,3 +28,4 @@ Run the following commands from the repo's root directory:
 
 
 https://github.com/sunnycupertino/cordova-plugin-admob-simple
+https://github.com/artberri/cordova-plugin-play-games-services
