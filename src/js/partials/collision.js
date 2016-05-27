@@ -75,6 +75,14 @@ var c = {
       // nx = (cos * (x - cx)) - (sin * (y - cy)) + cx,
       // ny = (cos * (y - cy)) + (sin * (x - cx)) + cy;
     return [nx, ny];
+  },
+
+  alculate_cordinates: function(object){
+    for (var i = 0, l = object.length; i < l; i++){
+      if(object[i].alive){
+        c.alculate_rotated_square(object[i]);
+      }
+    }
   }
 
 };

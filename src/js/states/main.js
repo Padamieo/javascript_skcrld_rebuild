@@ -35,28 +35,6 @@ main.create = function () {
   game.emitter.makeParticles('test');
   game.emitter.gravity = 200;
 
-  if(this.game.tutorial === 1){
-
-    //var phaserJSON = game.cache.getJSON('language');
-
-    this.game.ground = game.add.sprite(this.game.world.centerX, this.game.world.centerY+75, 'ground'); //also need way to calculate his 75
-    this.game.ground.anchor.setTo(0.5, 0);
-    // this.game.ground.width = this.game.width;
-    // this.game.ground.height = 300; //need find way to calcuate this
-
-    var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
-    this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, 'PRESS OF HOLD', style);
-    this.game.tutorial_text.anchor.setTo(0.5, 1);
-
-    this.game.indicator = this.add.existing(new indicator(this.game));
-
-    this.game.background_action = false;
-
-  }else{
-    this.game.background_action = true;
-    this.game.tick.start();
-  }
-
 	//bullet pool
 	this.game.bulletPool = this.game.add.group();
 	this.game.bulletPool.enableBody = true;
@@ -73,6 +51,31 @@ main.create = function () {
   this.game.kitty = this.add.existing(new Cat(this.game));
 
   this.game.rainbow = this.add.existing(new Rainbow(this.game));
+
+  if(this.game.tutorial === 1){
+
+    //var phaserJSON = game.cache.getJSON('language');
+
+    this.game.ground = game.add.sprite(this.game.world.centerX, this.game.world.centerY+75, 'ground'); //also need way to calculate his 75
+    this.game.ground.anchor.setTo(0.5, 0);
+    //this.game.ground.blendMode = PIXI.blendModes.SCREEN;
+    //need to setup animation for ledge/ground falling away
+
+    var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
+    this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, 'PRESS OF HOLD', style);
+    this.game.tutorial_text.anchor.setTo(0.5, 1);
+
+    this.game.indicator = this.add.existing(new indicator(this.game));
+
+    this.game.text_timeout = this.game.time.create(false);
+    this.game.text_timeout.loop(1000, g.text_timeout, this.game, this.game);
+
+    this.game.background_action = false;
+
+  }else{
+    this.game.background_action = true;
+    this.game.tick.start();
+  }
 
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
@@ -138,6 +141,7 @@ main.update = function(){
           localStorage.setItem("tutorial",  0 );
         }
         game.tutorial_text.setText('YAY');
+        game.text_timeout.start();
       }
 
       if(game.ground.y > game.height){
@@ -174,22 +178,10 @@ main.update = function(){
   }
 
   //generates co-ordinates of box around each bullet if one exists
-  for (var i1 = 0, l1 = this.game.bulletPool.children.length; i1 < l1; i1++){
-    if(this.game.bulletPool.children[i1].alive){
-      //console.log(i1);
-      c.alculate_rotated_square(this.game.bulletPool.children[i1]);
-
-    }
-  }
+  c.alculate_cordinates(this.game.bulletPool.children);
 
   //generates co-ordinates of box around each enemy while alive/exists
-  for (var i2 = 0, l2 = this.game.enemies.children.length; i2 < l2; i2++){
-    if(this.game.enemies.children[i2].alive){
-
-      c.alculate_rotated_square(this.game.enemies.children[i2]);
-
-    }
-  }
+  c.alculate_cordinates(this.game.enemies.children);
 
   //performs heavy collision check for bullets and enemies
   for (var i3 = 0, l3 = this.game.bulletPool.children.length; i3 < l3; i3++){
@@ -240,7 +232,7 @@ main.update = function(){
 
 };
 
-//every x seconds run this, currently causes weird invisible duplications need to resolve
+//every x seconds run this
 function updateTick(game) {
 
   game.tick_count++;

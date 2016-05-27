@@ -1,10 +1,9 @@
-// var pickup = require('pickup');
 
 var rainbow = function(game) {
 
-  //var h = (game.height/2);
-  var w = (game.width/2);
-  Phaser.Sprite.call(this, game, w, game.world.centerX, 'rainbow');
+  Phaser.Sprite.call(this, game, game.world.centerY, game.world.centerX, 'rainbow');
+
+  //this.blendMode = PIXI.blendModes.ADD;
 
   this.anchor.setTo(0.5, 0);
 
@@ -38,6 +37,7 @@ rainbow.prototype.update = function(game) {
     if(game.player.lazers === true){
 
       //navigator.vibrate([200, 200, 200, 200, 200]);
+
       if (game.kitty != null) {
         this.y = game.kitty.y+this.offset;
         this.x = game.kitty.x;

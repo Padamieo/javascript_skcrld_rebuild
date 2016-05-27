@@ -163,6 +163,12 @@ var general = {
       align: 'center'
     });
     text_button.anchor.setTo(0.5, 0.5);
+  },
+
+  text_timeout: function(game){
+    game.tick_count++;
+    game.tutorial_text.kill();
+
   }
 
 };
