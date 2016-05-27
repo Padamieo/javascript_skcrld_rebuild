@@ -71,9 +71,11 @@ main.create = function () {
     this.game.text_timeout.loop(1000, g.text_timeout, this.game, this.game);
 
     this.game.background_action = false;
+    this.game.num_enemy = 1;
 
   }else{
     this.game.background_action = true;
+    this.game.num_enemy = 2;
     this.game.tick.start();
   }
 
@@ -87,15 +89,15 @@ main.create = function () {
 
   this.game.player = this.add.existing(new Player(this.game));
 
-  this.game.max_enemy = 1;
+
   this.game.speed_ramp = 0.7;
   this.game.tick_count = 0;
   this.game.enemies_passed = 0;
-  //this.game.historic_accuracy = 0;
   this.game.amount_heatseekers = 0;
-  game.score = 0;
-  game.kills = 0;
-  game.misses = 0;
+  this.game.score = 0;
+  this.game.kills = 0;
+  this.game.misses = 0;
+  this.game.accuracy = 0;
 
   this.game.tick = this.game.time.create(false);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
@@ -227,6 +229,9 @@ main.update = function(){
         localStorage.setItem('highscore', this.game.score );
       }
     }
+
+    //this.game.accuracy //send game accuracy to google if avaliable
+
     this.game.state.start('menu');
   }
 
@@ -238,15 +243,15 @@ function updateTick(game) {
   game.tick_count++;
 
   // increase the amount of possible enemies on screen slowly based on kills - this is our natural difficulty increase
-  if(game.max_enemy <= 9){
+  if(game.num_enemy <= 9){
     enemy_add = Phaser.Math.roundTo(game.kills/5);
     if(enemy_add > 0){
-      if(game.max_enemy != enemy_add){
-        game.max_enemy = enemy_add;
+      if(game.num_enemy != enemy_add){
+        game.num_enemy = enemy_add;
       }
     }
   }
-  //console.log(game.max_enemy);
+  //console.log(game.num_enemy);
 
   heatseekers = Phaser.Math.roundTo(game.kills/20);
   //console.log(game.amount_heatseekers+"="+heatseekers);
@@ -263,6 +268,7 @@ function updateTick(game) {
 
   }
 
+  this.game.accuracy = Phaser.Math.roundTo(game.kills/(game.kills+game.misses), -2);
 
 
   //this determines if a player is doing well and increase difficulty
@@ -274,11 +280,6 @@ function updateTick(game) {
     //changes the difficulty of triggering this
     ramp = Phaser.Math.roundTo(game.speed_ramp+0.05,-3);
     game.speed_ramp = (ramp <= 0.95 ? ramp : 0.95 );
-
-    // calculates player accuracy over the game
-    total = game.kills+game.misses;
-    a = Phaser.Math.roundTo(game.kills/total, -2);
-    //console.log(a);
 
     // if(a > 0.50){
     //
@@ -310,7 +311,7 @@ function updateTick(game) {
   }
 
   //spawns an enemy
-  if(game.enemies.countLiving() < game.max_enemy){
+  if(game.enemies.countLiving() < game.num_enemy){
     var nme = game.enemies.getFirstDead();
     if (nme === null) {
       nme = new Enemy(game);
