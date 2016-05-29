@@ -18,6 +18,18 @@ opti.create = function () {
 
   g.button(phaserJSON.back, eight*6, go_menu);
 
+  window.plugins.playGamesServices.auth();
+
+  window.plugins.playGamesServices.isSignedIn(function (result) {
+    //console.log(“Do something with result.isSignedIn”);
+    g.display_text(result.isSignedIn, eight*2);
+  });
+
+  window.plugins.playGamesServices.showPlayer(function (playerData) {
+    //console.log(“Authenticated as ”+playerData['displayName']);
+    g.display_text(playerData['displayName'], eight*4);
+  });
+
 };
 
 opti.update = function (){

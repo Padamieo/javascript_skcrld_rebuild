@@ -268,7 +268,7 @@ function updateTick(game) {
 
   }
 
-  this.game.accuracy = Phaser.Math.roundTo(game.kills/(game.kills+game.misses), -2);
+  game.accuracy = Phaser.Math.roundTo(game.kills/(game.kills+game.misses), -2);
 
 
   //this determines if a player is doing well and increase difficulty

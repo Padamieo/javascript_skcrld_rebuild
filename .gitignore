@@ -8,6 +8,8 @@
 
 # intelij or android studio sdk
 /.idea
+.idea
+/gen
 
 # Build files
 /www/*
