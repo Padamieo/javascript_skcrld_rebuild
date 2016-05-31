@@ -79,6 +79,12 @@ main.create = function () {
     this.game.tick.start();
   }
 
+
+  this.game.trail = this.game.add.group();
+  this.game.trail.createMultiple(25 , 'trail');
+  this.game.trail.setAll('anchor.x', 0.5);
+  this.game.trail.setAll('anchor.y', 0);
+
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
@@ -159,8 +165,8 @@ main.update = function(){
   }
 
   if(game.background_action === true){
-    if(this.game.kitty.fall === false){
-      if(this.game.player.lazers === true){
+    if(game.kitty.fall === false){
+      if(game.player.lazers === true){
         if(background.speed < background.max_speed){
           background.speed += 0.1;
         }

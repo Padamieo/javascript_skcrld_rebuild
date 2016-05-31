@@ -116,7 +116,7 @@ var general = {
 
   enemy_colour: function(enemy_type){
     if(enemy_type === 0){
-      return 0xf24e4e;
+      return 0xf24e90;
     }
     if(enemy_type === 1){
       return 0x4ef24e;

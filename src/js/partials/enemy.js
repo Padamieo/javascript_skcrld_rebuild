@@ -7,6 +7,7 @@ var enemy = function(game) {
 
   this.events.onKilled.add(function(){
     g.explosion(game, this);
+    this.trail.kill();
   }, this);
 
   this.events.onRevived.add(function(){
@@ -31,6 +32,8 @@ var enemy = function(game) {
   this.trigger_once = 0;
 
   this.tint = g.enemy_colour(this.enemy_type);
+
+  console.log(this.height);
 
   game.enemies.add(this);
 };
@@ -94,10 +97,9 @@ enemy.prototype.update = function(game) {
       this.angle = game.math.radToDeg(angle);
     }
 
-    // this.e.x = this.x;
-    // this.e.y = this.y;
-    // this.e.lineStyle(2, 0xFF0000, 0.5);
-    // this.e.drawCircle(0, 0, 200);
+    this.trail.x = this.x;
+    this.trail.y = this.y;
+    this.trail.rotation = this.rotation/2;
 
   }
 
@@ -118,6 +120,13 @@ enemy.revive = function(game, enemy){
   enemy.angle = 0;
   enemy.trigger_once = 0;
   enemy.tint = g.enemy_colour(enemy.enemy_type);
+
+  if (game.trail.countDead() === 0) {
+    return;
+  }
+  enemy.trail = game.trail.getFirstExists(false);
+  enemy.trail.reset(enemy.x, enemy.y);
+
 };
 
 module.exports = enemy;
