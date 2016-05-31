@@ -99,7 +99,7 @@ enemy.prototype.update = function(game) {
 
     this.trail.x = this.x;
     this.trail.y = this.y;
-    this.trail.rotation = this.rotation/2;
+    this.trail.rotation = this.rotation/1.2;
 
   }
 
@@ -126,7 +126,6 @@ enemy.revive = function(game, enemy){
   }
   enemy.trail = game.trail.getFirstExists(false);
   enemy.trail.reset(enemy.x, enemy.y);
-
 };
 
 module.exports = enemy;
