@@ -147,7 +147,7 @@ var general = {
     return text.length/2.5;
   },
 
-  button: function(text, v_pos, action, enforce_width = ''){
+  button: function(text, v_pos, action, enforce_width){
     var button = game.add.button(game.world.centerX, v_pos, 'button', action, this, 1, 0, 2);
     if(enforce_width === ''){
       size = general.calculate_button_width(text);
