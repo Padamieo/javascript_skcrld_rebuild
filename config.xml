@@ -2,10 +2,10 @@
 <widget id="uk.co.padam.skcrl" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Super Kitty Cat Rainbow Lazers</name>
     <description>
-        A simple constant runner game for mobile devices
+      A simple constant runner game for mobile devices
     </description>
     <author email="michaeladamlockwood@googlemail.com" href="http://www.padam.co.uk">
-        Padam Games
+      Padam Games
     </author>
     <content src="index.html" />
     <preference name="Fullscreen" value="true" />
@@ -29,6 +29,6 @@
     <plugin name="cordova-plugin-vibration" spec="~2.1.1" />
     <plugin name="cordova-plugin-google-analytics" spec="~0.8.1" />
     <plugin name="cordova-plugin-play-games-services" spec="~1.0.0">
-        <variable name="APP_ID" value="xxx" />
+        <variable name="APP_ID" value="653547510782" />
     </plugin>
 </widget>
