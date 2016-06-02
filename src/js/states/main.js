@@ -95,7 +95,6 @@ main.create = function () {
 
   this.game.player = this.add.existing(new Player(this.game));
 
-
   this.game.speed_ramp = 0.7;
   this.game.tick_count = 0;
   this.game.enemies_passed = 0;
@@ -220,7 +219,7 @@ main.update = function(){
       var c_kitty_enemies = c.ollision_circle_square( this.game.kitty , this.game.enemies.children[i5] );
       if(c_kitty_enemies){
         this.game.enemies.children[i5].kill();
-        //this.game.bulletPool.children[i].kill();
+        
         this.game.kitty.fall = true;
         //console.log("hit");
       }

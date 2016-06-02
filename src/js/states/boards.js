@@ -1,11 +1,6 @@
-//var g = require('general');
+var g = require('general');
 
 var boards = {};
-
-function go_menu(){
-  game.state.start('menu');
-  //window.analytics.trackEvent('leaderboard', 'leaderboard', 'Hits', 1);
-}
 
 boards.create = function () {
 
@@ -13,11 +8,12 @@ boards.create = function () {
 
   var eight = (this.game.height/8);
 
+  //this will get all leaderboards
+  window.plugins.playGamesServices.showAllLeaderboards();
+
   g.display_text(phaserJSON.leaderboards, eight*1);
 
-
-
-  g.button(phaserJSON.back, eight*6, go_menu);
+  g.button(phaserJSON.back, eight*6, g.o_menu);
 
 };
 

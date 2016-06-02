@@ -3,10 +3,12 @@
 if (navigator.platform.match(/(Win)/)) {
   set_language = 'en-US'; //default should be fr-FR
   life_wait = 0.5;
+  live = false;
   start_game();
 }else{
-  document.addEventListener('deviceready', onDeviceReady, false);
+  live = true;
   life_wait = 60;
+  document.addEventListener('deviceready', onDeviceReady, false);
 }
 
 function onDeviceReady(){
@@ -31,7 +33,8 @@ function onDeviceReady(){
 
   //add vibration here
 
-
+  //check google auth or pass if localstore
+  //window.plugins.playGamesServices.auth(); // need functions for fail and success
 
   start_game();
 }
@@ -52,6 +55,7 @@ function start_game(){
       menu: require('./states/menu.js'),
       main: require('./states/main.js'),
       options: require('./states/options.js'),
+      boards: require('./states/boards.js'),
     },
 
     // game = new Phaser.Game(

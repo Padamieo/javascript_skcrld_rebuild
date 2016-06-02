@@ -2,9 +2,7 @@
 var general = {
 
   setup: function(game){
-
-
-
+    //will put generic setup stuff here so different game modes can use
   },
 
   explosion: function(game, loc){
@@ -143,13 +141,9 @@ var general = {
     return text_display;
   },
 
-  calculate_button_width: function(text){
-    return text.length/2.5;
-  },
-
   button: function(text, v_pos, action, enforce_width){
     var button = game.add.button(game.world.centerX, v_pos, 'button', action, this, 1, 0, 2);
-    if(enforce_width === ''){
+    if(enforce_width == null){
       size = general.calculate_button_width(text);
     }else{
       size = enforce_width;
@@ -163,12 +157,32 @@ var general = {
       align: 'center'
     });
     text_button.anchor.setTo(0.5, 0.5);
+    //console.log(button);
+  },
+
+  calculate_button_width: function(text){
+    return text.length/2.5;
   },
 
   text_timeout: function(game){
     game.tick_count++;
     game.tutorial_text.kill();
 
+  },
+
+  o_menu: function(){
+    game.state.start('menu');
+    //window.analytics.trackEvent('leaderboard', 'leaderboard', 'Hits', 1);
+  },
+
+  o_options: function(){
+    game.state.start('options');
+    //window.analytics.trackEvent('leaderboard', 'leaderboard', 'Hits', 1);
+  },
+
+  o_leaderboards: function(){
+    game.state.start('boards');
+    //window.analytics.trackEvent('leaderboard', 'leaderboard', 'Hits', 1);
   }
 
 };

@@ -6,11 +6,6 @@ function start_new_game(){
   game.state.start('main');
 }
 
-function go_options(){
-  game.state.start('options');
-  //window.analytics.trackEvent('menu', 'options', 'Hits', 1);
-}
-
 menu.create = function () {
 
   // window.analytics.startTrackerWithId('UA-10168261-8');
@@ -20,7 +15,7 @@ menu.create = function () {
 
   var eight = (this.game.height/8);
 
-  var menu_items = [phaserJSON.start, phaserJSON.options, 'Leaderboard', 'Get Lives', phaserJSON.exit];
+  var menu_items = [phaserJSON.start, phaserJSON.options, phaserJSON.leaderboards, 'Get Lives', phaserJSON.exit];
 
   // this should be a function
   biggest_width = 0;
@@ -33,11 +28,11 @@ menu.create = function () {
 
   g.button(phaserJSON.start, eight*1, start_new_game, biggest_width);
 
-  g.button('Leaderboard', eight*2, go_options, biggest_width);
+  g.button(phaserJSON.leaderboards, eight*2, g.o_leaderboards, biggest_width);
 
-  g.button(phaserJSON.options, eight*3, go_options, biggest_width);
+  g.button(phaserJSON.options, eight*3, g.o_options, biggest_width);
 
-  g.button('Get Lives', eight*4, go_options, biggest_width);
+  g.button('Get Lives', eight*4, g.o_options);
 
   //call update live directly then set timer to check
   g.check_store(this.game);
