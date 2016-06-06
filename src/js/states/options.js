@@ -11,7 +11,7 @@ opti.create = function () {
 
   g.button(this.game.phaserJSON.back, eight*6, g.o_menu);
 
-  g.button(this.game.phaserJSON.back, eight*6, g.o_menu);
+  g.button(this.game.phaserJSON.back, eight*2, g.o_menu);
 
 
 };

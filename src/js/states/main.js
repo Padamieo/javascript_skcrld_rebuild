@@ -137,7 +137,7 @@ main.update = function(){
   if(game.tutorial === 1){
 
       if(game.player.lazers === true){
-        game.tutorial_text.setText(this.game.phaserJSON.yay);
+        game.tutorial_text.setText(this.game.phaserJSON.now);
         game.background_action = true;
         game.tick.start();
       }
@@ -153,6 +153,7 @@ main.update = function(){
         }
         //console.log(this.game.phaserJSON.yay);
         game.tutorial_text.setText(this.game.phaserJSON.yay);
+        //add red
         game.text_timeout.start();
       }
 

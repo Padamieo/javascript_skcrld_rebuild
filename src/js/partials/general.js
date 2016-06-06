@@ -142,15 +142,25 @@ var general = {
   },
 
   button: function(text, v_pos, action, enforce_width){
-    var button = game.add.button(game.world.centerX, v_pos, 'button', action, this, 1, 0, 2);
+
     if(enforce_width == null){
       size = general.calculate_button_width(text);
     }else{
       size = enforce_width;
     }
+
+    // var button2 = game.add.graphics(game.world.centerX, v_pos);
+    // button2.beginFill(0xAAAAAA, 1);
+    // var w = size*55
+    // button2.drawRoundedRect(-w/2, -30, w, 60, 10);
+    // button2.anchor.setTo(0.5, 0.5);
+
+    var button = game.add.button(game.world.centerX, v_pos, 'button', action, this, 1, 0, 2);
+    button.opacity = 0.5;
     //max size will be 7.5 if it is reduce size of font
     button.scale.x = size;
     button.anchor.setTo(0.5, 0.5);
+
     var text_button = game.add.text(game.world.centerX, v_pos, text, {
       font: 'bold 20pt Arial',
       fill: '#ffffff',

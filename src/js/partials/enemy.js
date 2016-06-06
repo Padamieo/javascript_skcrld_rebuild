@@ -33,8 +33,6 @@ var enemy = function(game) {
 
   this.tint = g.enemy_colour(this.enemy_type);
 
-  console.log(this.height);
-
   game.enemies.add(this);
 };
 
