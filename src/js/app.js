@@ -3,12 +3,29 @@
 if (navigator.platform.match(/(Win)/)) {
   set_language = 'en-US'; //default should be fr-FR
   life_wait = 0.5;
-  live = false;
+  phone = false;
   start_game();
 }else{
-  live = true;
+  phone = true;
   life_wait = 60;
   document.addEventListener('deviceready', onDeviceReady, false);
+}
+
+function success_auth(test){
+  console.log(test);
+  if(localStorage != undefined){
+    if(localStorage.getItem('auth') === null){
+      localStorage.setItem('auth', true );
+    }
+  }
+}
+
+function fail_auth(){
+  if(localStorage != undefined){
+    if(localStorage.getItem('auth') === null){
+      localStorage.setItem('auth', false );
+    }
+  }
 }
 
 function onDeviceReady(){
@@ -34,7 +51,13 @@ function onDeviceReady(){
   //add vibration here
 
   //check google auth or pass if localstore
-  //window.plugins.playGamesServices.auth(); // need functions for fail and success
+  if(localStorage != undefined){
+    if(localStorage.getItem('auth') === null){
+      window.plugins.playGamesServices.auth(success_auth, fail_auth);
+    }else if(localStorage.getItem('auth') === true){
+      window.plugins.playGamesServices.auth(success_auth, fail_auth);
+    }
+  }
 
   start_game();
 }
@@ -57,22 +80,6 @@ function start_game(){
       options: require('./states/options.js'),
       boards: require('./states/boards.js'),
     },
-
-    // game = new Phaser.Game(
-    //   window.innerWidth*window.devicePixelRatio,
-    //   window.innerHeight*window.devicePixelRatio,
-    //   Phaser.AUTO,
-    //   'game'
-    // );
-
-    // w = properties.size.x;
-    // h = properties.size.y;
-    // console.log(w+" "+h);
-    // r = gcd (w, h);
-    // console.log(r);
-    // console.log("Aspect=", w/r, ":", h/r);
-    // v = (w/r)/(h/r);
-    // console.log("v"+v);
 
     w = window.innerWidth;
     h = window.innerHeight;

@@ -52,6 +52,9 @@ main.create = function () {
 
   this.game.rainbow = this.add.existing(new Rainbow(this.game));
 
+  this.game.tick = this.game.time.create(false);
+  this.game.tick.loop(2000, updateTick, this.game, this.game);
+
   if(this.game.tutorial === 1){
 
     //var phaserJSON = game.cache.getJSON('language');
@@ -61,8 +64,8 @@ main.create = function () {
     //this.game.ground.blendMode = PIXI.blendModes.SCREEN;
     //need to setup animation for ledge/ground falling away
 
-    var style = { font: 'bold 60pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
-    this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, 'PRESS OF HOLD', style);
+    var style = { font: 'bold 50pt Arial', fill: 'white', align: 'center', wordWrap: true, wordWrapWidth: this.game.width };
+    this.game.tutorial_text = this.game.add.text(this.game.world.centerX, this.game.height, this.game.phaserJSON.hold, style);
     this.game.tutorial_text.anchor.setTo(0.5, 1);
 
     this.game.indicator = this.add.existing(new indicator(this.game));
@@ -88,10 +91,14 @@ main.create = function () {
   // this.game.enemies = this.game.add.group();
   this.game.enemies = new Phaser.Group(this.game);
 
+  // older phone need to use the following instead of fill
+  // this.game.enemy_array = new Array();
+  // for (i = 0; i < 20; i++){
+  //   this.game.enemy_array[i] = 0;
+  // }
   this.game.enemy_array = new Array(20).fill(0);
   i = game.rnd.integerInRange(0, 19);
   this.game.enemy_array[i] = 1;
-  //console.log(this.game.enemy_array);
 
   this.game.player = this.add.existing(new Player(this.game));
 
@@ -103,9 +110,6 @@ main.create = function () {
   this.game.kills = 0;
   this.game.misses = 0;
   this.game.accuracy = 0;
-
-  this.game.tick = this.game.time.create(false);
-  this.game.tick.loop(2000, updateTick, this.game, this.game);
 
   //create explotion animations as group to be called, need to add scale
   game.explosion = game.add.group();
@@ -133,7 +137,7 @@ main.update = function(){
   if(game.tutorial === 1){
 
       if(game.player.lazers === true){
-        game.tutorial_text.setText('NOW');
+        game.tutorial_text.setText(this.game.phaserJSON.yay);
         game.background_action = true;
         game.tick.start();
       }
@@ -147,7 +151,8 @@ main.update = function(){
         if(localStorage !== undefined){
           localStorage.setItem("tutorial",  0 );
         }
-        game.tutorial_text.setText('YAY');
+        //console.log(this.game.phaserJSON.yay);
+        game.tutorial_text.setText(this.game.phaserJSON.yay);
         game.text_timeout.start();
       }
 
@@ -219,7 +224,7 @@ main.update = function(){
       var c_kitty_enemies = c.ollision_circle_square( this.game.kitty , this.game.enemies.children[i5] );
       if(c_kitty_enemies){
         this.game.enemies.children[i5].kill();
-        
+
         this.game.kitty.fall = true;
         //console.log("hit");
       }

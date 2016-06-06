@@ -62,7 +62,7 @@ var general = {
 
   check_store: function(game){
     if(localStorage != undefined){
-      console.log("Local Storage is supported");
+      //console.log("Local Storage is supported");
 
       if(localStorage.getItem('lives') === null){
         localStorage.setItem('lives', 9 );
