@@ -170,6 +170,46 @@ var general = {
     //console.log(button);
   },
 
+  button_new: function(text, v_pos, action, enforce_width){
+
+    if(enforce_width == null){
+      size = general.calculate_button_width(text);
+    }else{
+      size = enforce_width;
+    }
+
+    // play button
+    var e = game.add.graphics(0, 0);
+    // draw a rectangle
+    e.lineStyle(2, 0x0000FF, 0.5);
+    e.beginFill(0xFF8080, 1);
+    e.drawRect(game.world.centerX - 50, game.world.centerY - 50, 100, 100);
+    e.endFill();
+    // input
+    e.inputEnabled = true;
+    v = e.events.onInputDown.add(general.clickListener, this);
+    console.log(v);
+    
+    var text_button = game.add.text(game.world.centerX, v_pos, text, {
+      font: 'bold 20pt Arial',
+      fill: '#ffffff',
+      align: 'center'
+    });
+    text_button.anchor.setTo(0.5, 0.5);
+    //console.log(button);
+  },
+
+  clickListener: function (v) {
+    console.log("Pressed ...");
+    v.clear();
+    v.lineStyle(2, 0x00ffFF, 0.5);
+    v.beginFill(0xFFff80, 1);
+    v.drawRect(game.world.centerX - 50, game.world.centerY - 50, 100, 100);
+    v.endFill();
+    v.beginFill(0x0000FF, 1);
+    return true;
+  },
+
   calculate_button_width: function(text){
     return text.length/2.5;
   },

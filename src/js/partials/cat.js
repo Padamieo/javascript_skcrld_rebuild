@@ -26,7 +26,6 @@ var cat = function(game) {
     localStorage.setItem('timestamp', game.timestamp );
   }
 
-
 	this.game.add.existing(this);
 };
 

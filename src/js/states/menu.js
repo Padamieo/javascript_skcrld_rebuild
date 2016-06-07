@@ -32,7 +32,7 @@ this.game.phaserJSON = this.game.cache.getJSON('language');
 
   g.button(this.game.phaserJSON.options, eight*3, g.o_options, biggest_width);
 
-  g.button('Get Lives', eight*4, g.o_options);
+  g.button_new('Get Lives', eight*4, g.o_options);
 
   //call update live directly then set timer to check
   g.check_store(this.game);
