@@ -60,7 +60,7 @@ player.prototype.update = function(game) {
     if(this.endtime < game.time.now){
       this.lazers = true;
       this.tap = 0;
-      // g.shake(game);
+      //vibration here?
     }
 
 	}else{

@@ -50,7 +50,7 @@ function onDeviceReady(){
 
   //add vibration here
 
-  //check google auth or pass if localstore
+  //check google auth or pass if localstore //only request this if online
   if(localStorage != undefined){
     if(localStorage.getItem('auth') === null){
       window.plugins.playGamesServices.auth(success_auth, fail_auth);
@@ -59,7 +59,15 @@ function onDeviceReady(){
     }
   }
 
+  document.addEventListener("online", yourCallbackFunction, false);
+  //document.addEventListener("offline", onOffline, false);
+
   start_game();
+}
+
+//this does not get called on startup?
+function yourCallbackFunction(){
+  console.log("online callback function");
 }
 
 function gcd (a, b) {

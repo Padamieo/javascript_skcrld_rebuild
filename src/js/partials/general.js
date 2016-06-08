@@ -181,15 +181,16 @@ var general = {
     // play button
     var e = game.add.graphics(0, 0);
     // draw a rectangle
-    e.lineStyle(2, 0x0000FF, 0.5);
+    //e.lineStyle(2, 0x0000FF, 0.5);
     e.beginFill(0xFF8080, 1);
-    e.drawRect(game.world.centerX - 50, game.world.centerY - 50, 100, 100);
+    var w = size*55
+    e.drawRoundedRect(game.world.centerX - w/2, v_pos - 25, w, 50, 8);
     e.endFill();
     // input
     e.inputEnabled = true;
-    v = e.events.onInputDown.add(general.clickListener, this);
-    console.log(v);
-    
+    e.a = action;
+    e.events.onInputDown.add(general.clickListener, this);
+
     var text_button = game.add.text(game.world.centerX, v_pos, text, {
       font: 'bold 20pt Arial',
       fill: '#ffffff',
@@ -202,11 +203,13 @@ var general = {
   clickListener: function (v) {
     console.log("Pressed ...");
     v.clear();
-    v.lineStyle(2, 0x00ffFF, 0.5);
+    //v.lineStyle(2, 0x00ffFF, 0.5);
     v.beginFill(0xFFff80, 1);
-    v.drawRect(game.world.centerX - 50, game.world.centerY - 50, 100, 100);
+    var w = size*55
+    v.drawRoundedRect(game.world.centerX - w/2, game.world.centerY - 25, w, 50, 8);
     v.endFill();
     v.beginFill(0x0000FF, 1);
+    v.a();
     return true;
   },
 

@@ -28,6 +28,7 @@
     <plugin name="cordova-plugin-globalization" spec="~1.0.3" />
     <plugin name="cordova-plugin-vibration" spec="~2.1.1" />
     <plugin name="cordova-plugin-google-analytics" spec="~0.8.1" />
+    <plugin name="cordova-plugin-network-information" spec="~1.2.1" />
     <plugin name="cordova-plugin-play-games-services" spec="~1.0.0">
         <variable name="APP_ID" value="653547510782" />
     </plugin>

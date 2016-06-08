@@ -132,7 +132,13 @@ main.create = function () {
 };
 
 main.update = function(){
-  //console.log(game.tutorial);
+
+  //testing out shake? its not working
+  // console.log(this.game.input.keyboard.addKey(Phaser.Keyboard.UP));
+  // if (this.game.input.keyboard.addKey(Phaser.Keyboard.UP)){
+  //   g.shake(this.game);
+  //   console.log("shake");
+  // }
 
   if(game.tutorial === 1){
 
