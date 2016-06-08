@@ -10,6 +10,9 @@ var main = {};
 
 main.create = function () {
 
+  // this may resolve issue with garbage collection
+  //this.game.forceSingleUpdate = true;
+
   this.game.physics.startSystem(Phaser.Physics.ARCADE);
   // this.game.physics.arcade.gravity.y = 0;
 
@@ -92,11 +95,11 @@ main.create = function () {
   this.game.enemies = new Phaser.Group(this.game);
 
   // older phone need to use the following instead of fill
-  // this.game.enemy_array = new Array();
-  // for (i = 0; i < 20; i++){
-  //   this.game.enemy_array[i] = 0;
-  // }
-  this.game.enemy_array = new Array(20).fill(0);
+  this.game.enemy_array = new Array();
+  for (i = 0; i < 20; i++){
+    this.game.enemy_array[i] = 0;
+  }
+  // this.game.enemy_array = new Array(20).fill(0);
   i = game.rnd.integerInRange(0, 19);
   this.game.enemy_array[i] = 1;
 

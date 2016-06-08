@@ -182,8 +182,8 @@ var general = {
     var e = game.add.graphics(0, 0);
     // draw a rectangle
     //e.lineStyle(2, 0x0000FF, 0.5);
-    e.beginFill(0xFF8080, 1);
-    var w = size*55
+    e.beginFill(0x3A99D8, 1);
+    var w = size*50;
     e.drawRoundedRect(game.world.centerX - w/2, v_pos - 25, w, 50, 8);
     e.endFill();
     // input
@@ -205,7 +205,7 @@ var general = {
     v.clear();
     //v.lineStyle(2, 0x00ffFF, 0.5);
     v.beginFill(0xFFff80, 1);
-    var w = size*55
+    var w = size*50;
     v.drawRoundedRect(game.world.centerX - w/2, game.world.centerY - 25, w, 50, 8);
     v.endFill();
     v.beginFill(0x0000FF, 1);
