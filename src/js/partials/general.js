@@ -178,18 +178,19 @@ var general = {
       size = enforce_width;
     }
 
-    // play button
-    var e = game.add.graphics(0, 0);
     // draw a rectangle
-    //e.lineStyle(2, 0x0000FF, 0.5);
+    var e = game.add.graphics(0, 0);
     e.beginFill(0x3A99D8, 1);
-    var w = size*50;
-    e.drawRoundedRect(game.world.centerX - w/2, v_pos - 25, w, 50, 8);
+    e.set_size = size;
+    e.v_pos = v_pos;
+    e.drawRoundedRect(game.world.centerX - (e.set_size*50)/2, v_pos - 25, (e.set_size*50), 50, 8);
     e.endFill();
     // input
     e.inputEnabled = true;
     e.a = action;
-    e.events.onInputDown.add(general.clickListener, this);
+
+    e.events.onInputDown.add( general.clickListener, this );
+    e.events.onInputUp.add( action, this);
 
     var text_button = game.add.text(game.world.centerX, v_pos, text, {
       font: 'bold 20pt Arial',
@@ -197,20 +198,16 @@ var general = {
       align: 'center'
     });
     text_button.anchor.setTo(0.5, 0.5);
-    //console.log(button);
+
   },
 
   clickListener: function (v) {
-    console.log("Pressed ...");
+
     v.clear();
-    //v.lineStyle(2, 0x00ffFF, 0.5);
     v.beginFill(0xFFff80, 1);
-    var w = size*50;
-    v.drawRoundedRect(game.world.centerX - w/2, game.world.centerY - 25, w, 50, 8);
+    v.drawRoundedRect(game.world.centerX - (v.set_size*50)/2, v.v_pos - 25, (v.set_size*50), 50, 8);
     v.endFill();
-    v.beginFill(0x0000FF, 1);
-    v.a();
-    return true;
+
   },
 
   calculate_button_width: function(text){

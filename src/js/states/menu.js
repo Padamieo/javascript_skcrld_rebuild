@@ -26,13 +26,13 @@ this.game.phaserJSON = this.game.cache.getJSON('language');
     }
   }
 
-  g.button(this.game.phaserJSON.start, eight*1, start_new_game, biggest_width);
+  g.button_new(this.game.phaserJSON.start, eight*1, start_new_game, biggest_width);
 
   g.button(this.game.phaserJSON.leaderboards, eight*2, g.o_leaderboards, biggest_width);
 
-  g.button(this.game.phaserJSON.options, eight*3, g.o_options, biggest_width);
+  g.button_new(this.game.phaserJSON.options, eight*3, g.o_options, biggest_width);
 
-  g.button_new('Get Lives', eight*4, g.o_options);
+  g.button_new(this.game.phaserJSON.getlives, eight*4, g.o_options);
 
   //call update live directly then set timer to check
   g.check_store(this.game);
