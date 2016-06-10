@@ -13,7 +13,7 @@ menu.create = function () {
 
 this.game.phaserJSON = this.game.cache.getJSON('language');
 
-  var eight = (this.game.height/8);
+  eight = (this.game.height/8);
 
   var menu_items = [this.game.phaserJSON.start, this.game.phaserJSON.options, this.game.phaserJSON.leaderboards, 'Get Lives', this.game.phaserJSON.exit];
 
@@ -25,8 +25,10 @@ this.game.phaserJSON = this.game.cache.getJSON('language');
       biggest_width = v;
     }
   }
+  this.game.button = '';
 
-  g.button_new(this.game.phaserJSON.start, eight*1, start_new_game, biggest_width);
+  s = g.button_new(this.game.phaserJSON.start, eight*1, start_new_game, biggest_width);
+  console.log(s.v_pos);
 
   g.button(this.game.phaserJSON.leaderboards, eight*2, g.o_leaderboards, biggest_width);
 
@@ -62,7 +64,17 @@ this.game.phaserJSON = this.game.cache.getJSON('language');
 };
 
 menu.update = function (){
+
+  if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
+    console.log("shake");
+    //s.kill();
+    g.clickListener(s); //interesting
+    //s = g.button_new(this.game.phaserJSON.start, eight*1.5, start_new_game, biggest_width);
+  }
+
   //console.log("your on menu");
+  // console.log(s.v_pos);
+  // s.v_pos+0.001;
 };
 
 module.exports = menu;

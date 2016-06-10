@@ -190,19 +190,21 @@ var general = {
     e.a = action;
 
     e.events.onInputDown.add( general.clickListener, this );
-    e.events.onInputUp.add( action, this);
+    e.events.onInputUp.add( e.a, this);
 
-    var text_button = game.add.text(game.world.centerX, v_pos, text, {
+    e.text = game.add.text(game.world.centerX, v_pos, text, {
       font: 'bold 20pt Arial',
       fill: '#ffffff',
       align: 'center'
     });
-    text_button.anchor.setTo(0.5, 0.5);
+    e.text.anchor.setTo(0.5, 0.5);
+
+    return e;
 
   },
 
   clickListener: function (v) {
-
+    //should v be this so i can call it on main.js update
     v.clear();
     v.beginFill(0xFFff80, 1);
     v.drawRoundedRect(game.world.centerX - (v.set_size*50)/2, v.v_pos - 25, (v.set_size*50), 50, 8);
