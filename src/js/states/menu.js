@@ -7,8 +7,7 @@ function start_new_game(){
 }
 
 menu.create = function () {
-
-  // window.analytics.startTrackerWithId('UA-10168261-8');
+  
   // window.analytics.trackView('menu');
 
 this.game.phaserJSON = this.game.cache.getJSON('language');

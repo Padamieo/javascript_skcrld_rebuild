@@ -62,6 +62,8 @@ function onDeviceReady(){
   document.addEventListener("online", yourCallbackFunction, false);
   //document.addEventListener("offline", onOffline, false);
 
+  // window.analytics.startTrackerWithId('UA-10168261-8');
+
   start_game();
 }
 
