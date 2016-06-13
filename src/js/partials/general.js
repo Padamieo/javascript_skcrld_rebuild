@@ -91,8 +91,14 @@ var general = {
       }else{
         game.tutorial = localStorage.getItem('tutorial');
       }
-      game.tutorial = 1;
+      game.tutorial = 1; //got tutorial perma active here
 
+      if(localStorage.getItem('vibration') === null){
+        localStorage.setItem("vibration",  1 );
+        game.vibration = 1;
+      }else{
+        game.vibration = localStorage.getItem('vibration');
+      }
 
       //localStorage.removeItem("Website");
     }else{
@@ -180,17 +186,21 @@ var general = {
 
     // draw a rectangle
     var e = game.add.graphics(0, 0);
-    e.beginFill(0x3A99D8, 1);
+    colour = (action != '' ? 0x3A99D8 : 0x555555 );
+    e.beginFill(colour, 1);
     e.set_size = size;
     e.v_pos = v_pos;
     e.drawRoundedRect(game.world.centerX - (e.set_size*50)/2, v_pos - 25, (e.set_size*50), 50, 8);
     e.endFill();
     // input
     e.inputEnabled = true;
-    e.a = action;
 
-    e.events.onInputDown.add( general.clickListener, this );
-    e.events.onInputUp.add( e.a, this);
+    if(action != ''){
+      e.a = action;
+      e.events.onInputDown.add( general.clickListener, this );
+      e.events.onInputUp.add( e.a, this);
+    }
+
 
     e.text = game.add.text(game.world.centerX, v_pos, text, {
       font: 'bold 20pt Arial',

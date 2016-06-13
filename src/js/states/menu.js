@@ -7,10 +7,17 @@ function start_new_game(){
 }
 
 menu.create = function () {
-  
+
   // window.analytics.trackView('menu');
 
 this.game.phaserJSON = this.game.cache.getJSON('language');
+
+  //call update live directly then set timer to check
+  g.check_store(this.game);
+
+  var lives_update = this.game.time.create(false);
+  lives_update.loop(10000, g.update_lives, this.game, this.game);
+  lives_update.start();
 
   eight = (this.game.height/8);
 
@@ -24,29 +31,23 @@ this.game.phaserJSON = this.game.cache.getJSON('language');
       biggest_width = v;
     }
   }
-  this.game.button = '';
 
-  s = g.button_new(this.game.phaserJSON.start, eight*1, start_new_game, biggest_width);
-  console.log(s.v_pos);
+  //this.game.button = '';
+  start = ( this.game.lives >= 1 ? start_new_game : '' );
+  s = g.button_new(this.game.phaserJSON.start, eight*1, start, biggest_width);
 
-  g.button(this.game.phaserJSON.leaderboards, eight*2, g.o_leaderboards, biggest_width);
+  leadboards = ( phone ? g.o_leaderboards : '' );
+  g.button_new(this.game.phaserJSON.leaderboards, eight*2, leadboards, biggest_width);
 
   g.button_new(this.game.phaserJSON.options, eight*3, g.o_options, biggest_width);
 
   g.button_new(this.game.phaserJSON.getlives, eight*4, g.o_options);
 
-  //call update live directly then set timer to check
-  g.check_store(this.game);
-
-  var lives_update = this.game.time.create(false);
-  lives_update.loop(10000, g.update_lives, this.game, this.game);
-  lives_update.start();
-
   this.game.text_lives = g.display_text(this.game.phaserJSON.lives+' '+this.game.lives, eight*5);
 
   g.display_text(this.game.phaserJSON.score+' '+this.game.highscore, eight*6);
 
-  g.button(this.game.phaserJSON.exit, eight*7, g.click_exit, biggest_width);
+  g.button_new(this.game.phaserJSON.exit, eight*7, g.click_exit, biggest_width);
 
   // window.plugins.playGamesServices.isSignedIn(function (result) {
   //   //console.log(“Do something with result.isSignedIn”);
@@ -69,8 +70,17 @@ menu.update = function (){
     //s.kill();
     g.clickListener(s); //interesting
     //s = g.button_new(this.game.phaserJSON.start, eight*1.5, start_new_game, biggest_width);
+    this.game.lives = 1;
   }
 
+  //if lives change update button s
+  // if(!game.lives >= 1){
+  //   //start = ( this.game.lives >= 1 ? start_new_game : '' );
+  //   s.text.kill();
+  //   s.kill();
+  //   start = ( this.game.lives >= 1 ? start_new_game : '' );
+  //   s = g.button_new(this.game.phaserJSON.start, eight*1, start, biggest_width);
+  // }
   //console.log("your on menu");
   // console.log(s.v_pos);
   // s.v_pos+0.001;

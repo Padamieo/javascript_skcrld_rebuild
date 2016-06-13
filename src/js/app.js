@@ -30,10 +30,10 @@ function fail_auth(){
 
 function onDeviceReady(){
 
-  //working language detection
+  //language detection
   navigator.globalization.getPreferredLanguage(
     function (language) {
-      console.log('language: ' + language.value);
+      //console.log('language: ' + language.value);
       str = language.value;
       if(str.substring(0, 2) === 'en'){
         set_language = 'en-US';
@@ -44,13 +44,25 @@ function onDeviceReady(){
     },
     function () {
       console.log('Error getting language');
+      //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
       set_language = 'en-US';
     }
   );
 
-  //add vibration here
+  if(we_online()){
+    //check google auth or pass if localstore //only request this if online
+    playgameservices();
+    //start tracking within google analytics
+    ga_start_tracking();
+  }
 
-  //check google auth or pass if localstore //only request this if online
+  document.addEventListener("online", now_online, false);
+  document.addEventListener("offline", now_offline, false);
+
+  start_game();
+}
+
+function playgameservices(){
   if(localStorage != undefined){
     if(localStorage.getItem('auth') === null){
       window.plugins.playGamesServices.auth(success_auth, fail_auth);
@@ -58,18 +70,33 @@ function onDeviceReady(){
       window.plugins.playGamesServices.auth(success_auth, fail_auth);
     }
   }
-
-  document.addEventListener("online", yourCallbackFunction, false);
-  //document.addEventListener("offline", onOffline, false);
-
-  // window.analytics.startTrackerWithId('UA-10168261-8');
-
-  start_game();
 }
 
-//this does not get called on startup?
-function yourCallbackFunction(){
-  console.log("online callback function");
+function ga_start_tracking(){
+  window.analytics.startTrackerWithId('UA-10168261-8');
+}
+
+function we_online(){
+  var networkState = navigator.connection.type;
+  if (networkState !== Connection.NONE) {
+    return true;
+  }else{
+    return false;
+  }
+}
+
+//only called when we go online, no referance to what connection type.
+function now_online(){
+  console.log("now_online event triggered");
+  if(we_online()){
+    playgameservices();
+    ga_start_tracking();
+    //now allow playsgameservice and analytics calls
+  }
+}
+
+function now_offline(){
+  //now prevent playsgameservice and analytics calls
 }
 
 function gcd (a, b) {
