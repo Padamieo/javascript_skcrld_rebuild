@@ -85,6 +85,8 @@ var general = {
         game.highscore = parseInt(localStorage.getItem('highscore'));
       }
 
+      //dont need to call the following every menu load
+
       if(localStorage.getItem('tutorial') === null){
         localStorage.setItem("tutorial",  1 );
         game.tutorial = 1;
@@ -102,8 +104,10 @@ var general = {
 
       //localStorage.removeItem("Website");
     }else{
-      //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
-      console.log("No support");
+      if(game.online){
+        //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
+        console.log("No support");
+      }
     }
   },
 

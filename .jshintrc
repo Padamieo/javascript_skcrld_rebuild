@@ -25,6 +25,7 @@
   "-W008": true,
   "unused": true,
   "predef": [
-    "Phaser"
+    "Phaser",
+    "game"
   ]
 }

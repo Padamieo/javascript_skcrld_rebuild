@@ -33,18 +33,17 @@ function onDeviceReady(){
   //language detection
   navigator.globalization.getPreferredLanguage(
     function (language) {
-      //console.log('language: ' + language.value);
-      str = language.value;
+      var str = language.value;
       if(str.substring(0, 2) === 'en'){
         set_language = 'en-US';
       }else{
         set_language = language.value;
       }
-      lang = language.value;
     },
     function () {
-      console.log('Error getting language');
-      //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
+      //if(game.online){
+        //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
+      //}
       set_language = 'en-US';
     }
   );
@@ -92,15 +91,25 @@ function now_online(){
     playgameservices();
     ga_start_tracking();
     //now allow playsgameservice and analytics calls
+    if(game != null){
+      console.log("no action issue with game");
+    }else{
+      game.online = true;
+    }
   }
 }
 
 function now_offline(){
   //now prevent playsgameservice and analytics calls
+  if(game != null){
+    console.log("no action issue with game");
+  }else{
+    game.online = false;
+  }
 }
 
 function gcd (a, b) {
-  return (b == 0) ? a : gcd (b, a%b);
+  return (b === 0) ? a : gcd (b, a%b);
 }
 
 function start_game(){
@@ -116,21 +125,15 @@ function start_game(){
       main: require('./states/main.js'),
       options: require('./states/options.js'),
       boards: require('./states/boards.js'),
-    },
+    };
 
-    w = window.innerWidth;
-    h = window.innerHeight;
-    r = gcd (w, h);
-    v = (w/r)/(h/r);
-
-    if(v >= 0.50 && v <= 0.62){
-      console.log("size close engouth");
-      width = window.innerWidth;
-      height = window.innerHeight;
-    }else{
-      width = properties.size.x;
-      height = properties.size.y;
-    }
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var r = gcd (w, h);
+    var v = (w/r)/(h/r);
+    var criteria = (v >= 0.50 && v <= 0.62);
+    var width = (criteria ?  window.innerWidth : properties.size.x);
+    var height = (criteria ?  window.innerHeight : properties.size.y);
 
     game = new Phaser.Game(
       width,

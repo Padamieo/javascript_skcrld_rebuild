@@ -137,8 +137,7 @@ main.create = function () {
 main.update = function(){
 
   //testing out shake? its not working
-  // console.log(this.game.input.keyboard.addKey(Phaser.Keyboard.UP));
-  // if (this.game.input.keyboard.addKey(Phaser.Keyboard.UP)){
+  // if (game.input.keyboard.isDown(Phaser.Keyboard.Z)){
   //   g.shake(this.game);
   //   console.log("shake");
   // }
@@ -208,10 +207,8 @@ main.update = function(){
   //performs heavy collision check for bullets and enemies
   for (var i3 = 0, l3 = this.game.bulletPool.children.length; i3 < l3; i3++){
     if(this.game.bulletPool.children[i3].alive){
-
       for (var i4 = 0, l4 = this.game.enemies.children.length; i4 < l4; i4++){
         if(this.game.enemies.children[i4].alive){
-
           var c_bullet_enemies = c.ollision_square_square(this.game.enemies.children[i4], this.game.bulletPool.children[i3]);
           if(c_bullet_enemies){
             this.game.enemies.children[i4].kill();
@@ -230,15 +227,11 @@ main.update = function(){
 
   for (var i5  = 0, l5 = this.game.enemies.children.length; i5 < l5; i5++){
     if(this.game.enemies.children[i5].alive){
-
       var c_kitty_enemies = c.ollision_circle_square( this.game.kitty , this.game.enemies.children[i5] );
       if(c_kitty_enemies){
         this.game.enemies.children[i5].kill();
-
         this.game.kitty.fall = true;
-        //console.log("hit");
       }
-
     }
   }
 
@@ -247,11 +240,12 @@ main.update = function(){
     if(localStorage !== undefined){
       if(this.game.score > this.game.highscore){
         localStorage.setItem('highscore', this.game.score );
+        if(this.game.online){
+          //push highscore to google play services if logged in
+        }
       }
     }
-
-    //this.game.accuracy //send game accuracy to google if avaliable
-
+      //this.game.accuracy //send game accuracy to google if avaliable
     this.game.state.start('menu');
   }
 

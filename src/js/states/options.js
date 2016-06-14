@@ -9,10 +9,10 @@ opti.create = function () {
 
   g.display_text(this.game.phaserJSON.options, eight*1);
 
-  g.button(this.game.phaserJSON.back, eight*6, g.o_menu);
+  g.button(this.game.phaserJSON.back, eight*7, g.o_menu);
 
   //sound on off
-  g.button_new('sound', eight*3, '');
+  g.button_new('sound', eight*2, '');
 
   //game.vibration
   console.log(this.game.vibration);
