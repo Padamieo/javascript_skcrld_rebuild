@@ -157,7 +157,12 @@ var general = {
   },
 
   build_button_visual(){
-
+    //this will generate a rectangle and has fallbacks test it
+    var button = game.add.graphics(0, 0);
+    button.beginFill(colour, (opacity != '' ? opacity : 1 ));
+    button.drawRoundedRect(x, y, (height != '' ? height : 50), (height != '' ? height : 50), (rounded != '' ? rounded : 8));
+    button.endFill();
+    return button;
   },
 
   check_option: function(text, loc, colours){
