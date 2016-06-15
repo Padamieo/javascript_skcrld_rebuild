@@ -274,7 +274,7 @@ function updateTick(game) {
 
     v = game.enemy_array.indexOf(0);
     if(v < 0){
-      //this means we are out of 1 to add in our array
+      //this means we are out of 1's(homing type) to add in our array
     }else{
       game.enemy_array[v] = 1;
       //console.log(game.enemy_array);

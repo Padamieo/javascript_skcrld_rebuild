@@ -141,8 +141,9 @@ var general = {
     this.game.misses++;
   },
 
-  display_text: function(text, v_pos){
-    text_display = game.add.text(game.world.centerX, v_pos, text, {
+  display_text: function(text, loc){
+    var pos = (!loc.isArray ? (loc === '' ? [game.world.centerX, game.world.centerY]: [game.world.centerX, loc]) : loc);
+    var text_display = game.add.text(pos[0], pos[1], text, {
       font: 'bold 20pt Arial',
       fill: '#ffffff',
       align: 'center'
@@ -151,36 +152,35 @@ var general = {
     return text_display;
   },
 
-  button: function(text, v_pos, action, enforce_width){
+  default_button_colours: function(){
+    return ['0x3A99D8', '0x58d83a', '0x555555'];
+  },
 
-    if(enforce_width == null){
-      size = general.calculate_button_width(text);
-    }else{
-      size = enforce_width;
+  build_button_visual(){
+
+  },
+
+  check_option: function(text, loc, colours){
+    if(!text.isArray){
+      text = [game.phaserJSON.on, game.phaserJSON.off];
     }
 
-    // var button2 = game.add.graphics(game.world.centerX, v_pos);
-    // button2.beginFill(0xAAAAAA, 1);
-    // var w = size*55
-    // button2.drawRoundedRect(-w/2, -30, w, 60, 10);
-    // button2.anchor.setTo(0.5, 0.5);
+    var check = game.add.graphics(0, 0);
+    check.colours = (colours === '' ? general.default_button_colours() : general.default_button_colours() );
+    check.beginFill(check.colour[0], 1);
+    check.set_size = size;
+    check.v_pos = loc;
+    check.drawRoundedRect(game.world.centerX - (check.set_size*50)/2, check.v_pos - 25, (check.set_size*50), 50, 8);
+    check.endFill();
 
-    var button = game.add.button(game.world.centerX, v_pos, 'button', action, this, 1, 0, 2);
-    button.opacity = 0.5;
-    //max size will be 7.5 if it is reduce size of font
-    button.scale.x = size;
-    button.anchor.setTo(0.5, 0.5);
+    check.text = general.display_text(text, loc);
 
-    var text_button = game.add.text(game.world.centerX, v_pos, text, {
-      font: 'bold 20pt Arial',
-      fill: '#ffffff',
-      align: 'center'
-    });
-    text_button.anchor.setTo(0.5, 0.5);
-    //console.log(button);
   },
 
   button_new: function(text, v_pos, action, enforce_width){
+    //loc = {x_pos, y_pos, width, height};
+    // colours = {press,hover,alt};
+    // actions = {press,alt};
 
     if(enforce_width == null){
       size = general.calculate_button_width(text);
@@ -190,8 +190,9 @@ var general = {
 
     // draw a rectangle
     var e = game.add.graphics(0, 0);
-    colour = (action != '' ? 0x3A99D8 : 0x555555 );
-    e.beginFill(colour, 1);
+    colour = (action != '' ? 0 : 2 );
+    e.colours = general.default_button_colours();
+    e.beginFill(e.colours[colour], 1);
     e.set_size = size;
     e.v_pos = v_pos;
     e.drawRoundedRect(game.world.centerX - (e.set_size*50)/2, v_pos - 25, (e.set_size*50), 50, 8);
@@ -205,13 +206,7 @@ var general = {
       e.events.onInputUp.add( e.a, this);
     }
 
-
-    e.text = game.add.text(game.world.centerX, v_pos, text, {
-      font: 'bold 20pt Arial',
-      fill: '#ffffff',
-      align: 'center'
-    });
-    e.text.anchor.setTo(0.5, 0.5);
+    e.text = general.display_text(text, v_pos);
 
     return e;
 
@@ -220,7 +215,7 @@ var general = {
   clickListener: function (v) {
     //should v be this so i can call it on main.js update
     v.clear();
-    v.beginFill(0xFFff80, 1);
+    v.beginFill(v.colours[1], 1);
     v.drawRoundedRect(game.world.centerX - (v.set_size*50)/2, v.v_pos - 25, (v.set_size*50), 50, 8);
     v.endFill();
 

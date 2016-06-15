@@ -13,7 +13,7 @@ boards.create = function () {
 
   g.display_text(phaserJSON.leaderboards, eight*1);
 
-  g.button(phaserJSON.back, eight*6, g.o_menu);
+  g.button_new(phaserJSON.back, eight*6, g.o_menu);
 
 };
 
