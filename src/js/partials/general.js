@@ -141,10 +141,11 @@ var general = {
     this.game.misses++;
   },
 
-  display_text: function(text, loc){
-    var pos = (!loc.isArray ? (loc === '' ? [game.world.centerX, game.world.centerY]: [game.world.centerX, loc]) : loc);
-    var text_display = game.add.text(pos[0], pos[1], text, {
-      font: 'bold 20pt Arial',
+  display_text: function(text, loc, font_size){
+    pos = (!loc.isArray ? (loc === '' ? [game.world.centerX, game.world.centerY]: [game.world.centerX, loc]) : loc);
+    size = (font_size ? font_size : 20 );
+    text_display = game.add.text(pos[0], pos[1], text, {
+      font: 'bold '+size+'pt Arial',
       fill: '#ffffff',
       align: 'center'
     });
@@ -156,33 +157,40 @@ var general = {
     return ['0x3A99D8', '0x58d83a', '0x555555'];
   },
 
-  build_button_visual(){
-    //this will generate a rectangle and has fallbacks test it
-    var button = game.add.graphics(0, 0);
-    button.beginFill(colour, (opacity != '' ? opacity : 1 ));
-    button.drawRoundedRect(x, y, (height != '' ? height : 50), (height != '' ? height : 50), (rounded != '' ? rounded : 8));
+  build_button_visual(colour, y, w, x, h, rounded){
+    button = game.add.graphics(0, 0);
+    button.beginFill(colour, 1);
+    width = general.min_50(w);
+    height = general.min_50(h);
+    button.drawRoundedRect((x ? x : game.world.centerX )-(width/2), (y ? y : game.world.centerY )-(height/2), width, height, (rounded ? rounded : 8));
     button.endFill();
     return button;
+  },
+
+  min_50: function(value){
+    width_or_height = (value ? value : 50);
+    width_or_height = (width_or_height > 50 ? width_or_height : 50 );
+    return width_or_height;
   },
 
   check_option: function(text, loc, colours){
     if(!text.isArray){
       text = [game.phaserJSON.on, game.phaserJSON.off];
     }
+    font_size = 20;
+    // check.set_size = size;
+    // check.v_pos = loc;
 
-    var check = game.add.graphics(0, 0);
-    check.colours = (colours === '' ? general.default_button_colours() : general.default_button_colours() );
-    check.beginFill(check.colour[0], 1);
-    check.set_size = size;
-    check.v_pos = loc;
-    check.drawRoundedRect(game.world.centerX - (check.set_size*50)/2, check.v_pos - 25, (check.set_size*50), 50, 8);
-    check.endFill();
+    size = general.calculate_button_width(text[0]);
 
-    check.text = general.display_text(text, loc);
+    colours = (colours === '' ? general.default_button_colours() : general.default_button_colours() );
+    check = general.build_button_visual( colours[0], loc, size*(font_size*2.5) );
+
+    check.text = general.display_text(text[0], loc, font_size);
 
   },
 
-  button_new: function(text, v_pos, action, enforce_width){
+  button: function(text, v_pos, action, enforce_width){
     //loc = {x_pos, y_pos, width, height};
     // colours = {press,hover,alt};
     // actions = {press,alt};
@@ -193,15 +201,18 @@ var general = {
       size = enforce_width;
     }
 
+    font_size = 20;
+
     // draw a rectangle
-    var e = game.add.graphics(0, 0);
     colour = (action != '' ? 0 : 2 );
+
+    colours = general.default_button_colours();
+    e = general.build_button_visual( colours[colour], v_pos, size*(font_size*2.5) );
+
     e.colours = general.default_button_colours();
-    e.beginFill(e.colours[colour], 1);
     e.set_size = size;
     e.v_pos = v_pos;
-    e.drawRoundedRect(game.world.centerX - (e.set_size*50)/2, v_pos - 25, (e.set_size*50), 50, 8);
-    e.endFill();
+
     // input
     e.inputEnabled = true;
 
@@ -211,7 +222,7 @@ var general = {
       e.events.onInputUp.add( e.a, this);
     }
 
-    e.text = general.display_text(text, v_pos);
+    e.text = general.display_text(text, v_pos, font_size);
 
     return e;
 

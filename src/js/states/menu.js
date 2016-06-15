@@ -34,20 +34,20 @@ this.game.phaserJSON = this.game.cache.getJSON('language');
 
   //this.game.button = '';
   start = ( this.game.lives >= 1 ? start_new_game : '' );
-  s = g.button_new(this.game.phaserJSON.start, eight*1, start, biggest_width);
+  s = g.button(this.game.phaserJSON.start, eight*1, start, biggest_width);
 
   leadboards = ( phone ? g.o_leaderboards : '' );
-  g.button_new(this.game.phaserJSON.leaderboards, eight*2, leadboards, biggest_width);
+  g.button(this.game.phaserJSON.leaderboards, eight*2, leadboards, biggest_width);
 
-  g.button_new(this.game.phaserJSON.options, eight*3, g.o_options, biggest_width);
+  g.button(this.game.phaserJSON.options, eight*3, g.o_options, biggest_width);
 
-  g.button_new(this.game.phaserJSON.getlives, eight*4, g.o_options);
+  g.button(this.game.phaserJSON.getlives, eight*4, g.o_options);
 
   this.game.text_lives = g.display_text(this.game.phaserJSON.lives+' '+this.game.lives, eight*5);
 
   g.display_text(this.game.phaserJSON.score+' '+this.game.highscore, eight*6);
 
-  g.button_new(this.game.phaserJSON.exit, eight*7, g.click_exit, biggest_width);
+  g.button(this.game.phaserJSON.exit, eight*7, g.click_exit, biggest_width);
 
   // window.plugins.playGamesServices.isSignedIn(function (result) {
   //   //console.log(“Do something with result.isSignedIn”);
@@ -69,7 +69,7 @@ menu.update = function (){
     console.log("shake");
     //s.kill();
     g.clickListener(s); //interesting
-    //s = g.button_new(this.game.phaserJSON.start, eight*1.5, start_new_game, biggest_width);
+    //s = g.button(this.game.phaserJSON.start, eight*1.5, start_new_game, biggest_width);
     this.game.lives = 1;
   }
 
@@ -79,7 +79,7 @@ menu.update = function (){
   //   s.text.kill();
   //   s.kill();
   //   start = ( this.game.lives >= 1 ? start_new_game : '' );
-  //   s = g.button_new(this.game.phaserJSON.start, eight*1, start, biggest_width);
+  //   s = g.button(this.game.phaserJSON.start, eight*1, start, biggest_width);
   // }
   //console.log("your on menu");
   // console.log(s.v_pos);
