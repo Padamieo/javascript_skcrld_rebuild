@@ -183,22 +183,22 @@ var general = {
 
     size = general.calculate_button_width(text[0]);
 
-    colours = (colours === '' ? general.default_button_colours() : general.default_button_colours() );
+    colours = ( colours ? colours : general.default_button_colours() );
     check = general.build_button_visual( colours[0], loc, size*(font_size*2.5) );
 
     check.text = general.display_text(text[0], loc, font_size);
 
   },
 
-  button: function(text, v_pos, action, enforce_width){
-    //loc = {x_pos, y_pos, width, height};
+  button: function(text, loc, action, width){
+    //loc = {y, w, x, h};
     // colours = {press,hover,alt};
     // actions = {press,alt};
 
-    if(enforce_width == null){
-      size = general.calculate_button_width(text);
+    if(width == null){
+      size_width = general.calculate_button_width(text);
     }else{
-      size = enforce_width;
+      size_width = width;
     }
 
     font_size = 20;
@@ -207,11 +207,11 @@ var general = {
     colour = (action != '' ? 0 : 2 );
 
     colours = general.default_button_colours();
-    e = general.build_button_visual( colours[colour], v_pos, size*(font_size*2.5) );
+    e = general.build_button_visual( colours[colour], loc, size_width*(font_size*2.5) );
 
     e.colours = general.default_button_colours();
-    e.set_size = size;
-    e.v_pos = v_pos;
+    e.size_width = size_width; //should be all input
+    e.loc = loc;
 
     // input
     e.inputEnabled = true;
@@ -222,7 +222,7 @@ var general = {
       e.events.onInputUp.add( e.a, this);
     }
 
-    e.text = general.display_text(text, v_pos, font_size);
+    e.text = general.display_text(text, loc, font_size);
 
     return e;
 
@@ -232,7 +232,7 @@ var general = {
     //should v be this so i can call it on main.js update
     v.clear();
     v.beginFill(v.colours[1], 1);
-    v.drawRoundedRect(game.world.centerX - (v.set_size*50)/2, v.v_pos - 25, (v.set_size*50), 50, 8);
+    v.drawRoundedRect(game.world.centerX - (v.size_width*50)/2, v.loc - 25, (v.size_width*50), 50, 8);
     v.endFill();
 
   },
