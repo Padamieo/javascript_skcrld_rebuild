@@ -102,6 +102,13 @@ var general = {
         game.vibration = localStorage.getItem('vibration');
       }
 
+      if(localStorage.getItem('sound_setting') === null){
+        localStorage.setItem("sound_setting",  1 );
+        game.sound_setting = 1;
+      }else{
+        game.sound_setting = localStorage.getItem('sound_setting');
+      }
+
       //localStorage.removeItem("Website");
     }else{
       if(game.online){
@@ -173,20 +180,42 @@ var general = {
     return width_or_height;
   },
 
-  check_option: function(text, loc, colours){
-    if(!text.isArray){
+  check_option: function(text, loc, actions, font_size, colours){
+
+    if(text.isArray || text === ''){
       text = [game.phaserJSON.on, game.phaserJSON.off];
     }
-    font_size = 20;
+
+    var size = 0;
+    for (var i = 0; i < text.length; i++) {
+      var this_width = general.calculate_button_width(text[i]);
+      size = ( this_width > size ? this_width : size);
+    }
+
+    if(size < 7.5){
+      fs = ( font_size ? font_size : 20 );
+    }else{
+      //get to testing check word length is not an issue
+      fs = 20;
+    }
     // check.set_size = size;
     // check.v_pos = loc;
+    console.log(actions);
+    if(actions == 1 ){
+      status = 0;
+    }else{
+      status = 1;
+    }
 
-    size = general.calculate_button_width(text[0]);
+    //console.log(colour_set);
 
     colours = ( colours ? colours : general.default_button_colours() );
-    check = general.build_button_visual( colours[0], loc, size*(font_size*2.5) );
 
-    check.text = general.display_text(text[0], loc, font_size);
+    check = general.build_button_visual( colours[status], loc, size*(fs*2.5) );
+
+    check.events.onInputDown.add( general.clickListener, this );
+    
+    check.text = general.display_text(text[status], loc, fs);
 
   },
 
