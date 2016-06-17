@@ -165,17 +165,17 @@ var general = {
   },
 
   build_button_visual(colour, y, w, x, h, rounded){
-    button = game.add.graphics(0, 0);
+    var button = game.add.graphics(0, 0);
     button.beginFill(colour, 1);
-    width = general.min_50(w);
-    height = general.min_50(h);
+    var width = general.min_50(w);
+    var height = general.min_50(h);
     button.drawRoundedRect((x ? x : game.world.centerX )-(width/2), (y ? y : game.world.centerY )-(height/2), width, height, (rounded ? rounded : 8));
     button.endFill();
     return button;
   },
 
   min_50: function(value){
-    width_or_height = (value ? value : 50);
+    var width_or_height = (value ? value : 50);
     width_or_height = (width_or_height > 50 ? width_or_height : 50 );
     return width_or_height;
   },
@@ -196,27 +196,25 @@ var general = {
       fs = ( font_size ? font_size : 20 );
     }else{
       //get to testing check word length is not an issue
+      console.log(size-7.5); // value over 7.5
       fs = 20;
     }
-    // check.set_size = size;
-    // check.v_pos = loc;
-    console.log(actions);
-    if(actions == 1 ){
-      status = 0;
-    }else{
-      status = 1;
-    }
 
-    //console.log(colour_set);
+    var status = (actions == 1 ? 0 : 1 );
 
     colours = ( colours ? colours : general.default_button_colours() );
 
-    check = general.build_button_visual( colours[status], loc, size*(fs*2.5) );
+    var check = general.build_button_visual( colours[status], loc, size*(fs*2.5) );
+    check.colours = colours;
+    check.loc = loc;
+    check.size_width = size*(fs*2.5);
 
+    check.inputEnabled = true;
     check.events.onInputDown.add( general.clickListener, this );
-    
+
     check.text = general.display_text(text[status], loc, fs);
 
+    return check;
   },
 
   button: function(text, loc, action, width){
@@ -257,12 +255,12 @@ var general = {
 
   },
 
-  clickListener: function (v) {
+  clickListener: function (element) {
     //should v be this so i can call it on main.js update
-    v.clear();
-    v.beginFill(v.colours[1], 1);
-    v.drawRoundedRect(game.world.centerX - (v.size_width*50)/2, v.loc - 25, (v.size_width*50), 50, 8);
-    v.endFill();
+    element.clear();
+    element.beginFill(element.colours[1], 1);
+    element.drawRoundedRect(game.world.centerX - (element.size_width*50)/2, element.loc - 25, (element.size_width*50), 50, 8);
+    element.endFill();
 
   },
 
