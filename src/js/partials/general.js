@@ -148,8 +148,8 @@ var general = {
     this.game.misses++;
   },
 
-  display_text: function(text, loc, font_size){
-    pos = (!loc.isArray ? (loc === '' ? [game.world.centerX, game.world.centerY]: [game.world.centerX, loc]) : loc);
+  display_text: function(text, xy, font_size){
+    pos = (!xy.isArray ? (xy === '' ? [game.world.centerX, game.world.centerY]: [game.world.centerX, xy]) : xy);
     size = (font_size ? font_size : 20 );
     text_display = game.add.text(pos[0], pos[1], text, {
       font: 'bold '+size+'pt Arial',
@@ -169,7 +169,8 @@ var general = {
     button.beginFill(colour, 1);
     var width = general.min_50(w);
     var height = general.min_50(h);
-    button.drawRoundedRect((x ? x : game.world.centerX )-(width/2), (y ? y : game.world.centerY )-(height/2), width, height, (rounded ? rounded : 8));
+    button.loc = [(y ? y : game.world.centerY )-(height/2), width, (x ? x : game.world.centerX )-(width/2), height];
+    button.drawRoundedRect(button.loc[2],button.loc[0],button.loc[1],button.loc[3], (rounded ? rounded : 8));
     button.endFill();
     return button;
   },
@@ -180,10 +181,14 @@ var general = {
     return width_or_height;
   },
 
-  check_option: function(text, loc, actions, font_size, colours){
+  check_option: function(text, y, action, status, font_size, colours){
 
     if(text.isArray || text === ''){
       text = [game.phaserJSON.on, game.phaserJSON.off];
+    }else{
+      if(typeof text === "string"){
+
+      }
     }
 
     var size = 0;
@@ -200,22 +205,35 @@ var general = {
       fs = 20;
     }
 
-    var status = (actions == 1 ? 0 : 1 );
+    var set_status = (status == 1 ? 0 : 1 );
 
     colours = ( colours ? colours : general.default_button_colours() );
 
-    var check = general.build_button_visual( colours[status], loc, size*(fs*2.5) );
+    var check = general.build_button_visual( colours[set_status], y, size*(fs*2.5) );
     check.colours = colours;
-    check.loc = loc;
-    check.size_width = size*(fs*2.5);
+    check.set_status = set_status;
 
     check.inputEnabled = true;
     check.events.onInputDown.add( general.clickListener, this );
 
-    check.text = general.display_text(text[status], loc, fs);
+    check.events.onInputUp.add( action, this);
+
+    check.text = general.display_text(text[set_status], y, fs);
 
     return check;
   },
+
+  sound_flip: function(){
+    console.log("sound");
+    if(game.sound_setting === 1){
+      game.sound_setting = 0;
+      localStorage.setItem("sound_setting",  0 );
+    }else{
+      game.sound_setting = 1;
+      localStorage.setItem("sound_setting",  1 );
+    }
+  },
+
 
   button: function(text, loc, action, width){
     //loc = {y, w, x, h};
@@ -237,8 +255,8 @@ var general = {
     e = general.build_button_visual( colours[colour], loc, size_width*(font_size*2.5) );
 
     e.colours = general.default_button_colours();
-    e.size_width = size_width; //should be all input
-    e.loc = loc;
+    //e.size_width = size_width; //should be all input
+    //e.loc = loc;
 
     // input
     e.inputEnabled = true;
@@ -255,13 +273,16 @@ var general = {
 
   },
 
+  listener: function (element){
+    console.log("listener");
+  },
+
   clickListener: function (element) {
-    //should v be this so i can call it on main.js update
     element.clear();
     element.beginFill(element.colours[1], 1);
-    element.drawRoundedRect(game.world.centerX - (element.size_width*50)/2, element.loc - 25, (element.size_width*50), 50, 8);
+    rounded = element.rounded;
+    element.drawRoundedRect(element.loc[2],element.loc[0],element.loc[1],element.loc[3], (rounded ? rounded : 8));
     element.endFill();
-
   },
 
   calculate_button_width: function(text){

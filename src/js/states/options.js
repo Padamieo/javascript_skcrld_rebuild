@@ -15,7 +15,7 @@ opti.create = function () {
   //console.log(game.sound_setting);
   aaa = ['soundssoundsosdundasd','Vibration Off'];
 
-  g.check_option('', eight*2, game.sound_setting);
+  g.check_option('', eight*2, g.sound_flip, game.sound_setting);
 
   //game.vibration
   console.log(this.game.vibration);
