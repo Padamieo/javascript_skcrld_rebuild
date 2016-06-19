@@ -11,16 +11,17 @@ opti.create = function () {
 
   g.button(this.game.phaserJSON.back, eight*7, g.o_menu);
 
-  //sound on off
-  //console.log(game.sound_setting);
-  aaa = ['soundssoundsosdundasd','Vibration Off'];
+  //sound option
+  g.check_option(['Sound Off', 'Sound On'], eight*2, 'sound_setting');
 
-  g.check_option('', eight*2, g.sound_flip, game.sound_setting);
+  //vibration option
+  g.check_option(['Vibration Off', 'Vibration On'], eight*3, 'vibration');
 
-  //game.vibration
-  console.log(this.game.vibration);
-  vib = (this.game.vibration === 1 ? 'Vibration On' : 'Vibration Off' );
-  g.button(vib, eight*3, this.game.vibration = (this.game.vibration === 0 ? 1 : 0));
+  //tutorial option
+  g.check_option(['Tutorial Off', 'Tutorial On'], eight*4, 'tutorial');
+
+  //fps display option
+  //g.check_option(['Tutorial Off', 'Tutorial On'], eight*4, 'tutorial')
 
 };
 

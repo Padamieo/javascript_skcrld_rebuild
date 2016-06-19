@@ -68,7 +68,6 @@ menu.update = function (){
   if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
     console.log("shake");
     //s.kill();
-    g.clickListener(s); //interesting
     //s = g.button(this.game.phaserJSON.start, eight*1.5, start_new_game, biggest_width);
     this.game.lives = 1;
   }

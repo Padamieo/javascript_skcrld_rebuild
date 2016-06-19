@@ -93,7 +93,6 @@ var general = {
       }else{
         game.tutorial = localStorage.getItem('tutorial');
       }
-      game.tutorial = 1; //got tutorial perma active here
 
       if(localStorage.getItem('vibration') === null){
         localStorage.setItem("vibration",  1 );
@@ -109,7 +108,6 @@ var general = {
         game.sound_setting = localStorage.getItem('sound_setting');
       }
 
-      //localStorage.removeItem("Website");
     }else{
       if(game.online){
         //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
@@ -181,10 +179,10 @@ var general = {
     return width_or_height;
   },
 
-  check_option: function(text, y, action, status, font_size, colours){
-
+  check_option: function(text, y, setting_name, colours, font_size){
+    //following needs to be in a function for text size to be used by button
     if(text.isArray || text === ''){
-      text = [game.phaserJSON.on, game.phaserJSON.off];
+      text = [game.phaserJSON.off, game.phaserJSON.on];
     }else{
       if(typeof text === "string"){
 
@@ -204,36 +202,25 @@ var general = {
       console.log(size-7.5); // value over 7.5
       fs = 20;
     }
+    //end of following
 
-    var set_status = (status == 1 ? 0 : 1 );
-
+    var current_status = general.get_setting(setting_name);
     colours = ( colours ? colours : general.default_button_colours() );
 
-    var check = general.build_button_visual( colours[set_status], y, size*(fs*2.5) );
+    var check = general.build_button_visual( colours[current_status], y, size*(fs*2.5) );
     check.colours = colours;
-    check.set_status = set_status;
+    check.setting_name = setting_name;
+    check.text = text;
 
     check.inputEnabled = true;
-    check.events.onInputDown.add( general.clickListener, this );
+    check.events.onInputDown.add( general.colour_change, this );
 
-    check.events.onInputUp.add( action, this);
+    check.events.onInputUp.add( general.flip_flop, this);
 
-    check.text = general.display_text(text[set_status], y, fs);
+    check.set_text = general.display_text( text[current_status], y, fs );
 
     return check;
   },
-
-  sound_flip: function(){
-    console.log("sound");
-    if(game.sound_setting === 1){
-      game.sound_setting = 0;
-      localStorage.setItem("sound_setting",  0 );
-    }else{
-      game.sound_setting = 1;
-      localStorage.setItem("sound_setting",  1 );
-    }
-  },
-
 
   button: function(text, loc, action, width){
     //loc = {y, w, x, h};
@@ -252,34 +239,68 @@ var general = {
     colour = (action != '' ? 0 : 2 );
 
     colours = general.default_button_colours();
-    e = general.build_button_visual( colours[colour], loc, size_width*(font_size*2.5) );
+    button = general.build_button_visual( colours[colour], loc, size_width*(font_size*2.5) );
 
-    e.colours = general.default_button_colours();
+    button.colours = general.default_button_colours();
     //e.size_width = size_width; //should be all input
     //e.loc = loc;
 
     // input
-    e.inputEnabled = true;
+    button.inputEnabled = true;
 
     if(action != ''){
-      e.a = action;
-      e.events.onInputDown.add( general.clickListener, this );
-      e.events.onInputUp.add( e.a, this);
+      button.a = action;
+      button.events.onInputDown.add( general.colour_change, this );
+      button.events.onInputUp.add( button.a, this);
     }
 
-    e.text = general.display_text(text, loc, font_size);
+    button.set_text = general.display_text(text, loc, font_size);
 
-    return e;
+    return button
 
   },
 
-  listener: function (element){
-    console.log("listener");
+  get_setting: function(setting_name){
+    if(setting_name === 'sound_setting'){
+      return (game.sound_setting ? game.sound_setting : 0 );
+    }
+    if(setting_name === 'vibration'){
+      return (game.vibration ? game.vibration : 0 );
+    }
+    if(setting_name === 'tutorial'){
+      return (game.tutorial ? game.tutorial : 0 );
+    }
   },
 
-  clickListener: function (element) {
+  flip_setting: function(setting_name){
+    if(setting_name === 'sound_setting'){
+      new_setting = (game.sound_setting === 1 ? 0 : 1);
+      game.sound_setting = new_setting;
+      localStorage.setItem("sound_setting",  new_setting );
+    }
+    if(setting_name === 'vibration'){
+      new_setting = (game.vibration === 1 ? 0 : 1);
+      game.vibration = new_setting;
+      localStorage.setItem("vibration",  new_setting );
+    }
+    if(setting_name === 'tutorial'){
+      new_setting = (game.tutorial === 1 ? 0 : 1);
+      game.tutorial = new_setting;
+      localStorage.setItem("tutorial",  new_setting );
+    }
+    console.log(new_setting);
+    return new_setting;
+  },
+
+  flip_flop: function(button){
+    new_setting = general.flip_setting(button.setting_name);
+    button.set_text.setText(button.text[new_setting]);
+    general.colour_change(button, new_setting);
+  },
+
+  colour_change: function (element, set) {
     element.clear();
-    element.beginFill(element.colours[1], 1);
+    element.beginFill(element.colours[(set ? 1 : set)], 1);
     rounded = element.rounded;
     element.drawRoundedRect(element.loc[2],element.loc[0],element.loc[1],element.loc[3], (rounded ? rounded : 8));
     element.endFill();

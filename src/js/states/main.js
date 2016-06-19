@@ -57,8 +57,8 @@ main.create = function () {
 
   this.game.tick = this.game.time.create(false);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
-
-  if(this.game.tutorial === 1){
+  
+  if(this.game.tutorial != 0){
 
     //var phaserJSON = game.cache.getJSON('language');
 
@@ -142,7 +142,7 @@ main.update = function(){
   //   console.log("shake");
   // }
 
-  if(game.tutorial === 1){
+  if(game.tutorial != 0){
 
       if(game.player.lazers === true){
         game.tutorial_text.setText(this.game.phaserJSON.now);
