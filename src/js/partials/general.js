@@ -232,7 +232,8 @@ var general = {
 
     console.log(general.isArray(loc));
     console.log(typeof loc);
-
+    //http://www.shamasis.net/2011/08/infinite-ways-to-detect-array-in-javascript/
+    //object is probably not correct
     if(typeof loc === 'object' || general.isArray(loc)){
       if(loc[1] == null){
         size_width = general.calculate_button_width(text);
