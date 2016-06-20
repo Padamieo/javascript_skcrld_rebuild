@@ -214,7 +214,6 @@ var general = {
 
     check.inputEnabled = true;
     check.events.onInputDown.add( general.colour_change, this );
-
     check.events.onInputUp.add( general.flip_flop, this);
 
     check.set_text = general.display_text( text[current_status], y, fs );
@@ -222,28 +221,38 @@ var general = {
     return check;
   },
 
-  button: function(text, loc, action, width){
+  isArray: function(obj) {
+    return Array.isArray(obj);
+  },
+
+  button: function(text, loc, action, colours, font_size){
     //loc = {y, w, x, h};
     // colours = {press,hover,alt};
     // actions = {press,alt};
 
-    if(width == null){
-      size_width = general.calculate_button_width(text);
-    }else{
-      size_width = width;
-    }
+    console.log(general.isArray(loc));
+    console.log(typeof loc);
 
+    if(typeof loc === 'object' || general.isArray(loc)){
+      if(loc[1] == null){
+        size_width = general.calculate_button_width(text);
+        loc[1] = size_width;
+      }else{
+        size_width = loc[1];
+      }
+    }else{
+      size_width = general.calculate_button_width(text);
+      loc = [loc, size_width];
+    }
     font_size = 20;
 
     // draw a rectangle
     colour = (action != '' ? 0 : 2 );
 
     colours = general.default_button_colours();
-    button = general.build_button_visual( colours[colour], loc, size_width*(font_size*2.5) );
+    button = general.build_button_visual( colours[colour], loc[0], size_width*(font_size*2.5) );
 
     button.colours = general.default_button_colours();
-    //e.size_width = size_width; //should be all input
-    //e.loc = loc;
 
     // input
     button.inputEnabled = true;
@@ -254,10 +263,9 @@ var general = {
       button.events.onInputUp.add( button.a, this);
     }
 
-    button.set_text = general.display_text(text, loc, font_size);
+    button.set_text = general.display_text(text, loc[0], font_size);
 
     return button
-
   },
 
   get_setting: function(setting_name){
