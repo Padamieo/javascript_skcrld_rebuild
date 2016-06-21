@@ -147,7 +147,8 @@ var general = {
   },
 
   display_text: function(text, xy, font_size){
-    pos = (!xy.isArray ? (xy === '' ? [game.world.centerX, game.world.centerY]: [game.world.centerX, xy]) : xy);
+    defaultXY = [game.world.centerX, game.world.centerY];
+    pos = (general.isArray(xy) ? ( xy.length === 2 ? xy : defaultXY ) : (xy === '' ? defaultXY : [game.world.centerX, xy]));
     size = (font_size ? font_size : 20 );
     text_display = game.add.text(pos[0], pos[1], text, {
       font: 'bold '+size+'pt Arial',
@@ -162,7 +163,7 @@ var general = {
     return ['0x3A99D8', '0x58d83a', '0x555555'];
   },
 
-  build_button_visual(colour, y, w, x, h, rounded){
+  build_button_visual: function(colour, y, w, x, h, rounded){
     var button = game.add.graphics(0, 0);
     button.beginFill(colour, 1);
     var width = general.min_50(w);
@@ -230,11 +231,7 @@ var general = {
     // colours = {press,hover,alt};
     // actions = {press,alt};
 
-    console.log(general.isArray(loc));
-    console.log(typeof loc);
-    //http://www.shamasis.net/2011/08/infinite-ways-to-detect-array-in-javascript/
-    //object is probably not correct
-    if(typeof loc === 'object' || general.isArray(loc)){
+    if(general.isArray(loc)){
       if(loc[1] == null){
         size_width = general.calculate_button_width(text);
         loc[1] = size_width;
@@ -245,9 +242,17 @@ var general = {
       size_width = general.calculate_button_width(text);
       loc = [loc, size_width];
     }
+
+
+    //trying to setup alternative positon button than center align
+    if(!loc[2]){
+      loc[2] = game.world.centerX;
+    }
+
+
     font_size = 20;
 
-    // draw a rectangle
+
     colour = (action != '' ? 0 : 2 );
 
     colours = general.default_button_colours();
@@ -264,7 +269,9 @@ var general = {
       button.events.onInputUp.add( button.a, this);
     }
 
-    button.set_text = general.display_text(text, loc[0], font_size);
+    //loc[2]
+    //button.loc[2]
+    button.set_text = general.display_text(text, [loc[2],loc[0]], font_size);
 
     return button
   },

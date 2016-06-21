@@ -57,7 +57,7 @@ main.create = function () {
 
   this.game.tick = this.game.time.create(false);
   this.game.tick.loop(2000, updateTick, this.game, this.game);
-  
+
   if(this.game.tutorial != 0){
 
     //var phaserJSON = game.cache.getJSON('language');
