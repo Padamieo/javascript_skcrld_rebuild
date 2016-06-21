@@ -163,12 +163,13 @@ var general = {
     return ['0x3A99D8', '0x58d83a', '0x555555'];
   },
 
-  build_button_visual: function(colour, y, w, x, h, rounded){
+  build_button_visual: function(colour, loc, rounded){
+    //y, w, x, h
     var button = game.add.graphics(0, 0);
     button.beginFill(colour, 1);
-    var width = general.min_50(w);
-    var height = general.min_50(h);
-    button.loc = [(y ? y : game.world.centerY )-(height/2), width, (x ? x : game.world.centerX )-(width/2), height];
+    var width = general.min_50(loc[1]);
+    var height = general.min_50(loc[3]);
+    button.loc = [(loc[0] ? loc[0] : game.world.centerY )-(height/2), width, (loc[2] ? loc[2] : game.world.centerX )-(width/2), height];
     button.drawRoundedRect(button.loc[2],button.loc[0],button.loc[1],button.loc[3], (rounded ? rounded : 8));
     button.endFill();
     return button;
@@ -208,7 +209,7 @@ var general = {
     var current_status = general.get_setting(setting_name);
     colours = ( colours ? colours : general.default_button_colours() );
 
-    var check = general.build_button_visual( colours[current_status], y, size*(fs*2.5) );
+    var check = general.build_button_visual( colours[current_status], [y, size*(fs*2.5)] ); //y, size*(fs*2.5)
     check.colours = colours;
     check.setting_name = setting_name;
     check.text = text;
@@ -243,20 +244,19 @@ var general = {
       loc = [loc, size_width];
     }
 
-
     //trying to setup alternative positon button than center align
     if(!loc[2]){
       loc[2] = game.world.centerX;
     }
 
+    console.log(loc[2]+" "+text);
 
     font_size = 20;
-
 
     colour = (action != '' ? 0 : 2 );
 
     colours = general.default_button_colours();
-    button = general.build_button_visual( colours[colour], loc[0], size_width*(font_size*2.5) );
+    button = general.build_button_visual( colours[colour], [loc[0], size_width*(font_size*2.5)]); //loc[0], size_width*(font_size*2.5), loc[2]
 
     button.colours = general.default_button_colours();
 
@@ -269,8 +269,6 @@ var general = {
       button.events.onInputUp.add( button.a, this);
     }
 
-    //loc[2]
-    //button.loc[2]
     button.set_text = general.display_text(text, [loc[2],loc[0]], font_size);
 
     return button
