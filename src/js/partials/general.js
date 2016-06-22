@@ -164,7 +164,7 @@ var general = {
   },
 
   build_button_visual: function(colour, loc, rounded){
-    //y, w, x, h
+    //loc = {y, w, x, h};
     var button = game.add.graphics(0, 0);
     button.beginFill(colour, 1);
     var width = general.min_50(loc[1]);
@@ -181,16 +181,23 @@ var general = {
     return width_or_height;
   },
 
-  check_option: function(text, y, setting_name, colours, font_size){
-    //following needs to be in a function for text size to be used by button
-    if(text.isArray || text === ''){
-      text = [game.phaserJSON.off, game.phaserJSON.on];
-    }else{
-      if(typeof text === "string"){
+  check_option: function(text, loc, setting_name, colours, font_size){
 
-      }
+    if(typeof text === "string"){
+      text = [text, text];
+    }else if(general.isArray(text) === false){
+      text = [game.phaserJSON.off, game.phaserJSON.on];
     }
 
+    if(general.isArray(loc)){
+      loc = [loc];
+      //calculate width for each text
+    }else{
+      loc = [loc];
+      //
+    }
+
+    // following need to be in both
     var size = 0;
     for (var i = 0; i < text.length; i++) {
       var this_width = general.calculate_button_width(text[i]);
@@ -206,19 +213,27 @@ var general = {
     }
     //end of following
 
+    if(!loc[2]){
+      loc[2] = game.world.centerX;
+    }
+
     var current_status = general.get_setting(setting_name);
     colours = ( colours ? colours : general.default_button_colours() );
-
-    var check = general.build_button_visual( colours[current_status], [y, size*(fs*2.5)] ); //y, size*(fs*2.5)
+    var check = general.build_button_visual( colours[current_status], [loc[0], size*(fs*2.5)] ); //y, size*(fs*2.5)
     check.colours = colours;
-    check.setting_name = setting_name;
     check.text = text;
-
     check.inputEnabled = true;
     check.events.onInputDown.add( general.colour_change, this );
-    check.events.onInputUp.add( general.flip_flop, this);
 
-    check.set_text = general.display_text( text[current_status], y, fs );
+    if(typeof setting_name === 'string'){
+      check.setting_name = setting_name;
+      check.events.onInputUp.add( general.flip_flop, this);
+    }else{
+      //test this works
+      check.setting_name = setting_name;
+      check.events.onInputUp.add( check.setting_name, this);
+    }
+    check.set_text = general.display_text( text[current_status], [loc[2],loc[0]], fs );
 
     return check;
   },
@@ -228,41 +243,39 @@ var general = {
   },
 
   button: function(text, loc, action, colours, font_size){
-    //loc = {y, w, x, h};
-    // colours = {press,hover,alt};
-    // actions = {press,alt};
+
+    if(!font_size){
+      font_size = 20;
+    }
 
     if(general.isArray(loc)){
       if(loc[1] == null){
         size_width = general.calculate_button_width(text);
-        loc[1] = size_width;
+        loc[1] = size_width*(font_size*2.5);
       }else{
-        size_width = loc[1];
+        loc[1] = loc[1]*(font_size*2.5);
       }
     }else{
       size_width = general.calculate_button_width(text);
-      loc = [loc, size_width];
+      w = size_width*(font_size*2.5);
+      loc = [loc, w];
     }
 
-    //trying to setup alternative positon button than center align
+
     if(!loc[2]){
       loc[2] = game.world.centerX;
     }
 
-    console.log(loc[2]+" "+text);
-
-    font_size = 20;
-
     colour = (action != '' ? 0 : 2 );
 
-    colours = general.default_button_colours();
-    button = general.build_button_visual( colours[colour], [loc[0], size_width*(font_size*2.5)]); //loc[0], size_width*(font_size*2.5), loc[2]
+    colours = ( colours ? colours : general.default_button_colours() );
+
+    button = general.build_button_visual( colours[colour], loc );
 
     button.colours = general.default_button_colours();
 
     // input
     button.inputEnabled = true;
-
     if(action != ''){
       button.a = action;
       button.events.onInputDown.add( general.colour_change, this );

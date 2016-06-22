@@ -18,9 +18,12 @@ preloader.preload = function () {
 
   this.game.load.image('ground', 'images/placeholder.png');
 
-
-
-  // need to select language pack
+  //set as language from setting
+  if(localStorage != undefined){
+    if(localStorage.getItem('language') != null){
+      set_language = localStorage.getItem('language');
+    }
+  }
   this.game.load.json('language', 'languages/'+set_language+'.json');
 
   this.game.load.image('background', 'images/background_wall_temp.png');

@@ -35,7 +35,7 @@ menu.create = function () {
   //this.game.button = '';
   start = ( this.game.lives >= 1 ? start_new_game : '' );
   //s = g.button(this.game.phaserJSON.start, [eight*1,biggest_width], start);
-  s = g.button(this.game.phaserJSON.start, [eight*1,biggest_width], start);
+  s = g.button(this.game.phaserJSON.start, [eight*1,biggest_width], start, '', 25);
 
   leadboards = ( phone ? g.o_leaderboards : '' );
   g.button(this.game.phaserJSON.leaderboards, [eight*2,biggest_width], leadboards);
