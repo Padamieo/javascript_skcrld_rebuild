@@ -189,10 +189,31 @@ var general = {
       text = [game.phaserJSON.off, game.phaserJSON.on];
     }
 
+    //following need to be function
+    if(!font_size){
+      font_size = 20;
+    }
+
     if(general.isArray(loc)){
-      loc = [loc];
+      if(loc[1] === null){
+        if(general.isArray(loc)){
+          // var size = 0;
+          // for (var i = 0; i < text.length; i++) {
+          //   var this_width = general.calculate_button_width(text[i]);
+          //   size = ( this_width > size ? this_width : size);
+          // }
+        }else{
+          // size_width = general.calculate_button_width(text);
+          // loc[1] = size_width*(font_size*2.5);
+        }
+      }else{
+        loc[1] = loc[1]*(font_size*2.5);
+      }
+
+      //loc = [loc];
       //calculate width for each text
     }else{
+
       loc = [loc];
       //
     }
@@ -204,14 +225,12 @@ var general = {
       size = ( this_width > size ? this_width : size);
     }
 
-    if(size < 7.5){
-      fs = ( font_size ? font_size : 20 );
-    }else{
+    if((size < 7.5) === false){
       //get to testing check word length is not an issue
       console.log(size-7.5); // value over 7.5
-      fs = 20;
+      font_size = 20;
     }
-    //end of following
+    //end of following that need function
 
     if(!loc[2]){
       loc[2] = game.world.centerX;
@@ -219,7 +238,7 @@ var general = {
 
     var current_status = general.get_setting(setting_name);
     colours = ( colours ? colours : general.default_button_colours() );
-    var check = general.build_button_visual( colours[current_status], [loc[0], size*(fs*2.5)] ); //y, size*(fs*2.5)
+    var check = general.build_button_visual( colours[current_status], [loc[0], size*(font_size*2.5)] ); //y, size*(fs*2.5)
     check.colours = colours;
     check.text = text;
     check.inputEnabled = true;
@@ -233,7 +252,7 @@ var general = {
       check.setting_name = setting_name;
       check.events.onInputUp.add( check.setting_name, this);
     }
-    check.set_text = general.display_text( text[current_status], [loc[2],loc[0]], fs );
+    check.set_text = general.display_text( text[current_status], [loc[2],loc[0]], font_size );
 
     return check;
   },
@@ -244,6 +263,7 @@ var general = {
 
   button: function(text, loc, action, colours, font_size){
 
+    //function to replace
     if(!font_size){
       font_size = 20;
     }
@@ -260,7 +280,7 @@ var general = {
       w = size_width*(font_size*2.5);
       loc = [loc, w];
     }
-
+    //end of function to replace
 
     if(!loc[2]){
       loc[2] = game.world.centerX;
