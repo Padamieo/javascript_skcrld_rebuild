@@ -21,7 +21,17 @@ opti.create = function () {
   g.check_option(['Tutorial Off', 'Tutorial On'], eight*4, 'tutorial');
 
   //fps display option
-  //g.check_option(['Tutorial Off', 'Tutorial On'], eight*4, 'tutorial')
+  //g.check_option(['Tutorial Off', 'Tutorial On'], eight*4, 'tutorial');
+
+  // var myBitmap = game.add.bitmapData(100, 100);
+  // var grd = myBitmap.context.createLinearGradient(0,0,0,600);
+  // grd.addColorStop(0,"white");
+  // grd.addColorStop(500/600,"#0a68b0");
+  // grd.addColorStop(580/600,"#0a68b0");
+  // grd.addColorStop(1,"black");
+  // myBitmap.context.fillStyle = grd;
+  // myBitmap.context.fillRect(0,0,800,600);
+  // game.add.sprite(0, 0, myBitmap);
 
 };
 

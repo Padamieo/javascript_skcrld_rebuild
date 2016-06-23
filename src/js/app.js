@@ -147,5 +147,11 @@ function start_game(){
     game.state.add(key, state);
   });
 
+  //should only call on mobile
+  // if(we_online()){
+  //   now_online();
+  // }
+  game.online = true;
+
   game.state.start('boot');
 }

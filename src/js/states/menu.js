@@ -35,20 +35,22 @@ menu.create = function () {
   //this.game.button = '';
   start = ( this.game.lives >= 1 ? start_new_game : '' );
   //s = g.button(this.game.phaserJSON.start, [eight*1,biggest_width], start);
-  s = g.button(this.game.phaserJSON.start, [eight*1,biggest_width], start, '', 25);
+  s = g.button(this.game.phaserJSON.start, [eight*1,biggest_width], start, ['0x58d83a', '0x555555'], 25);
 
   leadboards = ( phone ? g.o_leaderboards : '' );
   g.button(this.game.phaserJSON.leaderboards, [eight*2,biggest_width], leadboards);
 
   g.button(this.game.phaserJSON.options, [eight*3,biggest_width], g.o_options);
 
-  g.button(this.game.phaserJSON.getlives, [eight*4,biggest_width], g.o_options);
+  //live_menu = ( phone ? ( game.online ? g.o_options : '' ) : '' );
+  live_menu = ( game.online ? g.o_options : '' );
+  g.button(this.game.phaserJSON.getlives, [eight*4,biggest_width], live_menu);
 
   this.game.text_lives = g.display_text(this.game.phaserJSON.lives+' '+this.game.lives, eight*5);
 
   g.display_text(this.game.phaserJSON.score+' '+this.game.highscore, eight*6);
 
-  g.button(this.game.phaserJSON.exit, [eight*7,biggest_width], g.click_exit);
+  g.button(this.game.phaserJSON.exit, eight*7, ( phone ? g.click_exit : '' ));
 
   // window.plugins.playGamesServices.isSignedIn(function (result) {
   //   //console.log(“Do something with result.isSignedIn”);
