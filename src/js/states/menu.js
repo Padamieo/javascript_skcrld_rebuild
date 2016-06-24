@@ -8,6 +8,10 @@ function start_new_game(){
 
 menu.create = function () {
 
+  // testSound = this.game.add.audio('testSound');
+  // this.game.sound.setDecodedCallback([ testSound ], start, this);
+  // this.game.sound.play('testSound');
+
   // window.analytics.trackView('menu');
 
   this.game.phaserJSON = this.game.cache.getJSON('language');

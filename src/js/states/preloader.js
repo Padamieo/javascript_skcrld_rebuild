@@ -28,6 +28,9 @@ preloader.preload = function () {
 
   this.game.load.image('background', 'images/background_wall_temp.png');
 
+  //testing apparently this does not work
+  this.game.load.audio('testSound', 'assets/audio/beep.mp3');
+
 };
 
 preloader.create = function () {
