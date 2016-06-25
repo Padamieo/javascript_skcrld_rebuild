@@ -60,7 +60,6 @@ player.prototype.update = function(game) {
     if(this.endtime < game.time.now){
       this.lazers = true;
       this.tap = 0;
-      //vibration here?
     }
 
 	}else{
@@ -75,6 +74,14 @@ player.prototype.update = function(game) {
 
           if (game.bulletPool.countDead() === 0) {
             return;
+          }
+
+          //vibration and sound
+          if(game.sound_setting != 0){
+            game.sound.play('Sparkle_C_2');
+          }
+          if(game.vibration != 0){
+            navigator.vibrate([50]);
           }
 
           //get a bullet

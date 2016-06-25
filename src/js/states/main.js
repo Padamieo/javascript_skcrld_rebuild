@@ -21,7 +21,7 @@ main.create = function () {
   background.max_speed = 2;
   background.speed = 0;
 
-  //g.setup(this.game);
+  //g.setup(this.game); // good for moduleizing this element for different game modes
 
   // Create a white rectangle that we'll use to represent the flash
   game.flash = game.add.graphics(0, 0);
@@ -60,8 +60,6 @@ main.create = function () {
 
   if(this.game.tutorial != 0){
 
-    //var phaserJSON = game.cache.getJSON('language');
-
     this.game.ground = game.add.sprite(this.game.world.centerX, this.game.world.centerY+75, 'ground'); //also need way to calculate his 75
     this.game.ground.anchor.setTo(0.5, 0);
     //this.game.ground.blendMode = PIXI.blendModes.SCREEN;
@@ -85,21 +83,20 @@ main.create = function () {
     this.game.tick.start();
   }
 
-
+  // define the trail for all enemis
   this.game.trail = this.game.add.group();
   this.game.trail.createMultiple(25 , 'trail');
   this.game.trail.setAll('anchor.x', 0.5);
   this.game.trail.setAll('anchor.y', 0);
 
-  // this.game.enemies = this.game.add.group();
+  // define enemies group
   this.game.enemies = new Phaser.Group(this.game);
 
-  // older phone need to use the following instead of fill
+  // older phones need to use the following instead of fill
   this.game.enemy_array = new Array();
   for (i = 0; i < 20; i++){
     this.game.enemy_array[i] = 0;
   }
-  // this.game.enemy_array = new Array(20).fill(0);
   i = game.rnd.integerInRange(0, 19);
   this.game.enemy_array[i] = 1;
 
@@ -143,28 +140,21 @@ main.update = function(){
   // }
 
   if(game.tutorial != 0){
-
       if(game.player.lazers === true){
         game.tutorial_text.setText(this.game.phaserJSON.now);
         game.background_action = true;
         game.tick.start();
       }
-
     if(game.background_action === true){
       if(this.game.kills >= 1){
-
         this.game.indicator.kill();
         this.game.indicator._text.kill();
-
         if(localStorage !== undefined){
           localStorage.setItem("tutorial",  0 );
         }
-        //console.log(this.game.phaserJSON.yay);
         game.tutorial_text.setText(this.game.phaserJSON.yay);
-        //add red
         game.text_timeout.start();
       }
-
       if(game.ground.y > game.height){
         if(this.game.kills >= 1){
           game.tutorial = 0;
@@ -172,9 +162,7 @@ main.update = function(){
       }else{
         game.ground.y = game.ground.y+background.speed;
       }
-
     }
-
   }
 
   if(game.background_action === true){
@@ -215,13 +203,10 @@ main.update = function(){
             this.game.bulletPool.children[i3].kill();
             this.game.score = this.game.score + 1;
             this.game.kills = this.game.kills + 1;
-            //console.log(this.game.score);
             text_score.setText(this.game.score);
           }
-
         }
       }
-
     }
   }
 
@@ -242,10 +227,15 @@ main.update = function(){
         localStorage.setItem('highscore', this.game.score );
         if(this.game.online){
           //push highscore to google play services if logged in
+          var data = { score: this.game.score, leaderboardId: "CgkI_rfe04ITEAIQAQ" };
+          window.plugins.playGamesServices.submitScore(data);
         }
       }
     }
-      //this.game.accuracy //send game accuracy to google if avaliable
+    //this.game.accuracy //send game accuracy to google if avaliable
+    if(this.game.online){
+      //send play accuracy
+    }
     this.game.state.start('menu');
   }
 
@@ -265,63 +255,31 @@ function updateTick(game) {
       }
     }
   }
-  //console.log(game.num_enemy);
 
   heatseekers = Phaser.Math.roundTo(game.kills/20);
-  //console.log(game.amount_heatseekers+"="+heatseekers);
   if(game.amount_heatseekers != heatseekers){
     game.amount_heatseekers = heatseekers;
-
     v = game.enemy_array.indexOf(0);
     if(v < 0){
       //this means we are out of 1's(homing type) to add in our array
     }else{
       game.enemy_array[v] = 1;
-      //console.log(game.enemy_array);
     }
-
   }
 
+  // calculate game accuracy
   game.accuracy = Phaser.Math.roundTo(game.kills/(game.kills+game.misses), -2);
 
-
   //this determines if a player is doing well and increase difficulty
-  //console.log(game.speed_ramp+"# "+Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0)+"+"+game.enemies_passed+" - "+game.score);
-  //console.log(game.tick_count);
   if(Phaser.Math.roundTo((game.tick_count+game.enemies_passed)*game.speed_ramp,0) < game.score){
-    //console.log("high performance player");
-
     //changes the difficulty of triggering this
     ramp = Phaser.Math.roundTo(game.speed_ramp+0.05,-3);
     game.speed_ramp = (ramp <= 0.95 ? ramp : 0.95 );
-
-    // if(a > 0.50){
-    //
-    //   if(game.historic_accuracy === 0){
-    //     game.historic_accuracy = a;
-    //   }
-    //
-    //   console.log("accurate player"+game.historic_accuracy);
-    //
-    //   if(game.historic_accuracy < a){
-    //     console.log("getting more accurate");
-    //     i = game.rnd.integerInRange(0, 19);
-    //     game.enemy_array[i] = 1;
-    //     console.log(game.enemy_array);
-    //     game.historic_accuracy = a;
-    //   }
-    //
-    // }else{
-    //   console.log("might not be good to speed up");
-    // }
-
     //looks at current spawn speed and increses it
     current = game.tick.events[0].delay;
     new_speed = Phaser.Math.roundTo(current*0.95, 0);
-    //console.log(new_speed);
-
+    //increases tick speed
     game.tick.events[0].delay = (new_speed >= 200 ? new_speed : 200 );
-
   }
 
   //spawns an enemy

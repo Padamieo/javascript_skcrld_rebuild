@@ -14,6 +14,9 @@ var general = {
 		//bang.rotation = 180;
 		bang.reset(loc.x, loc.y);
 		bang.play('boom', 30, 1, true);
+    if(game.sound_setting != 0){
+      game.sound.play('testSound');
+    }
 	},
 
   burst: function(game, x, y){
@@ -194,40 +197,7 @@ var general = {
       font_size = 20;
     }
 
-    if(general.isArray(loc)){
-      if(loc[1] != null){
-        loc[1] = loc[1]*(font_size*2.5);
-      }else{
-        if(general.isArray(text)){
-          var size_width = 0;
-          for (var i = 0; i < text.length; i++) {
-            var this_width = general.calculate_button_width(text[i]);
-            size_width = ( this_width > size_width ? this_width : size_width);
-          }
-          loc[1] = size_width*(font_size*2.5);
-        }else{
-          size_width = general.calculate_button_width(text);
-          loc[1] = size_width*(font_size*2.5);
-        }
-      }
-    }else{
-      loc = [loc];
-      if(loc[1] != null){
-        loc[1] = loc[1]*(font_size*2.5);
-      }else{
-        if(general.isArray(text)){
-          var size_width = 0;
-          for (var i = 0; i < text.length; i++) {
-            var this_width = general.calculate_button_width(text[i]);
-            size_width = ( this_width > size_width ? this_width : size_width);
-          }
-          loc[1] = size_width*(font_size*2.5);
-        }else{
-          size_width = general.calculate_button_width(text);
-          loc[1] = size_width*(font_size*2.5);
-        }
-      }
-    }
+    loc = general.unknow(loc, text, font_size);
 
     // if((size < 7.5) === false){
     //   //get to testing check word length is not an issue
@@ -366,7 +336,6 @@ var general = {
       game.tutorial = new_setting;
       localStorage.setItem("tutorial",  new_setting );
     }
-    console.log(new_setting);
     return new_setting;
   },
 
@@ -374,6 +343,13 @@ var general = {
     new_setting = general.flip_setting(button.setting_name);
     button.set_text.setText(button.text[new_setting]);
     general.colour_change(button, new_setting);
+    //do we want sound on
+    if(game.sound_setting != 0){
+      game.sound.play('Sparkle_C_2');
+    }
+    if(game.vibration != 0){
+      navigator.vibrate([50]);
+    }
   },
 
   colour_change: function (element, set) {

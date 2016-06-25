@@ -9,7 +9,7 @@ var enemy = function(game) {
     g.explosion(game, this);
 
       //vibration test
-      console.log(this.game.vibration);
+      //console.log(this.game.vibration);
       if(this.game.vibration){
         navigator.vibrate([50]);
       }
@@ -108,8 +108,9 @@ enemy.prototype.update = function(game) {
 
   }
 
-  if(this.y < 0+(game.height/50)){
+  if(this.y < 0-(game.height/30)){
     this.alive = false;
+    this.trail.kill();
     if(this.trigger_once === 0){
       this.game.enemies_passed = this.game.enemies_passed + -1;
       this.trigger_once = 1;
@@ -119,7 +120,7 @@ enemy.prototype.update = function(game) {
 };
 
 enemy.revive = function(game, enemy){
-  enemy.enemy_type = (game.tutorial != 0 ? g.choose(game) : 0);
+  enemy.enemy_type = (game.tutorial != 0 ? 0 : g.choose(game));
   enemy.x = game.rnd.integerInRange(0, game.width);
   enemy.y = game.height;
   enemy.angle = 0;

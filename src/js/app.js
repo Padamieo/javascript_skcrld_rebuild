@@ -86,13 +86,13 @@ function we_online(){
 
 //only called when we go online, no referance to what connection type.
 function now_online(){
-  console.log("now_online event triggered");
   if(we_online()){
     playgameservices();
     ga_start_tracking();
     //now allow playsgameservice and analytics calls
     if(game != null){
       console.log("no action issue with game");
+      //ga log of this issue case
     }else{
       game.online = true;
     }
@@ -148,10 +148,14 @@ function start_game(){
   });
 
   //should only call on mobile
-  // if(we_online()){
-  //   now_online();
-  // }
-  game.online = true;
+  if(phone){
+    if(we_online()){
+      now_online();
+      game.online = true;
+    }
+  }else{
+    game.online = false;
+  }
 
   game.state.start('boot');
 }

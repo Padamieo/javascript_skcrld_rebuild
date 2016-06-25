@@ -13,5 +13,11 @@
   "leaderboards": "Leaderboards",
   "hold": "PRESS OR HOLD TO FLY UP",
   "now": "NOW",
-  "yay": "YAY STAY ABOVE HERE"
+  "yay": "YAY STAY ABOVE HERE",
+  "sound_on": "Sound On",
+  "sound_off": "Sound Off",
+  "tutorial_on": "Tutorial On",
+  "tutorial_off": "Tutorial Off",
+  "vibration_on": "Vibration On",
+  "vibration_off": "Vibration Off"
 }
