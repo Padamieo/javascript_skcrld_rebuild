@@ -10,6 +10,10 @@ var main = {};
 
 main.create = function () {
 
+  if(this.game.online){
+    window.analytics.trackView('main');
+  }
+
   // this may resolve issue with garbage collection
   //this.game.forceSingleUpdate = true;
 

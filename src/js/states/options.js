@@ -4,6 +4,10 @@ var opti = {};
 
 opti.create = function () {
 
+  if(this.game.online){
+    window.analytics.trackView('options');
+  }
+
   var eight = (this.game.height/8);
 
   g.display_text(this.game.phaserJSON.options, eight*1);

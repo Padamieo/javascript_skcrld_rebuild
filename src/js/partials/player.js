@@ -78,7 +78,7 @@ player.prototype.update = function(game) {
 
           //vibration and sound
           if(game.sound_setting != 0){
-            game.sound.play('Sparkle_C_2');
+            game.sound.play('meow');
           }
           if(game.vibration != 0){
             navigator.vibrate([50]);

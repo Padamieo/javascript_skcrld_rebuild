@@ -4,6 +4,10 @@ var boards = {};
 
 boards.create = function () {
 
+  if(this.game.online){
+    window.analytics.trackView('leaderboards');
+  }
+
   var phaserJSON = this.game.cache.getJSON('language');
 
   var eight = (this.game.height/8);

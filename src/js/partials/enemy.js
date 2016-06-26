@@ -7,13 +7,7 @@ var enemy = function(game) {
 
   this.events.onKilled.add(function(){
     g.explosion(game, this);
-
-      //vibration test
-      //console.log(this.game.vibration);
-      if(this.game.vibration){
-        navigator.vibrate([50]);
-      }
-
+    g.sound_vibration("explosion");
     this.trail.kill();
   }, this);
 

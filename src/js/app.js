@@ -90,9 +90,8 @@ function now_online(){
     playgameservices();
     ga_start_tracking();
     //now allow playsgameservice and analytics calls
-    if(game != null){
-      console.log("no action issue with game");
-      //ga log of this issue case
+    if(game === null){
+      window.analytics.trackException('game : does not exist, unable to define game.online', false);
     }else{
       game.online = true;
     }
@@ -147,7 +146,7 @@ function start_game(){
     game.state.add(key, state);
   });
 
-  //should only call on mobile
+  //only on mobile/phone allow following
   if(phone){
     if(we_online()){
       now_online();

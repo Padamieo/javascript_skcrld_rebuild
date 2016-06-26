@@ -14,9 +14,6 @@ var general = {
 		//bang.rotation = 180;
 		bang.reset(loc.x, loc.y);
 		bang.play('boom', 30, 1, true);
-    if(game.sound_setting != 0){
-      game.sound.play('testSound');
-    }
 	},
 
   burst: function(game, x, y){
@@ -216,7 +213,7 @@ var general = {
     check.colours = colours;
     check.text = text;
     check.inputEnabled = true;
-    check.events.onInputDown.add( general.colour_change, this );
+    //check.events.onInputDown.add( general.colour_change, this );
 
     if(typeof setting_name === 'string'){
       check.setting_name = setting_name;
@@ -322,17 +319,17 @@ var general = {
 
   flip_setting: function(setting_name){
     if(setting_name === 'sound_setting'){
-      new_setting = (game.sound_setting === 1 ? 0 : 1);
+      new_setting = (game.sound_setting != 1 ? 1 : 0);
       game.sound_setting = new_setting;
       localStorage.setItem("sound_setting",  new_setting );
     }
     if(setting_name === 'vibration'){
-      new_setting = (game.vibration === 1 ? 0 : 1);
+      new_setting = (game.vibration != 1 ? 1 : 0);
       game.vibration = new_setting;
       localStorage.setItem("vibration",  new_setting );
     }
     if(setting_name === 'tutorial'){
-      new_setting = (game.tutorial === 1 ? 0 : 1);
+      new_setting = (game.tutorial != 1 ? 1 : 0);
       game.tutorial = new_setting;
       localStorage.setItem("tutorial",  new_setting );
     }
@@ -343,13 +340,6 @@ var general = {
     new_setting = general.flip_setting(button.setting_name);
     button.set_text.setText(button.text[new_setting]);
     general.colour_change(button, new_setting);
-    //do we want sound on
-    if(game.sound_setting != 0){
-      game.sound.play('Sparkle_C_2');
-    }
-    if(game.vibration != 0){
-      navigator.vibrate([50]);
-    }
   },
 
   colour_change: function (element, set) {
@@ -358,6 +348,21 @@ var general = {
     rounded = element.rounded;
     element.drawRoundedRect(element.loc[2],element.loc[0],element.loc[1],element.loc[3], (rounded ? rounded : 8));
     element.endFill();
+    general.sound_vibration('press');
+  },
+
+  sound_vibration: function(request, length){
+    if(game.sound_setting != 0){
+      if(request == 'press'){
+        game.sound.play('press');
+      }else{
+        game.sound.play('testSound');
+      }
+    }
+    if(game.vibration != 0){
+      v_length = ( length != '' ? length : 50 );
+      navigator.vibrate([v_length]);
+    }
   },
 
   calculate_button_width: function(text){
@@ -367,7 +372,6 @@ var general = {
   text_timeout: function(game){
     game.tick_count++;
     game.tutorial_text.kill();
-
   },
 
   o_menu: function(){

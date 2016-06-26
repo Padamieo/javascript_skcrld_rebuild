@@ -29,8 +29,9 @@ preloader.preload = function () {
   this.game.load.image('background', 'images/background_wall_temp.png');
 
   //testing apparently this does not work
-  this.game.load.audio('testSound', 'audio/test.wav');
-  this.game.load.audio('Sparkle_C_2', 'audio/Percussive Elements-04.wav');
+  this.game.load.audio('testSound', 'audio/meow.wav');
+  this.game.load.audio('meow', 'audio/meow2.wav');
+  this.game.load.audio('press', 'audio/Percussive Elements-04.wav');
 
 };
 
