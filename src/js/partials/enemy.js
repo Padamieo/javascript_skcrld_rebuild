@@ -84,7 +84,6 @@ enemy.prototype.update = function(game) {
         this.x_velocity = this.x_velocity - (h_speed * dt);
       }
 
-      //console.log(this.x_velocity);
       var rad = Math.atan2((this.game.kitty.y - this.y), (this.game.kitty.x - this.x));
       var angle = rad+1.5707963267948966;
       if(angle > 0.35){

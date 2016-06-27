@@ -35,9 +35,6 @@ rainbow.prototype.update = function(game) {
 
   if(game.kitty.fall === false){
     if(game.player.lazers === true){
-
-      //navigator.vibrate([200, 200, 200, 200, 200]);
-
       if (game.kitty != null) {
         this.y = game.kitty.y+this.offset;
         this.x = game.kitty.x;

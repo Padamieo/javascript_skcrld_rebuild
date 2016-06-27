@@ -1,4 +1,4 @@
-//var g = require('general');
+var g = require('general');
 
 var player = function(game) {
 
@@ -77,12 +77,7 @@ player.prototype.update = function(game) {
           }
 
           //vibration and sound
-          if(game.sound_setting != 0){
-            game.sound.play('meow');
-          }
-          if(game.vibration != 0){
-            navigator.vibrate([50]);
-          }
+          g.sound_vibration('meow', 50);
 
           //get a bullet
           var bullet = game.bulletPool.getFirstExists(false);

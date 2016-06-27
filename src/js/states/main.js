@@ -81,6 +81,8 @@ main.create = function () {
     this.game.background_action = false;
     this.game.num_enemy = 1;
 
+    //ga push started tutorial game
+
   }else{
     this.game.background_action = true;
     this.game.num_enemy = 2;
@@ -233,12 +235,16 @@ main.update = function(){
           //push highscore to google play services if logged in
           var data = { score: this.game.score, leaderboardId: "CgkI_rfe04ITEAIQAQ" };
           window.plugins.playGamesServices.submitScore(data);
+          //send play x beat their highest score flag
         }
       }
     }
     //this.game.accuracy //send game accuracy to google if avaliable
     if(this.game.online){
-      //send play accuracy
+      //this.game.accuracy //send play accuracy to ga
+      //this.game.score //send play score to ga
+      //send play play time
+      //send play distance traveled
     }
     this.game.state.start('menu');
   }
@@ -251,6 +257,7 @@ function updateTick(game) {
   game.tick_count++;
 
   // increase the amount of possible enemies on screen slowly based on kills - this is our natural difficulty increase
+  //add slow down of increase per 10 but infinatly increase
   if(game.num_enemy <= 9){
     enemy_add = Phaser.Math.roundTo(game.kills/5);
     if(enemy_add > 0){

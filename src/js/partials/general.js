@@ -62,7 +62,6 @@ var general = {
 
   check_store: function(game){
     if(localStorage != undefined){
-      //console.log("Local Storage is supported");
 
       if(localStorage.getItem('lives') === null){
         localStorage.setItem('lives', 9 );
@@ -110,8 +109,7 @@ var general = {
 
     }else{
       if(game.online){
-        //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
-        console.log("No support");
+        window.analytics.trackException('localStorage : is undefined, stored data will not work', false);
       }
     }
   },
@@ -189,7 +187,6 @@ var general = {
       text = [game.phaserJSON.off, game.phaserJSON.on];
     }
 
-    //following need to be function
     if(!font_size){
       font_size = 20;
     }
@@ -355,6 +352,8 @@ var general = {
     if(game.sound_setting != 0){
       if(request == 'press'){
         game.sound.play('press');
+      }else if(request == 'meow'){
+        game.sound.play('meow');
       }else{
         game.sound.play('testSound');
       }
@@ -376,17 +375,14 @@ var general = {
 
   o_menu: function(){
     game.state.start('menu');
-    //window.analytics.trackEvent('leaderboard', 'leaderboard', 'Hits', 1);
   },
 
   o_options: function(){
     game.state.start('options');
-    //window.analytics.trackEvent('leaderboard', 'leaderboard', 'Hits', 1);
   },
 
   o_leaderboards: function(){
     game.state.start('boards');
-    //window.analytics.trackEvent('leaderboard', 'leaderboard', 'Hits', 1);
   }
 
 };

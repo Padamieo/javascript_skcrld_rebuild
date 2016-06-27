@@ -24,24 +24,12 @@ var c = {
 
   ollision_square_square: function(obj_a, obj_b){
 
-    // points are negative because objects are bottom right aligned
-    //var carPoly = new P(new V(car.x, car.y), [new V(-200, -184), new V(-6, -76), new V(-90, -25), new V(-285, -132)]);
-    //var obstaclePoly = new P(new V(obstacle.x, obstacle.y), [new V(-200, -184), new V(-6, -76), new V(-90, -25), new V(-285, -132)]);
-
-    // c.alculate_rotated_square(obj_a);
-    // c.alculate_rotated_square(obj_b);
-
-    // var response = new SAT.Response();
-
     var collided = SAT.testPolygonPolygon(obj_a.poly, obj_b.poly/*, response*/); //response object is optional, will contain all the points that overlap
 
     if (collided){
-      // console.log(one.key, two.key, collided);
-      //two.tint = 0xFF0000;
       return true;
     }else{
       return false;
-      //two.tint = 0xFFFFFF;
     }
   },
 
@@ -68,12 +56,9 @@ var c = {
     var radians = (Math.PI / 180) * posangle;
     var cos = Math.cos(radians);
     var sin = Math.sin(radians);
+    var nx = (x - cx) * cos - (y - cy) * sin;
+    var ny = (y - cy) * cos + (x - cx) * sin;
 
-      var nx = (x - cx) * cos - (y - cy) * sin;
-      var ny = (y - cy) * cos + (x - cx) * sin;
-      //OLD
-      // nx = (cos * (x - cx)) - (sin * (y - cy)) + cx,
-      // ny = (cos * (y - cy)) + (sin * (x - cx)) + cy;
     return [nx, ny];
   },
 
