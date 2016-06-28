@@ -2,9 +2,11 @@ var preloader = {};
 
 preloader.preload = function () {
 
+  //images
   this.load.spritesheet('rainbow_r', 'images/rainbow_r.png', 200, 500);
   this.load.spritesheet('rainbow', 'images/rainbow.png', 200, 500, 18);
   this.load.spritesheet('rainbow_e', 'images/rainbow_e.png', 200, 500);
+
   this.load.spritesheet('cat', 'images/placeholder_kitty.png', 200, 200);
   this.load.spritesheet('explosion', 'images/explosion.png', 256, 256);
   this.load.spritesheet('button', 'images/placeholder_button.png', 50, 50);
@@ -18,6 +20,8 @@ preloader.preload = function () {
 
   this.game.load.image('ground', 'images/placeholder.png');
 
+  this.game.load.image('background', 'images/background_wall_temp.png');
+
   //set as language from setting
   if(localStorage != undefined){
     if(localStorage.getItem('language') != null){
@@ -26,9 +30,7 @@ preloader.preload = function () {
   }
   this.game.load.json('language', 'languages/'+set_language+'.json');
 
-  this.game.load.image('background', 'images/background_wall_temp.png');
-
-  //testing apparently this does not work
+  //sounds
   this.game.load.audio('testSound', 'audio/meow.wav');
   this.game.load.audio('meow', 'audio/meow2.wav');
   this.game.load.audio('press', 'audio/Percussive Elements-04.wav');

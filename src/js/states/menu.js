@@ -64,8 +64,6 @@ menu.create = function () {
   //   g.display_text(playerData['displayName'], eight*4);
   // });
 
-  //text(vv, eight*7);
-
 };
 
 menu.update = function (){

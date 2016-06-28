@@ -41,9 +41,9 @@ function onDeviceReady(){
       }
     },
     function () {
-      //if(game.online){
-        //window.analytics.enableUncaughtExceptionReporting(Enable, success, error);
-      //}
+      if(game.online){
+        window.analytics.trackException('gloalization.getPreferredLanguage : failed, fallback to en-US', false);
+      }
       set_language = 'en-US';
     }
   );
