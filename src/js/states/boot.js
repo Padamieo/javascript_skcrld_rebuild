@@ -8,10 +8,11 @@ boot.create = function () {
     addStats(this.game);
   }
 
+  //should use this rather than own custom
   this.game.sound.mute = properties.mute;
 
-  this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL ;
 
+  this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL ;
   this.scale.pageAlignHorizontally = true;
   this.scale.pageAlignVertically = true;
   this.scale.setShowAll();
@@ -24,7 +25,6 @@ function addStats(game) {
   var stats = new Stats();
 
   stats.setMode(0);
-
   stats.domElement.style.position = 'absolute';
   stats.domElement.style.right = '0px';
   stats.domElement.style.top = '0px';

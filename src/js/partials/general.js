@@ -60,6 +60,16 @@ var general = {
     }
   },
 
+  //rather than haveing the checkstore for everything have a commmon default
+  check_store_individual: function(game, name, value){
+    if(localStorage.getItem(name) === null){
+      localStorage.setItem(name,  value );
+      game.tutorial = value;
+    }else{
+      game.tutorial = parseInt(localStorage.getItem(name));
+    }
+  },
+
   check_store: function(game){
     if(localStorage != undefined){
 
@@ -90,21 +100,21 @@ var general = {
         localStorage.setItem("tutorial",  1 );
         game.tutorial = 1;
       }else{
-        game.tutorial = localStorage.getItem('tutorial');
+        game.tutorial = parseInt(localStorage.getItem('tutorial'));
       }
 
       if(localStorage.getItem('vibration') === null){
         localStorage.setItem("vibration",  1 );
         game.vibration = 1;
       }else{
-        game.vibration = localStorage.getItem('vibration');
+        game.vibration = parseInt(localStorage.getItem('vibration'));
       }
 
       if(localStorage.getItem('sound_setting') === null){
         localStorage.setItem("sound_setting",  1 );
         game.sound_setting = 1;
       }else{
-        game.sound_setting = localStorage.getItem('sound_setting');
+        game.sound_setting = parseInt(localStorage.getItem('sound_setting'));
       }
 
     }else{

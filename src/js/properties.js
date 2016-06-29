@@ -10,6 +10,5 @@ module.exports ={
   size:{
     x: 405,
     y: 720
-  },
-  analyticsId: 'UA-50892214-2'
+  }
 };

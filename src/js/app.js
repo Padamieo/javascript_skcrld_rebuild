@@ -13,6 +13,7 @@ if (navigator.platform.match(/(Win)/)) {
 
 function success_auth(test){
   console.log(test);
+  //need to maybe need add "test" above to home screen for testing
   if(localStorage != undefined){
     if(localStorage.getItem('auth') === null){
       localStorage.setItem('auth', true );
