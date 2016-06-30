@@ -61,60 +61,32 @@ var general = {
   },
 
   //rather than haveing the checkstore for everything have a commmon default
-  check_store_individual: function(game, name, value){
-    if(localStorage.getItem(name) === null){
-      localStorage.setItem(name,  value );
-      game.tutorial = value;
+  check_store_individual: function(attribute, fallback) {
+    if(localStorage.getItem(attribute) === null){
+      localStorage.setItem(attribute, fallback );
+      game[attribute] = fallback;
     }else{
-      game.tutorial = parseInt(localStorage.getItem(name));
+      game[attribute] = parseInt(localStorage.getItem(attribute));
     }
   },
 
   check_store: function(game){
     if(localStorage != undefined){
 
-      if(localStorage.getItem('lives') === null){
-        localStorage.setItem('lives', 9 );
-        game.lives = 9;
-      }else{
-        game.lives = parseInt(localStorage.getItem("lives"));
-      }
-
-      if(localStorage.getItem('timestamp') === null){
-        localStorage.setItem("timestamp", 0 );
-        game.timestamp = 0;
-      }else{
-        game.timestamp = parseInt(localStorage.getItem('timestamp'));
-      }
-
-      if(localStorage.getItem('highscore') === null){
-        localStorage.setItem("highscore",  0 );
-        game.highscore = 0;
-      }else{
-        game.highscore = parseInt(localStorage.getItem('highscore'));
-      }
+      general.check_store_individual('lives', 9);
+      general.check_store_individual('timestamp', 0);
+      general.check_store_individual('highscore', 0);
 
       //dont need to call the following every menu load
 
-      if(localStorage.getItem('tutorial') === null){
-        localStorage.setItem("tutorial",  1 );
-        game.tutorial = 1;
-      }else{
-        game.tutorial = parseInt(localStorage.getItem('tutorial'));
-      }
-
-      if(localStorage.getItem('vibration') === null){
-        localStorage.setItem("vibration",  1 );
-        game.vibration = 1;
-      }else{
-        game.vibration = parseInt(localStorage.getItem('vibration'));
-      }
+      general.check_store_individual('tutorial', 1);
+      general.check_store_individual('vibration', 1);
 
       if(localStorage.getItem('sound_setting') === null){
-        localStorage.setItem("sound_setting",  1 );
-        game.sound_setting = 1;
+        localStorage.setItem("sound_setting",  0 );
+        game.sound.mute = 0;
       }else{
-        game.sound_setting = parseInt(localStorage.getItem('sound_setting'));
+        game.sound.mute = parseInt(localStorage.getItem('sound_setting'));
       }
 
     }else{
@@ -215,6 +187,10 @@ var general = {
     }
 
     var current_status = general.get_setting(setting_name);
+    if(setting_name == 'sound_setting'){
+      console.log(current_status);
+    }
+
     colours = ( colours ? colours : general.default_button_colours() );
     var check = general.build_button_visual( colours[current_status], loc );
     check.colours = colours;
@@ -314,7 +290,8 @@ var general = {
 
   get_setting: function(setting_name){
     if(setting_name === 'sound_setting'){
-      return (game.sound_setting ? game.sound_setting : 0 );
+      var sound = (game.sound.mute ? 1 : 0);
+      return ( sound ? sound : 0 );
     }
     if(setting_name === 'vibration'){
       return (game.vibration ? game.vibration : 0 );
@@ -326,8 +303,9 @@ var general = {
 
   flip_setting: function(setting_name){
     if(setting_name === 'sound_setting'){
-      new_setting = (game.sound_setting != 1 ? 1 : 0);
-      game.sound_setting = new_setting;
+      new_setting = (game.sound.mute != 1 ? 1 : 0);
+      //game.sound_setting = new_setting;
+      game.sound.mute = new_setting;
       localStorage.setItem("sound_setting",  new_setting );
     }
     if(setting_name === 'vibration'){
@@ -359,7 +337,7 @@ var general = {
   },
 
   sound_vibration: function(request, length){
-    if(game.sound_setting != 0){
+    if(game.sound.mute != 1){
       if(request == 'press'){
         game.sound.play('press');
       }else if(request == 'meow'){

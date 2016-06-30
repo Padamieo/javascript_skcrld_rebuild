@@ -233,9 +233,10 @@ main.update = function(){
         localStorage.setItem('highscore', this.game.score );
         if(this.game.online){
           //push highscore to google play services if logged in
-          //need to probably if(localStorage.getItem('auth') === true){
-          var data = { score: this.game.score, leaderboardId: "CgkI_rfe04ITEAIQAQ" };
-          window.plugins.playGamesServices.submitScore(data);
+            //need to probably if(localStorage.getItem('auth') === true){
+              var data = { score: this.game.score, leaderboardId: "CgkI_rfe04ITEAIQAQ" };
+              window.plugins.playGamesServices.submitScore(data);
+            //}
           //send play x beat their highest score flag
         }
       }

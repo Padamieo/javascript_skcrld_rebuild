@@ -8,10 +8,6 @@ boot.create = function () {
     addStats(this.game);
   }
 
-  //should use this rather than own custom
-  this.game.sound.mute = properties.mute;
-
-
   this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL ;
   this.scale.pageAlignHorizontally = true;
   this.scale.pageAlignVertically = true;

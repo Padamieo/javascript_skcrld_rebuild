@@ -15,7 +15,7 @@ opti.create = function () {
   g.button(this.game.phaserJSON.back, eight*7, g.o_menu);
 
   //sound option
-  g.check_option([this.game.phaserJSON.sound_off, this.game.phaserJSON.sound_on], eight*2, 'sound_setting');
+  g.check_option([this.game.phaserJSON.sound_on, this.game.phaserJSON.sound_off], eight*2, 'sound_setting');
 
   //vibration option
   g.check_option([this.game.phaserJSON.vibration_off, this.game.phaserJSON.vibration_on], eight*3, 'vibration');
