@@ -126,13 +126,14 @@ var general = {
     this.game.misses++;
   },
 
-  display_text: function(text, xy, font_size){
+  display_text: function(text, xy, font_size, colour){
     defaultXY = [game.world.centerX, game.world.centerY];
     pos = (general.isArray(xy) ? ( xy.length === 2 ? xy : defaultXY ) : (xy === '' ? defaultXY : [game.world.centerX, xy]));
     size = (font_size ? font_size : 20 );
+    c = (colour ? colour : '#ffffff' );
     text_display = game.add.text(pos[0], pos[1], text, {
       font: 'bold '+size+'pt Arial',
-      fill: '#ffffff',
+      fill: c,
       align: 'center'
     });
     text_display.anchor.setTo(0.5, 0.5);
@@ -182,9 +183,7 @@ var general = {
     // }
     //end of following that need function
 
-    if(!loc[2]){
-      loc[2] = game.world.centerX;
-    }
+    loc = general.loc_xy_complete(loc);
 
     var current_status = general.get_setting(setting_name);
     if(setting_name == 'sound_setting'){
@@ -213,6 +212,13 @@ var general = {
 
   isArray: function(obj) {
     return Array.isArray(obj);
+  },
+
+  loc_xy_complete: function(loc){
+    if(!loc[2]){
+      loc[2] = game.world.centerX;
+    }
+    return loc;
   },
 
   unknow: function(loc, text, font_size){
@@ -263,9 +269,7 @@ var general = {
     loc = general.unknow(loc, text, font_size);
     //end of function to replace
 
-    if(!loc[2]){
-      loc[2] = game.world.centerX;
-    }
+    loc = general.loc_xy_complete(loc);
 
     colour = (action != '' ? 0 : 2 );
 

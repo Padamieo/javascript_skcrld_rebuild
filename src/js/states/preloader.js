@@ -22,6 +22,8 @@ preloader.preload = function () {
 
   this.game.load.image('background', 'images/background_wall_temp.png');
 
+  this.game.load.image('heart', 'images/heart.png');
+
   //set as language from setting
   if(localStorage != undefined){
     if(localStorage.getItem('language') != null){

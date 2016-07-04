@@ -34,23 +34,22 @@ menu.create = function () {
     }
   }
 
+  //this.game.text_lives = g.display_text(this.game.phaserJSON.lives+' '+this.game.lives, eight*1);
+
   //this.game.button = '';
   start = ( this.game.lives >= 1 ? start_new_game : '' );
   //s = g.button(this.game.phaserJSON.start, [eight*1,biggest_width], start);
-  s = g.button(this.game.phaserJSON.start, [eight*1,biggest_width], start, ['0x58d83a', '0x555555'], 25);
+  s = g.button(this.game.phaserJSON.start, [eight*4,biggest_width], start, ['0x58d83a', '0x555555'], 25);
 
   leadboards = ( phone ? g.o_leaderboards : '' );
-  g.button(this.game.phaserJSON.leaderboards, [eight*2,biggest_width], leadboards);
+  g.button(this.game.phaserJSON.leaderboards, [eight*5,biggest_width], leadboards);
 
-  g.button(this.game.phaserJSON.options, [eight*3,biggest_width], g.o_options);
+  g.button(this.game.phaserJSON.options, [eight*6,biggest_width], g.o_options);
 
-  //live_menu = ( phone ? ( game.online ? g.o_options : '' ) : '' );
-  live_menu = ( game.online ? g.o_options : '' );
-  g.button(this.game.phaserJSON.getlives, [eight*4,biggest_width], live_menu);
+  // live_menu = ( game.online ? g.o_options : '' );
+  // g.button(this.game.phaserJSON.getlives, [eight*6,biggest_width], live_menu);
 
-  this.game.text_lives = g.display_text(this.game.phaserJSON.lives+' '+this.game.lives, eight*5);
-
-  g.display_text(this.game.phaserJSON.score+' '+this.game.highscore, eight*6);
+  g.display_text(this.game.phaserJSON.score+' '+this.game.highscore, eight*2);
 
   g.button(this.game.phaserJSON.exit, eight*7, ( phone ? g.click_exit : '' ));
 
@@ -64,7 +63,38 @@ menu.create = function () {
   //   g.display_text(playerData['displayName'], eight*4);
   // });
 
+  heart_setup(eight*1);
+
 };
+
+function heart_setup(loc){
+
+  loc = g.unknow(loc, game.phaserJSON.getlives, 20);
+  g.loc_xy_complete(loc);
+
+  atarib = game.add.sprite( loc[2]-50, loc[0]-50, 'heart' );
+  //atarib.anchor.setTo(0.5, 0.5);
+  atarib.tint = 0xDE77AE;
+
+  atari1 = game.add.sprite( loc[2]-50, loc[0]-50, 'heart' );
+  //atari1.anchor.setTo(0.5, 0.5);
+  atari1.tint = 0x555555;
+
+  graphics = game.add.graphics(0, 0);
+  graphics.beginFill(0xDE77AE);
+
+  graphics.drawRoundedRect( loc[2]-50, loc[0]-50, 100, 50, 8 );
+
+  graphics.endFill();
+
+  atari1.mask = graphics;
+
+  game.text_lives = g.display_text(this.game.lives, [loc[2],loc[0]], 40, '#ffffff');
+
+  //game.text_lives.stroke = "#ffffff";
+  //game.text_lives.strokeThickness = 5;
+
+}
 
 menu.update = function (){
 
