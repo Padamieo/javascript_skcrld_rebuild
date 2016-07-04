@@ -35,6 +35,7 @@ menu.create = function () {
   }
 
   //this.game.text_lives = g.display_text(this.game.phaserJSON.lives+' '+this.game.lives, eight*1);
+  heart_setup(eight*1);
 
   //this.game.button = '';
   start = ( this.game.lives >= 1 ? start_new_game : '' );
@@ -49,7 +50,7 @@ menu.create = function () {
   // live_menu = ( game.online ? g.o_options : '' );
   // g.button(this.game.phaserJSON.getlives, [eight*6,biggest_width], live_menu);
 
-  g.display_text(this.game.phaserJSON.score+' '+this.game.highscore, eight*2);
+  g.display_text(this.game.phaserJSON.score+' '+this.game.highscore, eight*3);
 
   g.button(this.game.phaserJSON.exit, eight*7, ( phone ? g.click_exit : '' ));
 
@@ -63,36 +64,29 @@ menu.create = function () {
   //   g.display_text(playerData['displayName'], eight*4);
   // });
 
-  heart_setup(eight*1);
-
 };
 
 function heart_setup(loc){
 
-  loc = g.unknow(loc, game.phaserJSON.getlives, 20);
-  g.loc_xy_complete(loc);
+  loc = [loc, game.world.centerX];
 
-  atarib = game.add.sprite( loc[2]-50, loc[0]-50, 'heart' );
-  //atarib.anchor.setTo(0.5, 0.5);
-  atarib.tint = 0xDE77AE;
+  heart_back = game.add.sprite( loc[1], loc[0], 'heart' );
+  heart_back.anchor.setTo(0.5, 0.5);
+  heart_back.tint = 0xDE77AE;
 
-  atari1 = game.add.sprite( loc[2]-50, loc[0]-50, 'heart' );
-  //atari1.anchor.setTo(0.5, 0.5);
-  atari1.tint = 0x555555;
+  heart_level = game.add.sprite( loc[1], loc[0], 'heart' );
+  heart_level.anchor.setTo(0.5, 0.5);
+  heart_level.tint = 0x555555;
 
-  graphics = game.add.graphics(0, 0);
-  graphics.beginFill(0xDE77AE);
+  visual_control = game.add.graphics(0, 0);
+  visual_control.beginFill(0xDE77AE);
+  var inverse_health = ((game.lives*-1)+9)*11;
+  visual_control.drawRoundedRect( loc[1]-50, loc[0]-50, 100, inverse_health, 8 );
+  visual_control.endFill();
+  heart_level.mask = visual_control;
+  game.stored_lives = game.lives;
 
-  graphics.drawRoundedRect( loc[2]-50, loc[0]-50, 100, 50, 8 );
-
-  graphics.endFill();
-
-  atari1.mask = graphics;
-
-  game.text_lives = g.display_text(this.game.lives, [loc[2],loc[0]], 40, '#ffffff');
-
-  //game.text_lives.stroke = "#ffffff";
-  //game.text_lives.strokeThickness = 5;
+  game.text_lives = g.display_text(game.lives, [loc[1],loc[0]], 40, '#ffffff');
 
 }
 
@@ -100,12 +94,19 @@ menu.update = function (){
 
   if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
     console.log("Set Lives Too 1");
-    //s.kill();
     //s = g.button(this.game.phaserJSON.start, eight*1.5, start_new_game, biggest_width);
     this.game.lives = 1;
     game.lives = 1;
   }
 
+  if(game.lives != game.stored_lives){
+    console.log("something changed");
+    heart_back.kill();
+    heart_level.kill();
+    visual_control.kill();
+    game.stored_lives = game.lives;
+    heart_setup(eight*1); // maybe this should update better
+  }
 
   //if lives change update button s
   // if(!game.lives >= 1){

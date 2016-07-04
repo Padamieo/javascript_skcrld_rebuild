@@ -55,7 +55,7 @@ var general = {
         game.timestamp = game.timestamp + life_wait;
         game.lives = game.lives + 1;
         localStorage.setItem("lives", game.lives );
-        general.updateText(game);
+        general.update_lives_text(game);
       }
     }
   },
@@ -96,9 +96,9 @@ var general = {
     }
   },
 
-  updateText: function(game){
-    var phaserJSON = game.cache.getJSON('language');
-    game.text_lives.setText(phaserJSON.lives+' '+game.lives);
+  update_lives_text: function(game){
+    //var phaserJSON = game.cache.getJSON('language');
+    game.text_lives.setText(game.lives);
   },
 
   delete_store: function(){

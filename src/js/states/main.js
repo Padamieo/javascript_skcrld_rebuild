@@ -80,12 +80,14 @@ main.create = function () {
 
     this.game.background_action = false;
     this.game.num_enemy = 1;
+    this.game.enemy_limit = 10;
 
     //ga push started tutorial game
 
   }else{
     this.game.background_action = true;
     this.game.num_enemy = 2;
+    this.game.enemy_limit = 10;
     this.game.tick.start();
   }
 
@@ -258,18 +260,22 @@ function updateTick(game) {
 
   game.tick_count++;
 
-  // increase the amount of possible enemies on screen slowly based on kills - this is our natural difficulty increase
-  //add slow down of increase per 10 but infinatly increase
-  if(game.num_enemy <= 9){
-    enemy_add = Phaser.Math.roundTo(game.kills/5);
+  // increase the amount of possible enemies on screen to 10 then slowly based on kills
+  if(game.num_enemy <= game.enemy_limit){
+    enemy_add = Phaser.Math.roundTo(game.kills/(game.enemy_limit/2));
+    if(game.num_enemy > enemy_add){
+      enemy_add = game.num_enemy;
+    }
     if(enemy_add > 0){
       if(game.num_enemy != enemy_add){
         game.num_enemy = enemy_add;
       }
     }
+  }else{
+    game.enemy_limit = game.enemy_limit*2;
   }
 
-  heatseekers = Phaser.Math.roundTo(game.kills/20);
+  heatseekers = Phaser.Math.roundTo(game.kills/15);
   if(game.amount_heatseekers != heatseekers){
     game.amount_heatseekers = heatseekers;
     v = game.enemy_array.indexOf(0);
