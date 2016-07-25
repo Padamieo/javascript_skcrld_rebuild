@@ -6,45 +6,51 @@ function start_new_game(){
   game.state.start('main');
 }
 
-
-
-
-// var game = new Phaser.Game(800, 600, Phaser.AUTO, {
-//   preload: preload,
-//   create: create,
-//   update: update });
-// function preload() {
-//
-// }
-// var textStyle = { font: '64px Arial', align: 'center'};
-// var timer;
-// var milliseconds = 0;
-// var seconds = 0;
-// var minutes = 0;
-// function create() {
-//   timer = game.add.bitmapText(250, 250, '00:00:00', textStyle);
-// }
-// function update() {
-//   //Calling a different function to update the timer just cleans up the update loop if you have other code.
-//   updateTimer();
-// }
-
 function updateTimer() {
-  minutes = Math.floor(game.time.time / 60000) % 60;
-  seconds = Math.floor(game.time.time / 1000) % 60;
-  milliseconds = Math.floor(game.time.time) % 100;
-  //If any of the digits becomes a single digit number, pad it with a zero
-  if (milliseconds < 10)
-    milliseconds = '0' + milliseconds;
+  //console.log(this.game.timestamp);
+  // minutes = Math.floor(game.time.time-game.timestamp / 60000) % 60;
+  // seconds = Math.floor(game.time.time-game.timestamp / 1000) % 60;
+  // milliseconds = Math.floor(game.time.time) % 100;
+  // //If any of the digits becomes a single digit number, pad it with a zero
+  // if (milliseconds < 10)
+  //   milliseconds = '0' + milliseconds;
+  //
+  // if (seconds < 10)
+  //   seconds = '0' + seconds;
+  //
+  // if (minutes < 10){
+  //   minutes = '0' + minutes;
+  // }
 
-  if (seconds < 10)
-    seconds = '0' + seconds;
 
+
+  //game.ttimer.setText(minutes + ':'+ seconds + ':' + milliseconds);
+  if( game.lives <= 8 ){
+    var next_life = (game.timestamp + life_wait);
+    var time_now = (+new Date() / 60000);
+    var difference = time_now-(game.timestamp + life_wait);
+  }else{
+    var next_life = 0;
+    var time_now = 0;
+    var difference = 0;
+  }
+  difference_cal = difference*-1;
+  var minutes = Math.floor(difference_cal);
   if (minutes < 10){
     minutes = '0' + minutes;
   }
-  
-  game.ttimer.setText(minutes + ':'+ seconds + ':' + milliseconds);
+
+  var seconds = difference_cal/60;
+  // if (seconds < 10){
+  //   seconds = '0' + seconds;
+  // }
+
+
+  game.ttimer.setText(next_life);
+  game.tttimer.setText(time_now);
+  game.t3imer.setText(parseFloat(difference_cal).toFixed(4));
+  game.t4imer.setText(minutes + ':' + seconds);
+
 }
 
 menu.create = function () {
@@ -58,8 +64,10 @@ menu.create = function () {
   //call update live directly then set timer to check
   g.check_store(this.game);
 
+  //not sure this needs to be an loop seperate from update on the menu.
   var lives_update = this.game.time.create(false);
-  lives_update.loop(10000, g.update_lives, this.game, this.game);
+  //10000
+  lives_update.loop(1000, g.update_lives, this.game, this.game);
   lives_update.start();
 
   eight = (this.game.height/8);
@@ -111,8 +119,12 @@ menu.create = function () {
   var seconds = 0;
   var minutes = 0;
 
-  this.game.ttimer = this.game.add.text(250, 100, '00:00:00', textStyle);
+  this.game.ttimer = this.game.add.text(100, 130, '00:00:00', textStyle);
+  this.game.tttimer = this.game.add.text(100, 155, '00:00:00', textStyle);
+  this.game.t3imer = this.game.add.text(100, 180, '00:00:00', textStyle);
+  this.game.t4imer = this.game.add.text(100, 205, '00:00:00', textStyle);
 
+  //console.log((this.game.timestamp + life_wait));
 };
 
 function heart_setup(loc){
@@ -148,6 +160,9 @@ menu.update = function (){
     //s = g.button(this.game.phaserJSON.start, eight*1.5, start_new_game, biggest_width);
     this.game.lives = 1;
     game.lives = 1;
+    localStorage.setItem('lives', game.lives );
+    game.timestamp = (+new Date() / 60000);
+    localStorage.setItem('timestamp', game.timestamp );
   }
 
   if(game.lives != game.stored_lives){
