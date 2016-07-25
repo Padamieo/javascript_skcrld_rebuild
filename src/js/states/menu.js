@@ -34,16 +34,20 @@ function updateTimer() {
     var time_now = 0;
     var difference = 0;
   }
+
   difference_cal = difference*-1;
+
   var minutes = Math.floor(difference_cal);
   if (minutes < 10){
     minutes = '0' + minutes;
   }
 
-  var seconds = difference_cal/60;
-  // if (seconds < 10){
-  //   seconds = '0' + seconds;
-  // }
+  diff = minutes-difference_cal;
+  var seconds = Math.floor((diff*60000)/1000)*-1;
+
+  if (seconds < 10){
+    seconds = '0' + seconds;
+  }
 
 
   game.ttimer.setText(next_life);

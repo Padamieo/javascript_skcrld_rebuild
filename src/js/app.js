@@ -2,7 +2,7 @@
 // check if we are developing the app
 if (navigator.platform.match(/(Win)/)) {
   set_language = 'en-US'; //default should be fr-FR
-  life_wait = 0.5;
+  life_wait = 30;
   phone = false;
   start_game();
 }else{
