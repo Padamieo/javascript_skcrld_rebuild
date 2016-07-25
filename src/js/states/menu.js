@@ -43,7 +43,7 @@ function updateTimer() {
   }
 
   diff = minutes-difference_cal;
-  var seconds = Math.floor((diff*60000)/1000)*-1;
+  var seconds = Math.floor((diff*60)*-1);
 
   if (seconds < 10){
     seconds = '0' + seconds;
