@@ -2,7 +2,7 @@
   "name": "lib-tracking",
   "version": "0.0.1",
   "dependencies": {
-    "phaser-official": "2.5.0",
+    "phaser-official": "2.6.1",
     "stats.js": "*"
   },
   "private": true,
