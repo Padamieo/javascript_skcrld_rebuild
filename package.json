@@ -56,9 +56,10 @@
     "grunt-open": "^0.2.3",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
-    "karma-jasmine": "^1.0.2",
     "karma": "^1.1.1",
+    "karma-bro": "^0.11.1",
     "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.1",
     "lodash": "^4.6.1"
   }

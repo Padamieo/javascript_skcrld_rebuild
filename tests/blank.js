@@ -2,52 +2,19 @@
 
 describe('Test', function() {
 
-  it('works', function () {
-    //expect(true).toEqual(true);
-    // game.state.start('main');
+  it('general.js', function () {
+    expect(true).toEqual(true);
     // expect(game).toBeDefined();
-
-    // var flag = false;
-    // window.setTimeout(slowAlert, 2000);
-    // // var timer = new Timer(1000);
-    // // timer.handler = function () { flag = true };
-    // function slowAlert() {
-    //   flag = true;
-    // }
-    //
     // expect(flag).toBe(false);
-    //
-    // console.log("a"+flag);
-    //
-    // waitsFor( function() {
-    //   if(flag) {
-    //     console.log("B"+flag);
-    //   }
-    //   return flag;
-    // }, "timer ran", 750);
-    //
-    // runs( function() {
-    //   expect(flag).toBe(true);
-    // });
-  });
+    var g = require('../src/js/partials/general.js');
 
-  // var value;
-  //
-  // beforeEach(function(done) {
-  //   setTimeout(function() {
-  //     value = 0;
-  //     done();
-  //   }, 1);
-  // });
-  //
-  // it("should support async execution of test preparation and expectations", function(done) {
-  //   console.log(game.state.current);
-  //   //expect(value).toBeGreaterThan(0);
-  //
-  //   expect(game.state.current).toBe('menu');
-  //
-  //   done();
-  // });
+    expect(g.enemy_colour(0)).toBe(0xf24e90);
+
+    expect(g.enemy_colour(0)).toBe(0xf24e90);
+
+    expect(g.calculate_button_width({ length : 10 })).toBe(4);
+    
+  });
 
   //var originalTimeout;
 
@@ -82,7 +49,6 @@ describe('Test', function() {
 
     });
   });
-
 
 
   // afterEach(function() {

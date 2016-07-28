@@ -6,7 +6,7 @@ module.exports = function(config) {
 
 
         // frameworks to use
-        frameworks: ['jasmine'],
+        frameworks: ['browserify', 'jasmine'],
 
 
         // list of files / patterns to load in the browser
@@ -22,6 +22,10 @@ module.exports = function(config) {
         exclude: [
             //'config.js'
         ],
+
+        preprocessors: {
+          '../tests/*.js': ['browserify']
+        },
 
         proxies: {
           '/images/': '/base/images/',
@@ -48,7 +52,7 @@ module.exports = function(config) {
 
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: false,
+        autoWatch: true,
 
 
         // Start these browsers, currently available:
@@ -59,9 +63,15 @@ module.exports = function(config) {
         // - Safari (only Mac)
         // - PhantomJS
         // - IE (only Windows)
-        browsers: ['Chrome']
+        browsers: ['Chrome'],
         //browsers: ['ChromeCanary']
 
+        browserify: {
+          debug: true,
+          transform: []
+        },
+
+        plugins: ['karma-chrome-launcher', 'karma-jasmine', 'karma-bro']
 
         // If browser does not capture in given timeout [ms], kill it
         //captureTimeout: 60000,
