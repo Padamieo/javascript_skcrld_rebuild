@@ -174,9 +174,7 @@ module.exports = function (grunt) {
     'copy:images',
     'copy:audio',
     'copy:languages',
-    'connect',
-    'open',
-    'watch'
+    'serve'
   ]);
 
   grunt.registerTask('build', [

@@ -31,3 +31,8 @@ https://github.com/sunnycupertino/cordova-plugin-admob-simple
 https://github.com/artberri/cordova-plugin-play-games-services
 
 https://cordova.apache.org/docs/en/latest/guide/platforms/android/#signing-an-app
+
+
+need to build custom phaser :
+http://gruntjs.com/frequently-asked-questions#dynamic-alias-tasks
+http://phaser.io/tutorials/creating-custom-phaser-builds

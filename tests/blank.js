@@ -13,7 +13,7 @@ describe('Test', function() {
     expect(g.enemy_colour(0)).toBe(0xf24e90);
 
     expect(g.calculate_button_width({ length : 10 })).toBe(4);
-    
+
   });
 
   //var originalTimeout;
