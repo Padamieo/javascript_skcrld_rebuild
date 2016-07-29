@@ -2,18 +2,7 @@ var properties = require('./src/js/properties.js');
 
 module.exports = function (grunt) {
 
-  grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-cache-bust');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-jade');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-stylus');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-open');
-  grunt.loadNpmTasks('grunt-pngmin');
+  require('load-grunt-tasks')(grunt);
 
   var productionBuild = !!(grunt.cli.tasks.length && grunt.cli.tasks[0] === 'build');
 
@@ -56,131 +45,126 @@ module.exports = function (grunt) {
       js:{
         files: '<%= project.dest %>/**/*.js',
         tasks: ['jade']
-        },
-        jade:{
-          files: 'src/templates/*.jade',
-          tasks: ['jade']
-        },
-        stylus:{
-          files: 'src/style/*.styl',
-          tasks: ['stylus']
-        },
-        images:{
-          files: 'src/images/**/*',
-          tasks: ['copy:images']
-        },
-        audio:{
-          files: 'src/audio/**/*',
-          tasks: ['copy:audio']
-        }
       },
-      browserify:{
-        app:{
-          src: ['<%= project.src %>/app.js'],
-          dest: '<%= project.bundle %>',
-          options:{
-            transform: ['browserify-shim'],
-            watch: true,
-            browserifyOptions:{
-              debug: !productionBuild
-            }
-          }
-        }
+      jade:{
+        files: 'src/templates/*.jade',
+        tasks: ['jade']
       },
-      open:{
-        server:{
-          path: 'http://localhost:<%= project.port %>'
-        }
+      stylus:{
+        files: 'src/style/*.styl',
+        tasks: ['stylus']
       },
-      cacheBust:{
+      images:{
+        files: 'src/images/**/*',
+        tasks: ['copy:images']
+      },
+      audio:{
+        files: 'src/audio/**/*',
+        tasks: ['copy:audio']
+      }
+    },
+    browserify:{
+      app:{
+        src: ['<%= project.src %>/app.js'],
+        dest: '<%= project.bundle %>',
         options:{
-          assets: ['audio/**', 'images/**', 'js/**', 'style/**']
-        , baseDir: './www/'
-        , deleteOriginals: true
-        , length: 5
-        }
-      , files: {
-          src: ['./www/js/app.*', './www/index.html']
-        }
-      }
-
-    , jade:
-      { compile:
-        { options:
-          { data:
-            { properties: properties
-            , productionBuild: productionBuild
-            }
-          }
-        , files:
-          { 'www/index.html': ['src/templates/index.jade']
+          transform: ['browserify-shim'],
+          watch: true,
+          browserifyOptions:{
+            debug: !productionBuild
           }
         }
       }
-
-    , stylus:
-      { compile:
-        { files:
-          { 'www/style/index.css': ['src/style/index.styl'] }
-        , options:
-          { sourcemaps: !productionBuild
-          }
-        }
+    },
+    open:{
+      server:{
+        path: 'http://localhost:<%= project.port %>'
       }
-
-    , clean: ['./www/']
-
-    , pngmin:
-      { options:
-        { ext: '.png'
-        , force: true
-        }
-      , compile:
-        { files:
-            [ { src: 'src/images/*.png'
-              , dest: 'src/images/'
-              }
-            ]
-          }
-        },
-      copy:{
-        images:{
-          files:[{
-            expand: true,
-            cwd: 'src/images/',
-            src: ['**'],
-            dest: 'www/images/'
-          }]
-        },
-        audio:{
-          files:[{
-            expand: true,
-            cwd: 'src/audio/',
-            src: ['**'],
-            dest: 'www/audio/'
-          }]
-        },
-        languages:{
-          files:[{
-            expand: true,
-            cwd: 'src/languages/',
-            src: ['**'],
-            dest: 'www/languages/'
-          }]
-        }
+    },
+    cacheBust:{
+      options:{
+        assets: ['audio/**', 'images/**', 'js/**', 'style/**'],
+        baseDir: './www/',
+        deleteOriginals: true,
+        length: 5
       },
-      uglify:{
-        options:{
-          banner: '<%= project.banner %>'
+      files: {
+        src: ['./www/js/app.*', './www/index.html']
+      }
+    },
+    jade: {
+      compile: {
+        options: {
+          data: {
+            properties: properties,
+            productionBuild: productionBuild
+            }
         },
-        dist:{
-          files:{
-            '<%= project.bundle %>' : '<%= project.bundle %>'
-          }
+        files: {
+          'www/index.html': ['src/templates/index.jade']
+        }
+      }
+    },
+    stylus: {
+      compile:{
+        files:{
+          'www/style/index.css': ['src/style/index.styl']
+        },
+        options:{
+          sourcemaps: !productionBuild
+        }
+      }
+    },
+    clean: ['./www/'],
+    pngmin: {
+      options: {
+        ext: '.png',
+        force: true
+      },
+      compile: {
+        files:[ {
+          src: 'www/images/*.png',
+          dest: 'www/images/'
+        }]
+      }
+    },
+    copy:{
+      images:{
+        files:[{
+          expand: true,
+          cwd: 'src/images/',
+          src: ['**'],
+          dest: 'www/images/'
+        }]
+      },
+      audio:{
+        files:[{
+          expand: true,
+          cwd: 'src/audio/',
+          src: ['**'],
+          dest: 'www/audio/'
+        }]
+      },
+      languages:{
+        files:[{
+          expand: true,
+          cwd: 'src/languages/',
+          src: ['**'],
+          dest: 'www/languages/'
+        }]
+      }
+    },
+    uglify:{
+      options:{
+        banner: '<%= project.banner %>'
+      },
+      dist:{
+        files:{
+          '<%= project.bundle %>' : '<%= project.bundle %>'
         }
       }
     }
-  );
+  });
 
   grunt.registerTask('default', [
     'clean',
@@ -192,7 +176,7 @@ module.exports = function (grunt) {
     'copy:languages',
     'connect',
     'open',
-    'watch',
+    'watch'
   ]);
 
   grunt.registerTask('build', [
@@ -211,5 +195,14 @@ module.exports = function (grunt) {
     'jshint'
   ]);
 
-  grunt.registerTask('optimise', ['pngmin', 'copy:images']);
+  grunt.registerTask('serve',[
+    'connect',
+    'open',
+    'watch'
+  ]);
+
+  grunt.registerTask('optimise', [
+    'pngmin'
+  ]);
+
 };

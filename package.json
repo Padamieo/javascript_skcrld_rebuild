@@ -41,7 +41,8 @@
     "grunt-contrib-jade": "^1.0.0",
     "grunt-contrib-stylus": "^1.2.0",
     "grunt-contrib-uglify": "^1.0.0",
-    "grunt-pngmin": "^1.0.2"
+    "grunt-pngmin": "^1.0.2",
+    "load-grunt-tasks": "^3.5.0"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
