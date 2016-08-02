@@ -13,7 +13,7 @@
   "author": "Michaél Adam Lockwood",
   "license": " ",
   "browser": {
-    "Phaser": "./bower_components/phaser-official/build/custom/phaser-arcade-physics.js",
+    "Phaser": "./bower_components/phaser-official/dist/phaser.js",
     "Stats": "./bower_components/stats.js/build/stats.min.js",
     "player": "./src/js/partials/player.js",
     "general": "./src/js/partials/general.js",
@@ -55,6 +55,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-karma": "^2.0.0",
     "grunt-open": "^0.2.3",
+    "grunt-run": "^0.6.0",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
     "karma": "^1.1.1",

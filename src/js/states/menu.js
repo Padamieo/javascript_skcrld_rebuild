@@ -7,22 +7,6 @@ function start_new_game(){
 }
 
 function updateTimer() {
-  //console.log(this.game.timestamp);
-  // minutes = Math.floor(game.time.time-game.timestamp / 60000) % 60;
-  // seconds = Math.floor(game.time.time-game.timestamp / 1000) % 60;
-  // milliseconds = Math.floor(game.time.time) % 100;
-  // //If any of the digits becomes a single digit number, pad it with a zero
-  // if (milliseconds < 10)
-  //   milliseconds = '0' + milliseconds;
-  //
-  // if (seconds < 10)
-  //   seconds = '0' + seconds;
-  //
-  // if (minutes < 10){
-  //   minutes = '0' + minutes;
-  // }
-
-
 
   //game.ttimer.setText(minutes + ':'+ seconds + ':' + milliseconds);
   if( game.lives <= 8 ){
@@ -38,17 +22,12 @@ function updateTimer() {
   difference_cal = difference*-1;
 
   var minutes = Math.floor(difference_cal);
-  if (minutes < 10){
-    minutes = '0' + minutes;
-  }
+  minutes = g.prependzero(minutes);
 
   diff = minutes-difference_cal;
   var seconds = Math.floor((diff*60)*-1);
 
-  if (seconds < 10){
-    seconds = '0' + seconds;
-  }
-
+  seconds = g.prependzero(seconds);
 
   game.ttimer.setText(next_life);
   game.tttimer.setText(time_now);

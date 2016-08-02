@@ -361,6 +361,11 @@ var general = {
     return text.length/2.5;
   },
 
+
+  prependzero: function(time){
+    return (time < 10 ? '0' + time : time );
+  },
+
   text_timeout: function(game){
     game.tick_count++;
     game.tutorial_text.kill();

@@ -163,10 +163,41 @@ module.exports = function (grunt) {
           '<%= project.bundle %>' : '<%= project.bundle %>'
         }
       }
+    },
+    run: {
+      options: {
+        wait: true,
+        cwd: 'bower_components/phaser-official',
+      },
+      setup: {
+        exec: "npm install"
+      },
+      build_custom_phaser: {
+        exec: "grunt custom --exclude \"gamepad,p2,creature,rope,video,ninja,retrofont,net\""
+      },
+      build_arcade_phaser: {
+        exec: "grunt custom --exclude \"p2,ninja\""
+      }
     }
   });
 
+  grunt.registerTask('custom_phaser', function(n){
+    if(n == null){
+      if (!grunt.file.exists('bower_components/phaser-official/dist/phaser.js')) {
+        grunt.task.run(['phaser']);
+      }
+    }else{
+      grunt.task.run(['phaser']);
+    }
+  });
+
+  grunt.registerTask('phaser', function(n){
+    buildtype = (n == null ? 'build_custom_phaser' : 'build_arcade_phaser' );
+    grunt.task.run([ 'run:setup', 'run:'+buildtype ]);
+  });
+
   grunt.registerTask('default', [
+    'custom_phaser',
     'clean',
     'browserify',
     'jade',
@@ -178,6 +209,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'custom_phaser',
     'clean',
     'browserify',
     'jade',
