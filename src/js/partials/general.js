@@ -361,7 +361,6 @@ var general = {
     return text.length/2.5;
   },
 
-
   prependzero: function(time){
     return (time < 10 ? '0' + time : time );
   },
