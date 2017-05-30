@@ -46,14 +46,17 @@ module.exports = function (grunt) {
         files: '<%= project.dest %>/**/*.js',
         tasks: ['jade']
       },
-      jade:{
-        files: 'src/templates/*.jade',
-        tasks: ['jade']
-      },
-      stylus:{
-        files: 'src/style/*.styl',
-        tasks: ['stylus']
-      },
+
+      // jade:{
+      //   files: 'src/templates/*.jade',
+      //   tasks: ['jade']
+      // },
+
+      // stylus:{
+      //   files: 'src/style/*.styl',
+      //   tasks: ['stylus']
+      // },
+
       images:{
         files: 'src/images/**/*',
         tasks: ['copy:images']
@@ -92,29 +95,32 @@ module.exports = function (grunt) {
         src: ['./www/js/app.*', './www/index.html']
       }
     },
-    jade: {
-      compile: {
-        options: {
-          data: {
-            properties: properties,
-            productionBuild: productionBuild
-            }
-        },
-        files: {
-          'www/index.html': ['src/templates/index.jade']
-        }
-      }
-    },
-    stylus: {
-      compile:{
-        files:{
-          'www/style/index.css': ['src/style/index.styl']
-        },
-        options:{
-          sourcemaps: !productionBuild
-        }
-      }
-    },
+
+    // jade: {
+    //   compile: {
+    //     options: {
+    //       data: {
+    //         properties: properties,
+    //         productionBuild: productionBuild
+    //         }
+    //     },
+    //     files: {
+    //       'www/index.html': ['src/templates/index.jade']
+    //     }
+    //   }
+    // },
+
+    // stylus: {
+    //   compile:{
+    //     files:{
+    //       'www/style/index.css': ['src/style/index.styl']
+    //     },
+    //     options:{
+    //       sourcemaps: !productionBuild
+    //     }
+    //   }
+    // },
+
     clean: ['./www/'],
     pngmin: {
       options: {
@@ -129,6 +135,19 @@ module.exports = function (grunt) {
       }
     },
     copy:{
+
+      html:{
+        files:[{
+          cwd: 'src/',
+          src: ['**', '!**/js/*.js', '!**/*.{jpg,png,hbs,less,json,wav,js}'],
+          dest: 'www/',
+          nonull: false,
+          expand: true,
+          flatten: false,
+          filter: 'isFile'
+        },]
+      },
+
       images:{
         files:[{
           expand: true,
@@ -137,6 +156,7 @@ module.exports = function (grunt) {
           dest: 'www/images/'
         }]
       },
+
       audio:{
         files:[{
           expand: true,
@@ -145,6 +165,7 @@ module.exports = function (grunt) {
           dest: 'www/audio/'
         }]
       },
+
       languages:{
         files:[{
           expand: true,
@@ -153,7 +174,9 @@ module.exports = function (grunt) {
           dest: 'www/languages/'
         }]
       }
+
     },
+
     uglify:{
       options:{
         banner: '<%= project.banner %>'
@@ -164,6 +187,21 @@ module.exports = function (grunt) {
         }
       }
     },
+
+    less: {
+			live: {
+				options: {
+					strictMath: true,
+					sourceMap: true,
+					outputSourceFiles: true,
+					sourceMapURL: 'style.css.map',
+					sourceMapFilename: 'www/css/style.css.map'
+				},
+				src: 'src/less/style.less',
+				dest: 'www/css/style.css'
+			}
+		},
+
     run: {
       options: {
         wait: true,
@@ -200,8 +238,10 @@ module.exports = function (grunt) {
     'custom_phaser',
     'clean',
     'browserify',
-    'jade',
-    'stylus',
+    'copy:html',
+    'less',
+    // 'jade',
+    // 'stylus',
     'copy:images',
     'copy:audio',
     'copy:languages',
@@ -212,8 +252,10 @@ module.exports = function (grunt) {
     'custom_phaser',
     'clean',
     'browserify',
-    'jade',
-    'stylus',
+    'copy:html',
+    'less',
+    // 'jade',
+    // 'stylus',
     'uglify',
     'copy:images',
     'copy:audio',
