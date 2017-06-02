@@ -24,6 +24,7 @@ module.exports = function (grunt) {
         ' * @copyright <%= pkg.author %>\n' +
         ' */\n'
     },
+
     connect:{
       dev:{
         options:{
@@ -32,31 +33,30 @@ module.exports = function (grunt) {
         }
       }
     },
+
     jshint:{
       files:[ 'gruntfile.js', '<%= project.js %>'],
       options:{
         jshintrc: '.jshintrc'
       }
     },
+
     watch:{
       options:{
         livereload: productionBuild ? false : properties.liveReloadPort
       },
-      js:{
-        files: '<%= project.dest %>/**/*.js',
-        tasks: ['jade']
-      },
-
-      // jade:{
-      //   files: 'src/templates/*.jade',
+      // js:{
+      //   files: '<%= project.dest %>/**/*.js',
       //   tasks: ['jade']
       // },
-
-      // stylus:{
-      //   files: 'src/style/*.styl',
-      //   tasks: ['stylus']
-      // },
-
+      html:{
+        files: 'src/**.html',
+        tasks: ['copy:html']
+      },
+      html:{
+        files: 'src/less/*.less',
+        tasks: ['less']
+      },
       images:{
         files: 'src/images/**/*',
         tasks: ['copy:images']
@@ -66,9 +66,10 @@ module.exports = function (grunt) {
         tasks: ['copy:audio']
       }
     },
+
     browserify:{
       app:{
-        src: ['<%= project.src %>/app.js'],
+        src: [ '<%= project.src %>/app.js', (productionBuild ? '' : './helpers/livereload.js' )], // '<%= project.src %>/app.js',
         dest: '<%= project.bundle %>',
         options:{
           transform: ['browserify-shim'],
@@ -79,11 +80,13 @@ module.exports = function (grunt) {
         }
       }
     },
+
     open:{
       server:{
         path: 'http://localhost:<%= project.port %>'
       }
     },
+
     cacheBust:{
       options:{
         assets: ['audio/**', 'images/**', 'js/**', 'style/**'],
@@ -95,31 +98,6 @@ module.exports = function (grunt) {
         src: ['./www/js/app.*', './www/index.html']
       }
     },
-
-    // jade: {
-    //   compile: {
-    //     options: {
-    //       data: {
-    //         properties: properties,
-    //         productionBuild: productionBuild
-    //         }
-    //     },
-    //     files: {
-    //       'www/index.html': ['src/templates/index.jade']
-    //     }
-    //   }
-    // },
-
-    // stylus: {
-    //   compile:{
-    //     files:{
-    //       'www/style/index.css': ['src/style/index.styl']
-    //     },
-    //     options:{
-    //       sourcemaps: !productionBuild
-    //     }
-    //   }
-    // },
 
     clean: ['./www/'],
     pngmin: {
@@ -134,8 +112,8 @@ module.exports = function (grunt) {
         }]
       }
     },
-    copy:{
 
+    copy:{
       html:{
         files:[{
           cwd: 'src/',
@@ -147,7 +125,6 @@ module.exports = function (grunt) {
           filter: 'isFile'
         },]
       },
-
       images:{
         files:[{
           expand: true,
@@ -156,7 +133,6 @@ module.exports = function (grunt) {
           dest: 'www/images/'
         }]
       },
-
       audio:{
         files:[{
           expand: true,
@@ -165,7 +141,6 @@ module.exports = function (grunt) {
           dest: 'www/audio/'
         }]
       },
-
       languages:{
         files:[{
           expand: true,
@@ -174,7 +149,6 @@ module.exports = function (grunt) {
           dest: 'www/languages/'
         }]
       }
-
     },
 
     uglify:{
@@ -199,6 +173,14 @@ module.exports = function (grunt) {
 				},
 				src: 'src/less/style.less',
 				dest: 'www/css/style.css'
+			}
+		},
+
+    handlebars: {
+			all: {
+				files: {
+					"temp/templates.js": ["src/templates/*.hbs"]
+				}
 			}
 		},
 
@@ -238,33 +220,30 @@ module.exports = function (grunt) {
     'custom_phaser',
     'clean',
     'browserify',
-    'copy:html',
     'less',
-    // 'jade',
-    // 'stylus',
+    'copy:html',
     'copy:images',
     'copy:audio',
     'copy:languages',
-    'serve'
+    'serve',
+    'watch'
   ]);
 
   grunt.registerTask('build', [
     'custom_phaser',
     'clean',
     'browserify',
-    'copy:html',
     'less',
-    // 'jade',
-    // 'stylus',
-    'uglify',
+    'copy:html',
     'copy:images',
     'copy:audio',
     'copy:languages',
-    'cacheBust'
+    'cacheBust',
+    'uglify'
   ]);
 
   grunt.registerTask('test',[
-    'jshint'
+    'handlebars'
   ]);
 
   grunt.registerTask('serve',[
@@ -272,6 +251,10 @@ module.exports = function (grunt) {
     'open',
     'watch'
   ]);
+
+  grunt.registerTask('i', function(){
+    console.log(properties.liveReloadPort);
+  });
 
   grunt.registerTask('optimise', [
     'pngmin'

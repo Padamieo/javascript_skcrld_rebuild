@@ -5,6 +5,7 @@
 # nodejs npm modules
 /node_modules
 /bower_components
+/temp
 
 # intelij or android studio sdk
 /.idea
