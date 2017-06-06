@@ -132,7 +132,7 @@ function start_game(){
     var r = gcd (w, h);
     var v = (w/r)/(h/r);
     var criteria = (v >= 0.50 && v <= 0.62);
-    
+
     var width = (criteria ?  window.innerWidth : properties.size.x);
     var height = (criteria ?  window.innerHeight : properties.size.y);
 

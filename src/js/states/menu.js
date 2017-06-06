@@ -1,4 +1,5 @@
 var g = require('general');
+var ui = require('ui');
 
 var menu = {};
 
@@ -46,6 +47,11 @@ menu.create = function () {
 
   //call update live directly then set timer to check
   g.check_store(this.game);
+
+  console.log("build handlebars");
+  ui.create();
+
+  /*
 
   //not sure this needs to be an loop seperate from update on the menu.
   var lives_update = this.game.time.create(false);
@@ -107,6 +113,8 @@ menu.create = function () {
   this.game.t3imer = this.game.add.text(100, 180, '00:00:00', textStyle);
   this.game.t4imer = this.game.add.text(100, 205, '00:00:00', textStyle);
 
+  */
+
   //console.log((this.game.timestamp + life_wait));
 };
 
@@ -136,6 +144,7 @@ function heart_setup(loc){
 
 menu.update = function (){
 
+  /*
   updateTimer();
 
   if (game.input.keyboard.isDown(Phaser.Keyboard.A)){
@@ -156,6 +165,7 @@ menu.update = function (){
     game.stored_lives = game.lives;
     heart_setup(eight*1); // maybe this should update better
   }
+  */
 
   //if lives change update button s
   // if(!game.lives >= 1){

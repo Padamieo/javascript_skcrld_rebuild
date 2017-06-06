@@ -69,7 +69,12 @@ module.exports = function (grunt) {
 
     browserify:{
       app:{
-        src: [ '<%= project.src %>/app.js', (productionBuild ? '' : './helpers/livereload.js' )], // '<%= project.src %>/app.js',
+        src: [
+          '<%= project.src %>/app.js',
+          //'node_modules/handlebars/dist/handlebars.js',
+          //'temp/templates.js',
+          (productionBuild ? '' : './helpers/livereload.js' )
+        ], // '<%= project.src %>/app.js',
         dest: '<%= project.bundle %>',
         options:{
           transform: ['browserify-shim'],

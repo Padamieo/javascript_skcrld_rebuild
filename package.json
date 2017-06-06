@@ -17,6 +17,7 @@
     "Stats": "./bower_components/stats.js/build/stats.min.js",
     "player": "./src/js/partials/player.js",
     "general": "./src/js/partials/general.js",
+    "ui": "./src/js/ui.js",
     "rainbow": "./src/js/partials/rainbow.js",
     "cat": "./src/js/partials/cat.js",
     "indicator": "./src/js/partials/indicator.js",
