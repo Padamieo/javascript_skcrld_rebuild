@@ -1,5 +1,5 @@
 var g = require('general');
-var ui = require('ui');
+ui = require('ui');
 
 var menu = {};
 
@@ -47,8 +47,8 @@ menu.create = function () {
 
   //call update live directly then set timer to check
   g.check_store(this.game);
-  
-  ui.create();
+
+  ui.init();
 
   /*
 
