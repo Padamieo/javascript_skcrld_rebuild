@@ -49,6 +49,10 @@ module.exports = function (grunt) {
       //   files: '<%= project.dest %>/**/*.js',
       //   tasks: ['jade']
       // },
+      handlebars:{
+        files: 'src/templates/**.js',
+        tasks: ['handlebars', 'browserify']
+      },
       html:{
         files: 'src/**.html',
         tasks: ['copy:html']
@@ -71,10 +75,8 @@ module.exports = function (grunt) {
       app:{
         src: [
           '<%= project.src %>/app.js',
-          //'node_modules/handlebars/dist/handlebars.js',
-          //'temp/templates.js',
           (productionBuild ? '' : './helpers/livereload.js' )
-        ], // '<%= project.src %>/app.js',
+        ],
         dest: '<%= project.bundle %>',
         options:{
           transform: ['browserify-shim'],
@@ -224,6 +226,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'custom_phaser',
     'clean',
+    'handlebars',
     'browserify',
     'less',
     'copy:html',
@@ -237,6 +240,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'custom_phaser',
     'clean',
+    'handlebars',
     'browserify',
     'less',
     'copy:html',
@@ -245,10 +249,6 @@ module.exports = function (grunt) {
     'copy:languages',
     'cacheBust',
     'uglify'
-  ]);
-
-  grunt.registerTask('test',[
-    'handlebars'
   ]);
 
   grunt.registerTask('serve',[

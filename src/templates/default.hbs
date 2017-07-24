@@ -1,19 +1,22 @@
 
 
-  <p>hello i am a template</p>
-  <!-- <h1><strong>{{titlea}}</strong> {{titleb}}</h1>
+  <h1>Super Kitty Cat Rainbow Lazors</h1>
+  <!-- <h1><strong>{{titlea}}</strong> {{titleb}}</h1> -->
 
-  <div class="pt-triggers">
-    {{#if buttons}}
-      {{#buttons}}
-        <button id="{{id}}" class="pt-touch-button {{class}}"
-        {{#if data}}
-          {{#data}}
-            data-{{name}}="{{value}}"
-          {{/data}}
-        {{/if}}
-        >{{title}}</button>
-      {{/buttons}}
+    {{#if heart}}
+     <div class="heart"><p>heart</p></div>
     {{/if}}
 
-  </div> -->
+    {{#if buttons}}
+      {{#buttons}}
+        <div>
+          <a id="{{id}}" class="button {{class}}"
+          {{#if data}}
+            {{#data}}
+              data-{{name}}="{{value}}"
+            {{/data}}
+          {{/if}}
+          ><span>{{title}}</span></a>
+        </div>
+      {{/buttons}}
+    {{/if}}

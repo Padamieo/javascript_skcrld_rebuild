@@ -23,7 +23,10 @@
     "indicator": "./src/js/partials/indicator.js",
     "enemy": "./src/js/partials/enemy.js",
     "collision": "./src/js/partials/collision.js",
-    "Sat": "./bower_components/sat-js/SAT.js"
+    "Sat": "./bower_components/sat-js/SAT.js",
+    "handlebars": "./node_modules/handlebars/dist/handlebars.js",
+    "templates": "./temp/templates.js",
+    "jquery": "./node_modules/jquery/dist/jquery.js"
   },
   "browserify-shim": {
     "Phaser": {
@@ -38,10 +41,11 @@
   },
   "dependencies": {
     "grunt": "^0.4.5",
-    "handlebars": "^4.0.6",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^1.0.0",
     "grunt-pngmin": "^1.0.2",
+    "handlebars": "^4.0.6",
+    "jquery": "^3.2.1",
     "load-grunt-tasks": "^3.5.0"
   },
   "devDependencies": {

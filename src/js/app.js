@@ -157,6 +157,5 @@ function start_game(){
   }else{
     game.online = false;
   }
-
   game.state.start('boot');
 }

@@ -47,8 +47,7 @@ menu.create = function () {
 
   //call update live directly then set timer to check
   g.check_store(this.game);
-
-  console.log("build handlebars");
+  
   ui.create();
 
   /*
