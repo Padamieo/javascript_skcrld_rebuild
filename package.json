@@ -4,7 +4,8 @@
   "description": "Phaser Phonegap Game",
   "main": "www/js/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node_modules/.bin/bower install"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,10 @@
     "Sat": "./bower_components/sat-js/SAT.js",
     "handlebars": "./node_modules/handlebars/dist/handlebars.js",
     "templates": "./temp/templates.js",
-    "jquery": "./node_modules/jquery/dist/jquery.js"
+    "jquery": "./node_modules/jquery/dist/jquery.js",
+    "svgLoader": "./bower_components/PageLoadingEffects/js/svgLoader.js",
+    "snap": "./node_modules/snapsvg/dist/snap.svg.js",
+    "classie": "./bower_components/PageLoadingEffects/js/classie.js"
   },
   "browserify-shim": {
     "Phaser": {
@@ -46,7 +50,8 @@
     "grunt-pngmin": "^1.0.2",
     "handlebars": "^4.0.6",
     "jquery": "^3.2.1",
-    "load-grunt-tasks": "^3.5.0"
+    "load-grunt-tasks": "^3.5.0",
+    "snapsvg": "^0.5.1"
   },
   "devDependencies": {
     "browserify": "^13.0.0",

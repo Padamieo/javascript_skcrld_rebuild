@@ -6,6 +6,10 @@ ui.init = function () {
   Handlebars = require("handlebars");
   b = require("templates");
   $ = require("jquery");
+  require("snap");
+  require("classie");
+  svgLoader = require("svgLoader");
+  loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
   this.prepActions();
   this.buildPage();
 };
@@ -68,7 +72,10 @@ ui.prepActions = function(){
 ui.changePage = function( page ){
   var fallback = ( page ? page : "menu" );
   this.current = fallback;
+  loader.show();
   this.buildPage();
+  setInterval(function(){ loader.hide(); }, 3000);
+
 };
 
 ui.handlebars = function(page, data, template){

@@ -7,6 +7,7 @@
   },
   "private": true,
   "devDependencies": {
-    "sat-js": "https://github.com/jriecken/sat-js.git"
+    "sat-js": "https://github.com/jriecken/sat-js.git",
+    "PageLoadingEffects": "https://github.com/codrops/PageLoadingEffects.git"
   }
 }
