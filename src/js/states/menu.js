@@ -7,6 +7,7 @@ function start_new_game(){
   game.state.start('main');
 }
 
+/*
 function updateTimer() {
 
   //game.ttimer.setText(minutes + ':'+ seconds + ':' + milliseconds);
@@ -36,6 +37,7 @@ function updateTimer() {
   game.t4imer.setText(minutes + ':' + seconds);
 
 }
+*/
 
 menu.create = function () {
 

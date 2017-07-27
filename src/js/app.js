@@ -1,10 +1,19 @@
+ui = require('ui');
+$ = require("jquery");
 
 // check if we are developing the app
 if (navigator.platform.match(/(Win)/)) {
   set_language = 'en-US'; //default should be fr-FR
   life_wait = 30;
   phone = false;
-  start_game();
+
+  //start_game();
+  $( document ).ready(function() {
+    console.log( "ready!" );
+    ui.init();
+  });
+
+
 }else{
   phone = true;
   life_wait = 60;
@@ -59,7 +68,7 @@ function onDeviceReady(){
   document.addEventListener("online", now_online, false);
   document.addEventListener("offline", now_offline, false);
 
-  start_game();
+  //start_game();
 }
 
 function playgameservices(){
@@ -112,7 +121,7 @@ function gcd (a, b) {
   return (b === 0) ? a : gcd (b, a%b);
 }
 
-function start_game(){
+start_game = function(){
 
   var _ = require('lodash'),
     Phaser = require('Phaser'),
@@ -121,10 +130,10 @@ function start_game(){
     states = {
       boot: require('./states/boot.js'),
       preloader: require('./states/preloader.js'),
-      menu: require('./states/menu.js'),
+      //menu: require('./states/menu.js'),
       main: require('./states/main.js'),
-      options: require('./states/options.js'),
-      boards: require('./states/boards.js'),
+      //options: require('./states/options.js'),
+      //boards: require('./states/boards.js'),
     };
 
     var w = window.innerWidth;

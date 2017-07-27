@@ -3,13 +3,15 @@ var ui = {
 };
 
 ui.init = function () {
+  console.log("init");
   Handlebars = require("handlebars");
   b = require("templates");
-  $ = require("jquery");
-  require("snap");
-  require("classie");
+  //$ = require("jquery");
+  Snap = require("snap");
+  classie = require("classie");
   svgLoader = require("svgLoader");
-  loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
+
+  //loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
   this.prepActions();
   this.buildPage();
 };
@@ -72,9 +74,9 @@ ui.prepActions = function(){
 ui.changePage = function( page ){
   var fallback = ( page ? page : "menu" );
   this.current = fallback;
-  loader.show();
+  //loader.show();
   this.buildPage();
-  setInterval(function(){ loader.hide(); }, 3000);
+  //setInterval(function(){ loader.hide(); }, 3000);
 
 };
 
@@ -91,7 +93,8 @@ ui.swapContent = function( page, html ){
 
 ui.startGame = function(){
   //transition hide menu
-  game.state.start('main');
+  //game.state.start('main');
+  start_game();
 };
 
 module.exports = ui;

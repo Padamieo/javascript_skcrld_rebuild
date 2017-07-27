@@ -1,3 +1,4 @@
+var g = require('general');
 var preloader = {};
 
 preloader.preload = function () {
@@ -40,7 +41,11 @@ preloader.preload = function () {
 };
 
 preloader.create = function () {
-  this.game.state.start('menu');
+  
+  this.game.phaserJSON = this.game.cache.getJSON('language');
+  g.check_store(this.game);
+
+  this.game.state.start('main'); //menu
 };
 
 module.exports = preloader;
