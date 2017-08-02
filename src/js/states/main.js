@@ -137,6 +137,8 @@ main.create = function () {
   text_score.strokeThickness = 5;
   text_score.anchor.setTo(0.5, 0.5);
 
+  loader.hide();
+
 };
 
 main.update = function(){
@@ -250,7 +252,9 @@ main.update = function(){
       //send play play time
       //send play distance traveled
     }
-    this.game.state.start('menu');
+
+    this.game.state.start('idle');
+    ui.endGame();
   }
 
 };

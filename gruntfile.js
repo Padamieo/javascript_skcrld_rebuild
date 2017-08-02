@@ -50,7 +50,7 @@ module.exports = function (grunt) {
       //   tasks: ['jade']
       // },
       handlebars:{
-        files: 'src/templates/**.js',
+        files: 'src/templates/**.hbs',
         tasks: ['handlebars', 'browserify']
       },
       html:{

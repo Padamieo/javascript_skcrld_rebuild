@@ -7,6 +7,15 @@
      <div class="heart"><p>heart</p></div>
     {{/if}}
 
+    {{#if options}}
+      {{#options}}
+      <div>
+        <p>teststst</p> <input type="checkbox" id="{{id}}" /><label for="{{id}}">Toggle</label>
+        <!-- https://codepen.io/mburnette/pen/LxNxNg -->
+      </div>
+      {{/options}}
+    {{/if}}
+
     {{#if buttons}}
       {{#buttons}}
         <div>

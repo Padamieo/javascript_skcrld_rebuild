@@ -1,5 +1,6 @@
 var ui = {
-  current: 'menu'
+  current: 'menu',
+  intialized: false
 };
 
 ui.init = function () {
@@ -8,10 +9,10 @@ ui.init = function () {
   b = require("templates");
   //$ = require("jquery");
   Snap = require("snap");
-  classie = require("classie");
+  require("classie");
   svgLoader = require("svgLoader");
 
-  //loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
+  loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
   this.prepActions();
   this.buildPage();
 };
@@ -30,16 +31,16 @@ ui.getPageContent = function( current ){
         title: 'Play',
         id: 'start'
       },{
-        title: 'Something',
+        title: 'Options',
         class: 'page',
         data: [{
           name: 'page',
-          value: 'main'
+          value: 'options'
         }]
       }]
 
     }
-  }else if(current === 'main'){
+  }else if(current === 'options'){
     data = {
       buttons:[{
         title: 'Return',
@@ -48,12 +49,23 @@ ui.getPageContent = function( current ){
           name: 'page',
           value: 'menu'
         }]
-      }]
-
+      }],
+      options: ui.getOptions()
     }
   }
 
   return data;
+};
+
+ui.getOptions = function( ){
+  var options = [{
+    id: 'sound'
+  },{
+    id: 'vibration'
+  },{
+    id: 'tutorial'
+  }];
+  return options;
 };
 
 ui.prepActions = function(){
@@ -74,9 +86,9 @@ ui.prepActions = function(){
 ui.changePage = function( page ){
   var fallback = ( page ? page : "menu" );
   this.current = fallback;
-  //loader.show();
+  loader.show();
   this.buildPage();
-  //setInterval(function(){ loader.hide(); }, 3000);
+  setTimeout(function(){ loader.hide(); }, 300);
 
 };
 
@@ -92,9 +104,24 @@ ui.swapContent = function( page, html ){
 };
 
 ui.startGame = function(){
+  loader.show();
+  $("#game").show();
   //transition hide menu
-  //game.state.start('main');
-  start_game();
+  if(this.intialized){
+    game.state.start('main');
+  }else{
+    start_game();
+  }
+
+};
+
+ui.endGame = function(){
+  loader.show();
+  //console.log(game);
+  $("#game").hide();
+
+  loader.hide();
+
 };
 
 module.exports = ui;

@@ -7,12 +7,9 @@ if (navigator.platform.match(/(Win)/)) {
   life_wait = 30;
   phone = false;
 
-  //start_game();
   $( document ).ready(function() {
-    console.log( "ready!" );
     ui.init();
   });
-
 
 }else{
   phone = true;
@@ -21,7 +18,6 @@ if (navigator.platform.match(/(Win)/)) {
 }
 
 function success_auth(test){
-  console.log(test);
   //need to maybe need add "test" above to home screen for testing
   if(localStorage != undefined){
     if(localStorage.getItem('auth') === null){
@@ -130,11 +126,11 @@ start_game = function(){
     states = {
       boot: require('./states/boot.js'),
       preloader: require('./states/preloader.js'),
-      //menu: require('./states/menu.js'),
       main: require('./states/main.js'),
-      //options: require('./states/options.js'),
-      //boards: require('./states/boards.js'),
+      idle: require('./states/idle.js')
     };
+
+    ui.intialized = true;
 
     var w = window.innerWidth;
     var h = window.innerHeight;
