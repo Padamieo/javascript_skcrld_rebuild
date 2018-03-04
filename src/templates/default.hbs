@@ -1,0 +1,31 @@
+
+  {{#if title}}
+    <h1 class="background-clip">Super Kitty Cat Rainbow Lazors</h1>
+  {{/if}}
+
+    {{#if heart}}
+     <div class="heart"><p>heart</p></div>
+    {{/if}}
+
+    {{#if options}}
+      {{#options}}
+      <div>
+        <p>teststst</p> <input type="checkbox" id="{{id}}" /><label for="{{id}}">Toggle</label>
+        <!-- https://codepen.io/mburnette/pen/LxNxNg -->
+      </div>
+      {{/options}}
+    {{/if}}
+
+    {{#if buttons}}
+      {{#buttons}}
+        <div>
+          <a id="{{id}}" class="button pageload-link {{class}}" href="#game"
+          {{#if data}}
+            {{#data}}
+              data-{{name}}="{{value}}"
+            {{/data}}
+          {{/if}}
+          ><span>{{title}}</span></a>
+        </div>
+      {{/buttons}}
+    {{/if}}

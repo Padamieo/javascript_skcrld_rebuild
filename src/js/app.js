@@ -1,10 +1,16 @@
+ui = require('ui');
+$ = require("jquery");
 
 // check if we are developing the app
 if (navigator.platform.match(/(Win)/)) {
   set_language = 'en-US'; //default should be fr-FR
   life_wait = 30;
   phone = false;
-  start_game();
+
+  document.addEventListener("DOMContentLoaded", function(event) {
+    ui.init();
+  });
+
 }else{
   phone = true;
   life_wait = 60;
@@ -12,7 +18,6 @@ if (navigator.platform.match(/(Win)/)) {
 }
 
 function success_auth(test){
-  console.log(test);
   //need to maybe need add "test" above to home screen for testing
   if(localStorage != undefined){
     if(localStorage.getItem('auth') === null){
@@ -59,7 +64,7 @@ function onDeviceReady(){
   document.addEventListener("online", now_online, false);
   document.addEventListener("offline", now_offline, false);
 
-  start_game();
+  //start_game();
 }
 
 function playgameservices(){
@@ -112,7 +117,7 @@ function gcd (a, b) {
   return (b === 0) ? a : gcd (b, a%b);
 }
 
-function start_game(){
+start_game = function(){
 
   var _ = require('lodash'),
     Phaser = require('Phaser'),
@@ -121,18 +126,18 @@ function start_game(){
     states = {
       boot: require('./states/boot.js'),
       preloader: require('./states/preloader.js'),
-      menu: require('./states/menu.js'),
       main: require('./states/main.js'),
-      options: require('./states/options.js'),
-      boards: require('./states/boards.js'),
+      idle: require('./states/idle.js')
     };
+
+    ui.intialized = true;
 
     var w = window.innerWidth;
     var h = window.innerHeight;
     var r = gcd (w, h);
     var v = (w/r)/(h/r);
     var criteria = (v >= 0.50 && v <= 0.62);
-    
+
     var width = (criteria ?  window.innerWidth : properties.size.x);
     var height = (criteria ?  window.innerHeight : properties.size.y);
 
@@ -157,6 +162,5 @@ function start_game(){
   }else{
     game.online = false;
   }
-
   game.state.start('boot');
 }

@@ -21,7 +21,7 @@ var enemy = function(game) {
 
   this.scale.y = 1.2;
   this.scale.x = 1.2;
-
+  this.angle = 0;
   this.x_velocity = 0;
   this.max_velocity = 0.1;
   this.alive = true;
@@ -45,7 +45,7 @@ enemy.prototype.update = function(game) {
 
   if(game.player.lazers === true){
     if(this.v_speed > 0.05){
-      this.v_speed -= 0.001;
+      this.v_speed -= 0.005;
     }
     v_speed = this.v_speed;
   }else{
@@ -60,12 +60,11 @@ enemy.prototype.update = function(game) {
   if(this.alive === true){
 
     if(this.enemy_type >= 0){
-      this.y = this.y -( v_speed * dt );
+      this.y = this.y -( this.v_speed * dt );
       this.animations.play('rotate', 12, true);
     }
 
     if(this.enemy_type === 1){
-
       this.x = this.x - this.x_velocity * dt;
 
       if(this.x > this.game.kitty.x){
@@ -83,16 +82,54 @@ enemy.prototype.update = function(game) {
         }
         this.x_velocity = this.x_velocity - (h_speed * dt);
       }
+      this.toAngle();
+    }
 
-      var rad = Math.atan2((this.game.kitty.y - this.y), (this.game.kitty.x - this.x));
-      var angle = rad+1.5707963267948966;
-      if(angle > 0.35){
-        angle = 0.35;
+    if(this.enemy_type === 3){
+      this.x = this.x - this.x_velocity * dt;
+      if(this.y < game.height-(game.height/4)){
+        if(this.x < this.game.kitty.x ){
+          this.x_velocity = this.x_velocity - (0.0001 * dt);
+        }else if(this.x > this.game.kitty.x ){
+          this.x_velocity = this.x_velocity + (0.0001 * dt);
+        }else{
+          this.x_velocity = (0.0 * dt);
+        }
+        this.trail.tint = '0xBCFCFF';
+        this.trail.scale.y = 1.2;
+        this.trail.scale.x = 1.2;
+        this.toAngle();
       }
-      if(angle < -0.35){
-        angle = -0.35
-      }
-      this.angle = game.math.radToDeg(angle);
+    }
+
+    if(this.enemy_type === 2){
+      //this.x = this.x - this.x_velocity * dt;
+
+      // if(this.start_x < (this.game.width/2)){
+      //   window.console.log(this.x / this.game.width);
+      //   this.x = this.x + (0.025 * dt);
+      // }else{
+      //   this.x = this.x - (0.025 * dt);
+      // }
+
+      //if(this.x < this.start_x ){
+        //this.x_velocity = this.x_velocity - (0.0001 * dt);
+      //}else if(this.x > this.start_x ){
+      //  this.x_velocity = this.x_velocity + (0.0001 * dt);
+      //}else{
+      //  this.x_velocity = (0.0 * dt);
+      //}
+
+      //this.toAngle();
+      var toPlayerX = this.game.kitty.x - this.x;
+
+       // Normalize
+      var toPlayerLength = Math.sqrt(toPlayerX * toPlayerX);
+      var toPlayerX = toPlayerX / toPlayerLength;
+
+       // Move towards the player
+       this.x += toPlayerX * (0.05 * dt);
+
     }
 
     this.trail.x = this.x;
@@ -112,19 +149,36 @@ enemy.prototype.update = function(game) {
 
 };
 
+enemy.prototype.toAngle = function(){
+  var rad = Math.atan2((this.game.kitty.y - this.y), (this.game.kitty.x - this.x));
+  var angle = rad+1.5707963267948966;
+  if(angle > 0.35){
+    angle = 0.35;
+  }
+  if(angle < -0.35){
+    angle = -0.35
+  }
+  this.angle = game.math.radToDeg(angle);
+}
+
 enemy.revive = function(game, enemy){
   enemy.enemy_type = (game.tutorial != 0 ? 0 : g.choose(game));
-  enemy.x = game.rnd.integerInRange(0, game.width);
+  enemy.x = game.rnd.integerInRange(10, game.width-10);
+  enemy.start_x = enemy.x;
   enemy.y = game.height;
   enemy.angle = 0;
   enemy.trigger_once = 0;
   enemy.tint = g.enemy_colour(enemy.enemy_type);
+  enemy.x_velocity = 0;
 
   if (game.trail.countDead() === 0) {
     return;
   }
   enemy.trail = game.trail.getFirstExists(false);
   enemy.trail.reset(enemy.x, enemy.y);
+  enemy.trail.tint = '0xFFFFFF';
+  enemy.trail.scale.y = 1;
+  enemy.trail.scale.x = 1;
 };
 
 module.exports = enemy;

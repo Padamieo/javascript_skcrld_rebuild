@@ -2,11 +2,12 @@
   "name": "lib-tracking",
   "version": "0.0.1",
   "dependencies": {
-    "phaser-official": "2.6.1",
+    "phaser-official": "2.6.2",
     "stats.js": "*"
   },
   "private": true,
   "devDependencies": {
-    "sat-js": "https://github.com/jriecken/sat-js.git"
+    "sat-js": "https://github.com/jriecken/sat-js.git",
+    "PageLoadingEffects": "https://github.com/codrops/PageLoadingEffects.git"
   }
 }
