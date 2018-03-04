@@ -4,15 +4,14 @@ var ui = {
 };
 
 ui.init = function () {
-  console.log("init");
+
   Handlebars = require("handlebars");
   b = require("templates");
   //$ = require("jquery");
-  Snap = require("snap");
-  require("classie");
-  svgLoader = require("svgLoader");
-
-  loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
+  // Snap = require("snap");
+  // require("classie");
+  //svgLoader = require("svgLoader");
+  //loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
   this.prepActions();
   this.buildPage();
 };
@@ -27,6 +26,7 @@ ui.getPageContent = function( current ){
 
   if(current === 'menu'){
     data = {
+      title: true,
       buttons:[{
         title: 'Play',
         id: 'start'
@@ -86,9 +86,9 @@ ui.prepActions = function(){
 ui.changePage = function( page ){
   var fallback = ( page ? page : "menu" );
   this.current = fallback;
-  loader.show();
+  //loader.show();
   this.buildPage();
-  setTimeout(function(){ loader.hide(); }, 300);
+  //setTimeout(function(){ loader.hide(); }, 300);
 
 };
 
@@ -104,7 +104,7 @@ ui.swapContent = function( page, html ){
 };
 
 ui.startGame = function(){
-  loader.show();
+  //loader.show();
   $("#game").show();
   //transition hide menu
   if(this.intialized){
@@ -116,11 +116,11 @@ ui.startGame = function(){
 };
 
 ui.endGame = function(){
-  loader.show();
-  //console.log(game);
-  $("#game").hide();
 
-  loader.hide();
+  //loader.show();
+  $("#menu").show();
+  $("#game").hide();
+  //loader.hide();
 
 };
 

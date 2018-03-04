@@ -7,7 +7,7 @@ if (navigator.platform.match(/(Win)/)) {
   life_wait = 30;
   phone = false;
 
-  $( document ).ready(function() {
+  document.addEventListener("DOMContentLoaded", function(event) {
     ui.init();
   });
 

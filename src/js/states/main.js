@@ -103,7 +103,7 @@ main.create = function () {
   // older phones need to use the following instead of fill
   this.game.enemy_array = new Array();
   for (i = 0; i < 20; i++){
-    this.game.enemy_array[i] = 0;
+    this.game.enemy_array[i] = 0;//initial enemy set
   }
   i = game.rnd.integerInRange(0, 19);
   this.game.enemy_array[i] = 1;
@@ -137,7 +137,7 @@ main.create = function () {
   text_score.strokeThickness = 5;
   text_score.anchor.setTo(0.5, 0.5);
 
-  loader.hide();
+  //loader.hide();
 
 };
 

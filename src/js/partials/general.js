@@ -108,7 +108,10 @@ var general = {
       return 0xf24e90;
     }
     if(enemy_type === 1){
-      return 0x4ef24e;
+      return 0x4EF24E;
+    }
+    if(enemy_type === 2){
+      return 0xFEFF0D;
     }
   },
 
