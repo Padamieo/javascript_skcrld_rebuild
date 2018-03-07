@@ -56,7 +56,7 @@ var general = {
         console.log(game.timestamp);
         game.lives = game.lives + 1;
         localStorage.setItem("lives", game.lives );
-        general.update_lives_text(game);
+        //general.update_lives_text(game);
       }
     }
   },

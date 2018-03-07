@@ -27,6 +27,8 @@ ui.getPageContent = function( current ){
   if(current === 'menu'){
     data = {
       title: true,
+      heart: true,
+      lives: 9,
       buttons:[{
         title: 'Play',
         id: 'start'

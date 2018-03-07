@@ -43,6 +43,7 @@ cat.prototype.update = function(game) {
       var offset = this.y-(h/10);
       this.y = this.y - (offset/100);
       this.y_velocity = ( this.y_velocity <= 0 ? 0 : this.y_velocity/0.8 );
+      window.console.log(game.player.x);
       this.animations.play('fire', 1, true);
     }else{
 
