@@ -1,3 +1,28 @@
+.setting{
+	position: relative;
+	clear: both;
+	padding: 10px;
+	margin: auto;
+	display: inline-block;
+	width: 100%;
+	border-bottom: 1px solid #fff;
+	p{
+		float: left;
+		display: inline-block;
+		position: relative;
+		padding: 0px;
+		margin: 10px;
+		margin-left: 0px;
+		color: #fff;
+    text-shadow: 0 -1px 1px rgba(80, 82, 101, 0.7);
+	}
+
+	label{
+		float: right;
+	}
+
+}
+
 input[type=checkbox]{
 	height: 0;
 	width: 0;
@@ -7,23 +32,23 @@ input[type=checkbox]{
 label {
 	cursor: pointer;
 	text-indent: -9999px;
-	width: 200px;
-	height: 100px;
+	width: 100px;
+	height: 50px;
 	background: grey;
 	display: block;
-	border-radius: 100px;
+	border-radius: 50px;
 	position: relative;
 }
 
 label:after {
 	content: '';
 	position: absolute;
-	top: 5px;
-	left: 5px;
-	width: 90px;
-	height: 90px;
+	top: 3px;
+	left: 3px;
+	width: 44px;
+	height: 44px;
 	background: #fff;
-	border-radius: 90px;
+	border-radius: 44px;
 	transition: 0.3s;
 }
 
@@ -37,5 +62,8 @@ input:checked + label:after {
 }
 
 label:active:after {
-	width: 130px;
+	width: 100px;
+}
+
+label:after{
 }

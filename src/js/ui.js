@@ -1,6 +1,7 @@
 var ui = {
   current: 'menu',
-  intialized: false
+  intialized: false,
+  lives: 1
 };
 
 ui.init = function () {
@@ -14,6 +15,11 @@ ui.init = function () {
   //loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
   this.prepActions();
   this.buildPage();
+
+};
+
+ui.negativePercentage = function(){
+  return (this.lives-9)/-0.1;
 };
 
 ui.buildPage = function(){
@@ -28,7 +34,8 @@ ui.getPageContent = function( current ){
     data = {
       title: true,
       heart: true,
-      lives: 9,
+      lives: ui.lives,
+      percentage: ui.negativePercentage(),
       buttons:[{
         title: 'Play',
         id: 'start'
@@ -61,10 +68,13 @@ ui.getPageContent = function( current ){
 
 ui.getOptions = function( ){
   var options = [{
+    label: 'Sound',
     id: 'sound'
   },{
+    label: 'Vibration',
     id: 'vibration'
   },{
+    label: 'Tutorial',
     id: 'tutorial'
   }];
   return options;

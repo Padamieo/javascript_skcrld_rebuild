@@ -11,11 +11,30 @@ body{
 
 #menu{
   box-sizing: border-box;
-  background: #505265 ; //rgba(255,250,255,1);
+  background: #505265;
   padding: 30px;
   text-align: center;
   height: 100vh;
   overflow: overlay;
+
+  .heart-holder{
+    position: relative;
+    svg{
+      height: 20vh;
+    }
+    p{
+      font-size: 10vh;
+      padding: 0;
+      margin: 0 auto;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding-top: 3.5vh;
+      color: rgba(255,255,255,0.8);
+      text-shadow: 0 -1px 1px rgba(175, 49, 95, 0.7);
+    }
+  }
+
 }
 
 @import "mixins.less";

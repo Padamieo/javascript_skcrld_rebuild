@@ -1,5 +1,6 @@
 ui = require('ui');
 $ = require("jquery");
+window.console.log($);
 
 // check if we are developing the app
 if (navigator.platform.match(/(Win)/)) {

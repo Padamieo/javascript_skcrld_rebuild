@@ -4,17 +4,25 @@
   {{/if}}
 
     {{#if heart}}
-     <div class="heart"><p>heart</p></div>
-      <svg class="heart" viewBox="0 0 32 29.6">
-        <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
-        c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
-      </svg>
+      <div class="heart-holder">
+        <svg class="heart" viewBox="0 0 32 29.6">
+          <linearGradient id="Gradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#23D5AB"/>
+            <stop offset="{{percentage}}%" stop-color="#81e8ce" />
+            <stop offset="{{percentage}}%" stop-color="#fa9ec0" />
+            <stop offset="100%" stop-color="#EC528D"/>
+          </linearGradient>
+          <path fill="url(#Gradient)" d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
+          c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+        </svg>
+        <p>{{lives}}</p>
+      </div>
     {{/if}}
 
     {{#if options}}
       {{#options}}
-      <div>
-        <p>{{id}}</p> <input type="checkbox" id="{{id}}" /><label for="{{id}}">Toggle</label>
+      <div class="setting">
+        <p>{{label}}</p><input type="checkbox" id="{{id}}" /><label for="{{id}}">Toggle</label>
         <!-- https://codepen.io/mburnette/pen/LxNxNg -->
       </div>
       {{/options}}
