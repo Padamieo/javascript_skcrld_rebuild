@@ -82,18 +82,46 @@ ui.getOptions = function( ){
 
 ui.prepActions = function(){
   var ref = this;
-  $( document ).on( "click", ".button", function() {
-    if($(this).hasClass("page")){
-      var page = $(this).data("page");
-      if(page){
-        ref.changePage( page );
-      }
-    }
-    if(this.id === 'start'){
-      ref.startGame();
-    }
-  });
+  // $( document ).on( "click", ".button", function() {
+  //   if($(this).hasClass("page")){
+  //     var page = $(this).data("page");
+  //     if(page){
+  //       ref.changePage( page );
+  //     }
+  //   }
+  //   if(this.id === 'start'){
+  //     ref.startGame();
+  //   }
+  // });
+  window.console.log(document.getElementsByClassName("button"));
+  var d = document.getElementsByClassName("button");
+
+  document.getElementById("menu").addEventListener("click", function(e){
+    var a = ui.findclass( e.path );
+    window.console.log(a);
+
+  }.bind(this));
+
+  // document.getElementsByClassName("button")[0].addEventListener("click", function(){
+  //   if(this.classList.contains("page")){
+  //     var page = this.getAttribute('data-page');
+  //     if(page){
+  //       ref.changePage( page );
+  //     }
+  //   }
+  //   if(this.id === 'start'){
+  //     ref.startGame();
+  //   }
+  // });
 };
+
+  ui.findclass = function( array, classToFind = 'button' ){
+    return array.find(function(entry) {
+      if( entry.classList.contains(classToFind) ){
+        return entry;
+      }
+    });
+  },
 
 ui.changePage = function( page ){
   var fallback = ( page ? page : "menu" );
@@ -112,12 +140,14 @@ ui.handlebars = function(page, data, template){
 };
 
 ui.swapContent = function( page, html ){
-  $( "#"+page).html( '<div class="content">'+html+'</div>' );
+  //$( "#"+page).html( '<div class="content">'+html+'</div>' );
+  document.getElementById(page).innerHTML = '<div class="content">'+html+'</div>';
 };
 
 ui.startGame = function(){
   //loader.show();
-  $("#game").show();
+  //$("#game").show();
+  document.getElementById('game').style.display = 'block';
   //transition hide menu
   if(this.intialized){
     game.state.start('main');
@@ -130,8 +160,10 @@ ui.startGame = function(){
 ui.endGame = function(){
 
   //loader.show();
-  $("#menu").show();
-  $("#game").hide();
+  //$("#menu").show();
+  document.getElementById('menu').style.display = 'block';
+  //$("#game").hide();
+  document.getElementById('game').style.display = 'none';
   //loader.hide();
 
 };

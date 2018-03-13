@@ -1,5 +1,7 @@
 # CORDOVA
-/platforms
+/platforms/*
+/platform/*
+/serve/*
 /plugins
 
 # nodejs npm modules

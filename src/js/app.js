@@ -1,6 +1,6 @@
 ui = require('ui');
-$ = require("jquery");
-window.console.log($);
+// $ = require("jquery");
+// window.console.log($);
 
 // check if we are developing the app
 if (navigator.platform.match(/(Win)/)) {
@@ -16,6 +16,7 @@ if (navigator.platform.match(/(Win)/)) {
   phone = true;
   life_wait = 60;
   document.addEventListener('deviceready', onDeviceReady, false);
+
 }
 
 function success_auth(test){
@@ -38,34 +39,34 @@ function fail_auth(){
 function onDeviceReady(){
 
   //language detection
-  navigator.globalization.getPreferredLanguage(
-    function (language) {
-      var str = language.value;
-      if(str.substring(0, 2) === 'en'){
-        set_language = 'en-US';
-      }else{
-        set_language = language.value;
-      }
-    },
-    function () {
-      if(game.online){
-        window.analytics.trackException('gloalization.getPreferredLanguage : failed, fallback to en-US', false);
-      }
-      set_language = 'en-US';
-    }
-  );
-
-  if(we_online()){
-    //check google auth or pass if localstore //only request this if online
-    playgameservices();
-    //start tracking within google analytics
-    ga_start_tracking();
-  }
-
-  document.addEventListener("online", now_online, false);
-  document.addEventListener("offline", now_offline, false);
-
-  //start_game();
+  // navigator.globalization.getPreferredLanguage(
+  //   function (language) {
+  //     var str = language.value;
+  //     if(str.substring(0, 2) === 'en'){
+  //       set_language = 'en-US';
+  //     }else{
+  //       set_language = language.value;
+  //     }
+  //   },
+  //   function () {
+  //     if(game.online){
+  //       window.analytics.trackException('gloalization.getPreferredLanguage : failed, fallback to en-US', false);
+  //     }
+  //     set_language = 'en-US';
+  //   }
+  // );
+  //
+  // if(we_online()){
+  //   //check google auth or pass if localstore //only request this if online
+  //   playgameservices();
+  //   //start tracking within google analytics
+  //   ga_start_tracking();
+  // }
+  //
+  // document.addEventListener("online", now_online, false);
+  // document.addEventListener("offline", now_offline, false);
+  window.console.log('here');
+  ui.init();
 }
 
 function playgameservices(){
