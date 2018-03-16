@@ -1,6 +1,4 @@
 ui = require('ui');
-// $ = require("jquery");
-// window.console.log($);
 
 // check if we are developing the app
 if (navigator.platform.match(/(Win)/)) {
@@ -65,7 +63,7 @@ function onDeviceReady(){
   //
   // document.addEventListener("online", now_online, false);
   // document.addEventListener("offline", now_offline, false);
-  window.console.log('here');
+  
   ui.init();
 }
 
