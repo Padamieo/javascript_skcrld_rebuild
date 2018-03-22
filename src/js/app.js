@@ -2,7 +2,7 @@ ui = require('ui');
 
 // check if we are developing the app
 if (navigator.platform.match(/(Win)/)) {
-  set_language = 'en-US'; //default should be fr-FR
+  set_language = 'en-US';
   life_wait = 30;
   phone = false;
 
@@ -36,46 +36,47 @@ function fail_auth(){
 
 function onDeviceReady(){
 
-  //language detection
-  // navigator.globalization.getPreferredLanguage(
-  //   function (language) {
-  //     var str = language.value;
-  //     if(str.substring(0, 2) === 'en'){
-  //       set_language = 'en-US';
-  //     }else{
-  //       set_language = language.value;
-  //     }
-  //   },
-  //   function () {
-  //     if(game.online){
-  //       window.analytics.trackException('gloalization.getPreferredLanguage : failed, fallback to en-US', false);
-  //     }
-  //     set_language = 'en-US';
-  //   }
-  // );
-  //
-  // if(we_online()){
-  //   //check google auth or pass if localstore //only request this if online
-  //   playgameservices();
-  //   //start tracking within google analytics
-  //   ga_start_tracking();
-  // }
-  //
+  language detection
+  navigator.globalization.getPreferredLanguage(
+    function (language) {
+      var str = language.value;
+      if(str.substring(0, 2) === 'en'){
+        set_language = 'en-US';
+      }else{
+        set_language = language.value;
+      }
+    },
+    function () {
+      if(game.online){
+        window.analytics.trackException('gloalization.getPreferredLanguage : failed, fallback to en-US', false);
+      }
+      set_language = 'en-US';
+    }
+  );
+
+  if(we_online()){
+    //check google auth or pass if localstore //only request this if online
+    //playgameservices();
+    //start tracking within google analytics
+    ga_start_tracking();
+
+  }
+
   // document.addEventListener("online", now_online, false);
   // document.addEventListener("offline", now_offline, false);
-  
+
   ui.init();
 }
 
-function playgameservices(){
-  if(localStorage != undefined){
-    if(localStorage.getItem('auth') === null){
-      window.plugins.playGamesServices.auth(success_auth, fail_auth);
-    }else if(localStorage.getItem('auth') === true){
-      window.plugins.playGamesServices.auth(success_auth, fail_auth);
-    }
-  }
-}
+// function playgameservices(){
+//   if(localStorage != undefined){
+//     if(localStorage.getItem('auth') === null){
+//       window.plugins.playGamesServices.auth(success_auth, fail_auth);
+//     }else if(localStorage.getItem('auth') === true){
+//       window.plugins.playGamesServices.auth(success_auth, fail_auth);
+//     }
+//   }
+// }
 
 function ga_start_tracking(){
   window.analytics.startTrackerWithId('UA-10168261-8');
