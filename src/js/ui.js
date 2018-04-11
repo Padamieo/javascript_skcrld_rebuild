@@ -1,7 +1,7 @@
 var ui = {
   current: 'menu',
   intialized: false,
-  lives: 1
+  lives: 9
 };
 
 ui.init = function () {
@@ -12,8 +12,21 @@ ui.init = function () {
   // require("classie");
   //svgLoader = require("svgLoader");
   //loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
+  this.getData();
   this.prepActions();
   this.buildPage();
+
+};
+
+ui.getData = function(){
+
+  var stored_lives = localStorage.getItem('lives');
+  if(stored_lives === undefined){
+    this.lives = 9;
+    localStorage.setItem('lives', 9 );
+    stored_lives = this.lives;
+  }
+  this.lives = stored_lives;
 
 };
 
@@ -37,7 +50,9 @@ ui.getPageContent = function( current ){
       percentage: ui.negativePercentage(),
       buttons:[{
         title: 'Play',
-        id: 'start'
+        id: 'start',
+        class: ( this.lives <= 0 ? 'disabled' : 'test' ),
+        disabled: ( this.lives <= 0 ? true : false )
       },{
         title: 'Options',
         class: 'page',

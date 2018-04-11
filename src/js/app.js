@@ -35,8 +35,7 @@ function fail_auth(){
 }
 
 function onDeviceReady(){
-
-  language detection
+  //language detection
   navigator.globalization.getPreferredLanguage(
     function (language) {
       var str = language.value;

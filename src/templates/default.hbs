@@ -32,6 +32,9 @@
       {{#buttons}}
         <div>
           <a id="{{id}}" class="button pageload-link {{class}}" href="#game"
+          {{#if disabled}}
+            disabled="disabled"
+          {{/if}}
           {{#if data}}
             {{#data}}
               data-{{name}}="{{value}}"
