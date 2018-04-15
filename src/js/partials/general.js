@@ -49,18 +49,6 @@ var general = {
     }
   },
 
-  update_lives: function(game){
-    if( game.lives <= 8 ){
-      if((+new Date() / 60000) >= (game.timestamp + life_wait) ){
-        game.timestamp = game.timestamp + life_wait;
-        console.log(game.timestamp);
-        game.lives = game.lives + 1;
-        localStorage.setItem("lives", game.lives );
-        //general.update_lives_text(game);
-      }
-    }
-  },
-
   //rather than haveing the checkstore for everything have a commmon default
   check_store_individual: function(attribute, fallback) {
     if(localStorage.getItem(attribute) === null){

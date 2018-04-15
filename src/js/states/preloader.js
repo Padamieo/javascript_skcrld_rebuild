@@ -28,10 +28,10 @@ preloader.preload = function () {
   //set as language from setting
   if(localStorage != undefined){
     if(localStorage.getItem('language') != null){
-      set_language = localStorage.getItem('language');
+      ui.set_language = localStorage.getItem('language');
     }
   }
-  this.game.load.json('language', 'languages/'+set_language+'.json');
+  this.game.load.json('language', 'languages/'+ui.set_language+'.json');
 
   //sounds
   this.game.load.audio('testSound', 'audio/meow.wav');
@@ -41,7 +41,7 @@ preloader.preload = function () {
 };
 
 preloader.create = function () {
-  
+
   this.game.phaserJSON = this.game.cache.getJSON('language');
   g.check_store(this.game);
 

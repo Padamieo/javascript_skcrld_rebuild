@@ -1,6 +1,6 @@
 {
   "lives":"Lives",
-  "start":"Start Game",
+  "start":"Start",
   "exit":"Exit",
   "options": "Options",
   "vibration": "vibration",
@@ -14,10 +14,7 @@
   "hold": "PRESS OR HOLD TO FLY UP",
   "now": "NOW",
   "yay": "YAY STAY ABOVE HERE",
-  "sound_on": "Sound On",
-  "sound_off": "Sound Off",
-  "tutorial_on": "Tutorial On",
-  "tutorial_off": "Tutorial Off",
-  "vibration_on": "Vibration On",
-  "vibration_off": "Vibration Off"
+  "sound": "Sound",
+  "tutorial": "Tutorial",
+  "vibration": "Vibration"
 }

@@ -20,8 +20,10 @@ var cat = function(game) {
   game.lives = game.lives - 1;
   if(localStorage !== undefined){
     localStorage.setItem('lives', game.lives );
-    game.timestamp = (+new Date() / 60000);
-    localStorage.setItem('timestamp', game.timestamp );
+    var timestamp = new Date();
+    var currentTimestamp = localStorage.getItem('timestamp');
+
+    localStorage.setItem('timestamp', timestamp );
   }
 
 	this.game.add.existing(this);

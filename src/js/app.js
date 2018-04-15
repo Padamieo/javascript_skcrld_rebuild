@@ -2,17 +2,16 @@ ui = require('ui');
 
 // check if we are developing the app
 if (navigator.platform.match(/(Win)/)) {
-  set_language = 'en-US';
-  life_wait = 30;
-  phone = false;
-
+  ui.set_language = 'en-US';
+  ui.phone = false;
+  ui.life_wait = 1;
   document.addEventListener("DOMContentLoaded", function(event) {
     ui.init();
   });
 
 }else{
-  phone = true;
-  life_wait = 60;
+  ui.phone = true;
+  ui.life_wait = 60;
   document.addEventListener('deviceready', onDeviceReady, false);
 
 }
@@ -40,16 +39,16 @@ function onDeviceReady(){
     function (language) {
       var str = language.value;
       if(str.substring(0, 2) === 'en'){
-        set_language = 'en-US';
+        ui.set_language = 'en-US';
       }else{
-        set_language = language.value;
+        ui.set_language = language.value;
       }
     },
     function () {
       if(game.online){
         window.analytics.trackException('gloalization.getPreferredLanguage : failed, fallback to en-US', false);
       }
-      set_language = 'en-US';
+      ui.set_language = 'en-US';
     }
   );
 
@@ -154,7 +153,7 @@ start_game = function(){
   });
 
   //only on mobile/phone allow following
-  if(phone){
+  if(ui.phone){
     if(we_online()){
       now_online();
       game.online = true;

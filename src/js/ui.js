@@ -1,37 +1,104 @@
 var ui = {
   current: 'menu',
   intialized: false,
-  lives: 9
+  lives: 9,
+  default: 9
 };
 
 ui.init = function () {
 
   Handlebars = require("handlebars");
-  b = require("templates");
-  // Snap = require("snap");
-  // require("classie");
-  //svgLoader = require("svgLoader");
-  //loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
-  this.getData();
-  this.prepActions();
-  this.buildPage();
+  this.templates = require("templates");
+
+  this.loadJSON(function(response) {
+    this.language = JSON.parse(response);
+
+    // Snap = require("snap");
+    // require("classie");
+    //svgLoader = require("svgLoader");
+    //loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
+
+    this.getLives();
+    this.prepActions();
+    this.buildPage();
+
+  }.bind(this));
 
 };
 
-ui.getData = function(){
+ui.loadJSON = function(callback) {
+  var xobj = new XMLHttpRequest();
+  xobj.overrideMimeType("application/json");
+  xobj.open('GET', '../languages/'+ui.set_language+'.json', true); // Replace 'my_data' with the path to your file
+  xobj.onreadystatechange = function () {
+    if (xobj.readyState == 4 && xobj.status == "200") {
+      // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+      callback(xobj.responseText);
+    }
+  }
+  xobj.send(null);
+};
 
-  var stored_lives = localStorage.getItem('lives');
+ui.getLives = function(){
+
+  let stored_lives = parseInt(localStorage.getItem('lives'));
   if(stored_lives === undefined){
-    this.lives = 9;
-    localStorage.setItem('lives', 9 );
+    this.lives = this.default;
+    localStorage.setItem('lives', this.default );
     stored_lives = this.lives;
   }
+  if(stored_lives < this.default ){
+    stored_lives = this.returnLives( stored_lives );
+  }
   this.lives = stored_lives;
+};
 
+ui.returnLives = function( stored_lives ){
+  //if(stored_lives === undefined){
+  var stored = localStorage.getItem('timestamp');
+  var timestamp = new Date(stored);
+
+  var liveToRegain = (this.default-stored_lives);
+  var array = this.generateTimestamps( stored, liveToRegain );
+
+  var timestampNow = new Date();
+  for (var i = 0; i < array.length; i++){
+    if(array[i] < timestampNow){
+      stored_lives = stored_lives + 1;
+      localStorage.setItem('lives', stored_lives );
+    }else{
+      window.console.log(new Date(array[i]));
+    }
+  }
+  // timestamp.setMinutes(timestamp.getMinutes() + timeAllReturn );
+  //
+  // window.console.log(timestamp.toTimeString());
+  //
+  // var timestampNow = new Date();
+  //
+  // if(timestamp < timestampNow){
+  //   //window.console.log(timestampNow.toTimeString());
+  //   //localStorage.setItem('timestamp', (new Date()) );
+  //   stored_lives = 9;
+  // }else{
+  //   window.console.log('not yet all returned');
+  //
+  // }
+  return stored_lives;
+};
+
+ui.generateTimestamps = function( stored, liveToRegain ){
+  var times = [];
+  for (var i = 1; i <= liveToRegain; i++){
+    var timestamp = new Date( stored );
+    var time = timestamp.setMinutes(timestamp.getMinutes() + (i * this.life_wait) );
+    times.push(time);
+  }
+  return times;
 };
 
 ui.negativePercentage = function(){
-  return (this.lives-9)/-0.1;
+  return (this.lives-this.default)/-0.1;
 };
 
 ui.buildPage = function(){
@@ -46,27 +113,33 @@ ui.getPageContent = function( current ){
     data = {
       title: true,
       heart: true,
-      lives: ui.lives,
+      lives: this.lives,
       percentage: ui.negativePercentage(),
       buttons:[{
-        title: 'Play',
+        title: this.language.start,
         id: 'start',
         class: ( this.lives <= 0 ? 'disabled' : 'test' ),
         disabled: ( this.lives <= 0 ? true : false )
       },{
-        title: 'Options',
+        title: this.language.options,
         class: 'page',
         data: [{
           name: 'page',
           value: 'options'
         }]
+      },{
+        title: this.language.leaderboards,
+        class: 'disabled',
+        disabled: true
+      },{
+        title: this.language.exit
       }]
 
     }
   }else if(current === 'options'){
     data = {
       buttons:[{
-        title: 'Return',
+        title: this.language.back,
         class: 'page',
         data: [{
           name: 'page',
@@ -82,13 +155,13 @@ ui.getPageContent = function( current ){
 
 ui.getOptions = function( ){
   var options = [{
-    label: 'Sound',
+    label: this.language.sound,
     id: 'sound'
   },{
-    label: 'Vibration',
+    label: this.language.vibration,
     id: 'vibration'
   },{
-    label: 'Tutorial',
+    label: this.language.tutorial,
     id: 'tutorial'
   }];
   return options;
@@ -128,7 +201,7 @@ ui.changePage = function( page ){
 
 ui.handlebars = function(page, data, template){
   var set_template = (template ? template : 'default' );
-  var postTemplate = b['JST']['src/templates/'+set_template+'.hbs'];
+  var postTemplate = this.templates['JST']['src/templates/'+set_template+'.hbs'];
   var html = postTemplate(data);
   this.swapContent(page, html);
 };
