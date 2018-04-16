@@ -70,20 +70,6 @@ ui.returnLives = function( stored_lives ){
       window.console.log(new Date(array[i]));
     }
   }
-  // timestamp.setMinutes(timestamp.getMinutes() + timeAllReturn );
-  //
-  // window.console.log(timestamp.toTimeString());
-  //
-  // var timestampNow = new Date();
-  //
-  // if(timestamp < timestampNow){
-  //   //window.console.log(timestampNow.toTimeString());
-  //   //localStorage.setItem('timestamp', (new Date()) );
-  //   stored_lives = 9;
-  // }else{
-  //   window.console.log('not yet all returned');
-  //
-  // }
   return stored_lives;
 };
 
@@ -156,6 +142,7 @@ ui.getPageContent = function( current ){
 ui.getOptions = function( ){
   var options = [{
     label: this.language.sound,
+    state: true,
     id: 'sound'
   },{
     label: this.language.vibration,
@@ -185,6 +172,10 @@ ui.prepActions = function(){
 
   ui.findclass = function( array, classToFind = 'button' ){
     return array.find(function(entry) {
+      window.console.log(entry.id);
+      if(entry.id == 'menu'){
+        return false;
+      }
       if( entry.classList.contains(classToFind) ){
         return entry;
       }

@@ -5,27 +5,31 @@
 //     src: local('Pacifico'), url('http://themes.googleusercontent.com/font?kit=fKnfV28XkldRW297cFLeqfesZW2xOQ-xsNqO47m55DA') format('truetype');
 // }
 
+.buttons{
+  display: inline-flex;
+  flex-direction: column;
+}
+
 .button {
-  display: inline-block;
+  display: flex;
+  text-decoration: none;
 
   .border-radius (8px);
 
-  -webkit-box-shadow:    0 8px 0 #c5376d, 0 15px 20px rgba(0, 0, 0, .35);
-  -moz-box-shadow: 0 8px 0 #c5376d, 0 15px 20px rgba(0, 0, 0, .35);
+  -webkit-box-shadow: 0 8px 0 #c5376d, 0 15px 20px rgba(0, 0, 0, .35);
   box-shadow: 0 8px 0 #c5376d, 0 15px 20px rgba(0, 0, 0, .35);
 
   -webkit-transition: -webkit-box-shadow .1s ease-in-out;
-  -moz-transition: -moz-box-shadow .1s ease-in-out;
-  -o-transition: -o-box-shadow .1s ease-in-out;
   transition: box-shadow .1s ease-in-out;
 
-  font-size: 40px;
+  font-size: 30px;
   color: #fff;
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+
   span {
-    display: inline-block;
-    padding: 20px 30px;
+    width: 100%;
+    padding: 15px 25px;
     background-color: #ec528d;
 
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(hsla(338, 90%, 80%, .8)), to(hsla(338, 90%, 70%, .2)));
@@ -33,8 +37,7 @@
 
     .border-radius (8px);
 
-    -webkit-box-shadow: inset 0 -1px 1px rgba(255, 255, 255, .15);
-    box-shadow: inset 0 -1px 1px rgba(255, 255, 255, .15);
+    .box-shadow( inset 0 -1px 1px rgba(255, 255, 255, .15) );
 
     font-family: 'Pacifico', Arial, sans-serif;
     line-height: 1;
@@ -52,7 +55,6 @@
 
   &:active, &:focus {
     -webkit-box-shadow:    0 8px 0 #c5376d, 0 12px 10px rgba(0, 0, 0, .3);
-    -moz-box-shadow: 0 8px 0 #c5376d, 0 12px 10px rgba(0, 0, 0, .3);
     box-shadow:    0 8px 0 #c5376d, 0 12px 10px rgba(0, 0, 0, .3);
   }
 
@@ -61,10 +63,14 @@
   }
 
   &:disabled, &.disabled{
-    background-color: #5f585a;
+    -webkit-box-shadow: 0 8px 0 #6d6568, 0 15px 20px rgba(0, 0, 0, .35);
+    box-shadow: 0 8px 0 #6d6568, 0 15px 20px rgba(0, 0, 0, .35);
     span{
-      background: #5f585a;
-      // border: 1px solid black;
+      background: #cebcca; //#90898b;
+      background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(fade(#90898b, 20%)), to(fade(#90898b, 80%)));
+      background-image: -webkit-linear-gradient(fade(#90898b, 20%), fade(#90898b, 80%));
+
+      text-shadow: 0 -1px 1px fade(#675d60, 70%);
     }
   }
 }
