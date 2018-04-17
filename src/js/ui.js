@@ -19,6 +19,8 @@ ui.init = function () {
     //loader = new SVGLoader( document.getElementById( 'loader' ), { speedIn : 100 } );
 
     this.getLives();
+    //TODO: find way to rebuildPage on data change rather than timeout
+    //setInterval(function(){ this.reBuildPage(); }.bind(this), 3000);
     this.prepActions();
     this.buildPage();
 
@@ -54,7 +56,6 @@ ui.getLives = function(){
 };
 
 ui.returnLives = function( stored_lives ){
-  //if(stored_lives === undefined){
   var stored = localStorage.getItem('timestamp');
   var timestamp = new Date(stored);
 
@@ -83,8 +84,27 @@ ui.generateTimestamps = function( stored, liveToRegain ){
   return times;
 };
 
+ui.getLocalStorage = function(attribute, fallback) {
+  if(localStorage.getItem(attribute) === null){
+    this.setLocalStorage(attribute, fallback);
+  }else{
+    fallback = parseInt(localStorage.getItem(attribute));
+  }
+  return fallback;
+};
+
+ui.setLocalStorage = function(attribute, value){
+  localStorage.setItem(attribute, value );
+};
+
 ui.negativePercentage = function(){
   return (this.lives-this.default)/-0.1;
+};
+
+ui.reBuildPage = function(){
+  this.getLives();
+  this.buildPage();
+  console.log('rebuildPage'); //NOTE: temporary for testing
 };
 
 ui.buildPage = function(){
@@ -120,7 +140,6 @@ ui.getPageContent = function( current ){
       },{
         title: this.language.exit
       }]
-
     }
   }else if(current === 'options'){
     data = {
@@ -142,13 +161,15 @@ ui.getPageContent = function( current ){
 ui.getOptions = function( ){
   var options = [{
     label: this.language.sound,
-    state: true,
+    state: this.getLocalStorage('sound', 1),
     id: 'sound'
   },{
     label: this.language.vibration,
+    state: this.getLocalStorage('vibration', 1),
     id: 'vibration'
   },{
     label: this.language.tutorial,
+    state: this.getLocalStorage('tutorial', 1),
     id: 'tutorial'
   }];
   return options;
@@ -158,28 +179,38 @@ ui.prepActions = function(){
   var ref = this;
   document.getElementById("menu").addEventListener("click", function(e){
     var button = ui.findclass( e.path );
-    if(button.classList.contains("page")){
-      var page = button.getAttribute('data-page');
-      if(page){
-        ref.changePage( page );
+    if(button){
+      if(button.classList.contains("page")){
+        var page = button.getAttribute('data-page');
+        if(page){
+          ref.changePage( page );
+        }
+      }
+      if(button.id === 'start'){
+        ref.startGame();
       }
     }
-    if(button.id === 'start'){
-      ref.startGame();
+    var setting = ui.findclass( e.path, 'setting' );
+    if(setting){
+      if(setting.classList.contains("setting")){
+        var which = setting.getAttribute('for');
+        var status = (document.getElementById(which).checked ? 0 : 1 );
+        this.setLocalStorage(which, status);
+      }
     }
+    return false;
   }.bind(this));
 };
 
   ui.findclass = function( array, classToFind = 'button' ){
-    return array.find(function(entry) {
-      window.console.log(entry.id);
-      if(entry.id == 'menu'){
+    for (var i = 0; i < array.length; i++){
+      if(array[i].id === 'menu'){
         return false;
       }
-      if( entry.classList.contains(classToFind) ){
-        return entry;
+      if(array[i].classList.contains(classToFind)){
+        return array[i];
       }
-    });
+    }
   },
 
 ui.changePage = function( page ){
@@ -216,10 +247,19 @@ ui.startGame = function(){
 };
 
 ui.endGame = function(){
+  this.reBuildPage();
   //loader.show();
   document.getElementById('menu').style.display = 'block';
   document.getElementById('game').style.display = 'none';
   //loader.hide();
+};
+
+ui.click_exit = function(){
+  if(navigator.app){
+    navigator.app.exitApp();
+  }else if(navigator.device){
+    navigator.device.exitApp();
+  }
 };
 
 module.exports = ui;

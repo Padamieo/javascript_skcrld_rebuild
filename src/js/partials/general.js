@@ -41,48 +41,14 @@ var general = {
 		*/
 	},
 
-  click_exit: function() {
-    if(navigator.app){
-      navigator.app.exitApp();
-    }else if(navigator.device){
-      navigator.device.exitApp();
-    }
-  },
-
-  //rather than haveing the checkstore for everything have a commmon default
-  check_store_individual: function(attribute, fallback) {
-    if(localStorage.getItem(attribute) === null){
-      localStorage.setItem(attribute, fallback );
-      game[attribute] = fallback;
-    }else{
-      game[attribute] = parseInt(localStorage.getItem(attribute));
-    }
-  },
-
   check_store: function(game){
-    if(localStorage != undefined){
+      game.lives = localStorage.getItem('lives');
+      game.timestamp = localStorage.getItem('timestamp');
+      game.highscore = localStorage.getItem('highscore');
 
-      general.check_store_individual('lives', 9);
-      general.check_store_individual('timestamp', 0);
-      general.check_store_individual('highscore', 0);
-
-      //dont need to call the following every menu load
-
-      general.check_store_individual('tutorial', 1);
-      general.check_store_individual('vibration', 1);
-
-      if(localStorage.getItem('sound_setting') === null){
-        localStorage.setItem("sound_setting",  0 );
-        game.sound.mute = 0;
-      }else{
-        game.sound.mute = parseInt(localStorage.getItem('sound_setting'));
-      }
-
-    }else{
-      if(game.online){
-        window.analytics.trackException('localStorage : is undefined, stored data will not work', false);
-      }
-    }
+      game.tutorial = localStorage.getItem('tutorial');
+      game.vibration = localStorage.getItem('vibration');
+      game.soundmute = localStorage.getItem('sound');
   },
 
   delete_store: function(){
@@ -113,26 +79,17 @@ var general = {
     this.game.misses++;
   },
 
-  colour_change: function (element, set) {
-    element.clear();
-    element.beginFill(element.colours[(set ? 1 : set)], 1);
-    rounded = element.rounded;
-    element.drawRoundedRect(element.loc[2],element.loc[0],element.loc[1],element.loc[3], (rounded ? rounded : 8));
-    element.endFill();
-    general.sound_vibration('press');
-  },
 
   sound_vibration: function(request, length){
-    if(game.sound.mute != 1){
-      if(request == 'press'){
-        game.sound.play('press');
-      }else if(request == 'meow'){
+    window.console.log(request, game.sound.mute);
+    if(game.soundmute){
+      if(request == 'meow'){
         game.sound.play('meow');
       }else{
         game.sound.play('testSound');
       }
     }
-    if(game.vibration != 0){
+    if(game.vibration){
       v_length = ( length != '' ? length : 50 );
       navigator.vibrate([v_length]);
     }

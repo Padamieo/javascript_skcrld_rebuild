@@ -21,8 +21,8 @@
 
     {{#if options}}
       {{#options}}
-      <div class="setting">
-        <p>{{label}}</p><input type="checkbox" id="{{id}}" {{#if state}} checked {{/if}}/><label for="{{id}}" >Toggle</label>
+      <div class="section">
+        <p>{{label}}</p><input type="checkbox" id="{{id}}" {{#if state}} checked {{/if}}/><label class="setting" for="{{id}}" >Toggle</label>
         <!-- https://codepen.io/mburnette/pen/LxNxNg -->
       </div>
       {{/options}}
