@@ -42,13 +42,14 @@ var general = {
 	},
 
   check_store: function(game){
-      game.lives = localStorage.getItem('lives');
-      game.timestamp = localStorage.getItem('timestamp');
-      game.highscore = localStorage.getItem('highscore');
+    game.lives = localStorage.getItem('lives');
+    game.timestamp = localStorage.getItem('timestamp');
+    game.highscore = localStorage.getItem('highscore');
 
-      game.tutorial = localStorage.getItem('tutorial');
-      game.vibration = localStorage.getItem('vibration');
-      game.soundmute = localStorage.getItem('sound');
+    game.tutorial = localStorage.getItem('tutorial');
+    game.vibration = localStorage.getItem('vibration');
+    game.soundon = localStorage.getItem('sound');
+    //game.sound.mute = (game.soundon ? false : true );
   },
 
   delete_store: function(){
@@ -79,10 +80,10 @@ var general = {
     this.game.misses++;
   },
 
-
   sound_vibration: function(request, length){
     window.console.log(request, game.sound.mute);
-    if(game.soundmute){
+    if(game.soundon){
+      window.console.log('play');
       if(request == 'meow'){
         game.sound.play('meow');
       }else{

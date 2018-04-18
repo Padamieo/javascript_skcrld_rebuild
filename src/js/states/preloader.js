@@ -23,8 +23,6 @@ preloader.preload = function () {
 
   this.game.load.image('background', 'images/background_wall_temp.png');
 
-  this.game.load.image('heart', 'images/heart.png');
-
   //set as language from setting
   if(localStorage != undefined){
     if(localStorage.getItem('language') != null){
@@ -44,6 +42,7 @@ preloader.create = function () {
 
   this.game.phaserJSON = this.game.cache.getJSON('language');
   g.check_store(this.game);
+  window.console.log('when');
 
   this.game.state.start('main'); //menu
 };
