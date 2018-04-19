@@ -39,12 +39,8 @@ preloader.preload = function () {
 };
 
 preloader.create = function () {
-
   this.game.phaserJSON = this.game.cache.getJSON('language');
-  g.check_store(this.game);
-  window.console.log('when');
-
-  this.game.state.start('main'); //menu
+  this.game.state.start('main');
 };
 
 module.exports = preloader;

@@ -10,6 +10,10 @@ var main = {};
 
 main.create = function () {
 
+  g.check_store(this.game);
+
+  console.log(this.game.soundon, this.game.sound.mute);
+
   if(this.game.online){
     window.analytics.trackView('main');
   }
@@ -121,7 +125,7 @@ main.create = function () {
 
   //create explotion animations as group to be called, need to add scale
   game.explosion = game.add.group();
-  game.explosion.createMultiple(100, 'explosion');
+  game.explosion.createMultiple(25, 'explosion');
   game.explosion.setAll('anchor.x', 0.5);
   game.explosion.setAll('anchor.y', 0.5);
   game.explosion.setAll('killOnComplete',true);
@@ -238,8 +242,8 @@ main.update = function(){
         if(this.game.online){
           //push highscore to google play services if logged in
             //need to probably if(localStorage.getItem('auth') === true){
-              var data = { score: this.game.score, leaderboardId: "CgkI_rfe04ITEAIQAQ" };
-              window.plugins.playGamesServices.submitScore(data);
+              // var data = { score: this.game.score, leaderboardId: "CgkI_rfe04ITEAIQAQ" };
+              // window.plugins.playGamesServices.submitScore(data);
             //}
           //send play x beat their highest score flag
         }

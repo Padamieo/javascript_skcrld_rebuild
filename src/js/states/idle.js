@@ -7,7 +7,6 @@ idle.create = function () {
   console.log("idle");
 };
 
-
 idle.update = function (){
 
 };
