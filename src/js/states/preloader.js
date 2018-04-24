@@ -9,11 +9,10 @@ preloader.preload = function () {
   this.load.spritesheet('rainbow_e', 'images/rainbow_e.png', 200, 500);
 
   this.load.spritesheet('cat', 'images/placeholder_kitty.png', 200, 200);
-  this.load.spritesheet('explosion', 'images/explosion.png', 256, 256);
-  this.load.spritesheet('button', 'images/placeholder_button.png', 50, 50);
+  this.load.spritesheet('explosion', 'images/explosion_anim.png', 128, 128);
 
   this.load.spritesheet('enemy', 'images/testsmall.png', 25, 47);
-  this.game.load.image('trail', 'images/trail.png');
+  this.load.spritesheet('trail', 'images/trail_anim.png', 20, 40);
 
   this.game.load.image('bullet', 'images/b.png', 20, 10);
 

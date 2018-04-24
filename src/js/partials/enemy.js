@@ -133,7 +133,7 @@ enemy.prototype.update = function(game) {
     }
 
     this.trail.x = this.x;
-    this.trail.y = this.y;
+    this.trail.y = this.y+this.height/2;
     this.trail.rotation = this.rotation/1.2;
 
   }

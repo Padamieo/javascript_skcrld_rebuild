@@ -9,14 +9,19 @@ var general = {
 		if (game.explosion.countDead() === 0) {
 			return;
 		}
-		general.burst(game, loc.x, loc.y);
+		general.burst(game, loc.x, loc.y, loc.tint);
 		bang = game.explosion.getFirstExists(false);
-		//bang.rotation = 180;
+		bang.rotation = game.rnd.angle();
+    bang.scale.y = 2;
+    bang.scale.x = 2;
+    //console.log(game.rnd.integerInRange(2, 3));
 		bang.reset(loc.x, loc.y);
-		bang.play('boom', 30, 1, true);
+		bang.play('boom', 25, 1, true);
 	},
 
-  burst: function(game, x, y){
+  burst: function(game, x, y, tint){
+    //game.emitter.tint = '0xBCFCFF';
+    //console.log(game.emitter);
 		game.emitter.x = x;
 		game.emitter.y = y;
 		game.emitter.start(true, 2000, null, 10);

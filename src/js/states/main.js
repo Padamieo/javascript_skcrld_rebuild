@@ -12,7 +12,7 @@ main.create = function () {
 
   g.check_store(this.game);
 
-  console.log(this.game.soundon, this.game.sound.mute);
+  //console.log(this.game.soundon, this.game.sound.mute);
 
   if(this.game.online){
     window.analytics.trackView('main');
@@ -43,7 +43,7 @@ main.create = function () {
 
   //setup emitter for burst
   game.emitter = game.add.emitter(0, 0, 100);
-  game.emitter.makeParticles('test');
+  game.emitter.makeParticles(['test','test']);
   game.emitter.gravity = 200;
 
 	//bullet pool
@@ -100,6 +100,8 @@ main.create = function () {
   this.game.trail.createMultiple(25 , 'trail');
   this.game.trail.setAll('anchor.x', 0.5);
   this.game.trail.setAll('anchor.y', 0);
+  this.game.trail.callAll('animations.add', 'animations', 'trail', [0,1,2], 5, true);
+  this.game.trail.callAll('animations.play', 'animations', 'trail');
 
   // define enemies group
   this.game.enemies = new Phaser.Group(this.game);
@@ -123,13 +125,13 @@ main.create = function () {
   this.game.misses = 0;
   this.game.accuracy = 0;
 
-  //create explotion animations as group to be called, need to add scale
+  //create explosion animations as group to be called, need to add scale
   game.explosion = game.add.group();
   game.explosion.createMultiple(25, 'explosion');
   game.explosion.setAll('anchor.x', 0.5);
   game.explosion.setAll('anchor.y', 0.5);
   game.explosion.setAll('killOnComplete',true);
-  game.explosion.callAll('animations.add', 'animations', 'boom', [0, 1, 3], 30, false);
+  game.explosion.callAll('animations.add', 'animations', 'boom', [3,2,1,0], 12, false);
   //http://www.html5gamedevs.com/topic/4384-callback-when-animation-complete/
 
   text_score = this.game.add.text(this.game.width-(this.game.width/15), this.game.height/15, this.game.score, {
